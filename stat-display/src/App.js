@@ -1,17 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
-import {getLeagueInfo} from './api/main';
+import React from "react";
+import info2023 from "./LeagueInfo/info-2023.json";
 
 function App() {
-  const info = getLeagueInfo();
-  console.log("Info", info);
+  
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-        </p>
-        
+        <span>{JSON.stringify(info2023)}</span>
+
       </header>
     </div>
   );
