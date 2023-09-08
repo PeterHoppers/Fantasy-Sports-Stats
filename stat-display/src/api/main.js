@@ -1,23 +1,25 @@
-import pkg from 'espn-fantasy-football-api/node.js'; // node
+//import pkg from 'espn-fantasy-football-api/node.js'; // node
 import axios from 'axios';
-import { leagueId, testPublicId, s2, swid} from '../Fantasy-Sports-Stats/secrets/secrets.js';
+import { leagueId, testPublicId, s2, swid} from '../secrets/secrets.js';
 
-//documentation at http://espn-fantasy-football-api.s3-website.us-east-2.amazonaws.com/
-const storedInfo = {
-    teams: [],
-    scores: [],
-    rosters: []
-};
+export async function getLeagueInfo() {
+    //documentation at http://espn-fantasy-football-api.s3-website.us-east-2.amazonaws.com/
+    const storedInfo = {
+        teams: [],
+        scores: [],
+        rosters: []
+    };
 
-const testYear = 2022;
-const apiUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${testYear}/segments/0/leagues/${leagueId}`;
+    const testYear = 2022;
+    const apiUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${testYear}/segments/0/leagues/${leagueId}`;
 
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
-storedInfo.teams = await getTeamsInfo(apiUrl);
-storedInfo.scores = await getScoreInfo(apiUrl);
-storedInfo.rosters = await getWeeklyRosters(apiUrl, 19);
+    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
+    storedInfo.teams = await getTeamsInfo(apiUrl);
+    storedInfo.scores = await getScoreInfo(apiUrl);
+    storedInfo.rosters = await getWeeklyRosters(apiUrl, 19);
 
-console.log("This has finished", storedInfo);
+    return storedInfo;
+}
 
 async function getTeamsInfo(apiURL) {
     let teams;
