@@ -1,0 +1,21 @@
+@import "../styles/colors.scss";
+
+.welcome-header {
+    display: flex;
+    position: relative;
+    height: 50px;
+    align-items: center;
+    background-color: $carrollOrange;
+    color: $carrollWhite;
+
+    &__message {
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
