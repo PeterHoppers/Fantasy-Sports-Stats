@@ -3,74 +3,86 @@ import axios from 'axios';
 import fs from 'fs';
 import { leagueId, testPublicId, s2, swid} from '../secrets/secrets.js';
 
+const ApiViews = Object.freeze({
+    BoxScore: "mBoxscore",
+    Roster: "mRoster",
+    Settings: "mSettings",
+    Scoreboard: "mScoreboard",
+    Matchup: "mMatchupScore"
+});
 
 //documentation at http://espn-fantasy-football-api.s3-website.us-east-2.amazonaws.com/
 const storedInfo = {
+    currentWeek: 0,
     teams: [],
     scores: [],
     rosters: []
 };
 
 const testYear = 2023;
-const gamesThisSeason = 2;
 const targetDestination = `Football 2023/Fantasy-Sports-Stats/stat-display/src/LeagueInfo/info-${testYear}.json`;
 const apiUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${testYear}/segments/0/leagues/${leagueId}`;
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
-storedInfo.teams = await getTeamsInfo(apiUrl);
-storedInfo.scores = await getScoreInfo(apiUrl);
-storedInfo.rosters = await getWeeklyRosters(apiUrl, gamesThisSeason);
+const scoreboardInfo = await getScoreboardInfo(apiUrl);
+storedInfo.scores = scoreboardInfo.schedule;
+storedInfo.currentWeek = scoreboardInfo.status.currentMatchupPeriod;
+
+const boxscoreInfo = await getBoxscoreInfo(apiUrl);
+storedInfo.teams = boxscoreInfo.teams;
+
+storedInfo.rosters = await getWeeklyRosters(apiUrl, storedInfo.currentWeek);
 
 var dictstring = JSON.stringify(storedInfo);
 fs.writeFile(targetDestination, dictstring, (err) => err && console.error(err));
 
-//storedInfo;
-
-async function getTeamsInfo(apiURL) {
-    let teams;
+async function getBoxscoreInfo(apiURL) {
+    let scoreInfo;
     await axios
     .get(apiURL, {
         headers: {
             Cookie: `swid=${swid}; espn_s2=${s2}`,
         },
         params: {
-            "view": "mBoxscore"
+            "view": ApiViews.BoxScore
         },
     })
     .then((response) => {
         console.info("Successfully fetched league endpoint");
-        teams = response.data.teams;
+        scoreInfo = response.data;
     })
     .catch(function (error) {
         // handle error
         console.log(error);
     });
 
-    return teams;
+    return scoreInfo;
 }
 
-async function getScoreInfo(apiURL) {
-    let scores;
+async function getScoreboardInfo(apiURL) {
+    let scoreboardInfo;
     await axios
     .get(apiURL, {
         headers: {
             Cookie: `swid=${swid}; espn_s2=${s2}`,
         },
         params: {
-            "view": "mBoxscore"
+            "view": ApiViews.Scoreboard,
+            "view": ApiViews.Matchup
         },
     })
     .then((response) => {
         console.info("Successfully fetched league endpoint");
-        scores = response.data.schedule;
+        scoreboardInfo = response.data;
     })
     .catch(function (error) {
         // handle error
         console.log(error);
     });
 
-    return scores;
+    return scoreboardInfo;
 }
+
 
 async function getWeeklyRosters(apiURL, weeks) {
     const rosters = [];
@@ -81,7 +93,7 @@ async function getWeeklyRosters(apiURL, weeks) {
                 Cookie: `swid=${swid}; espn_s2=${s2}`,
             },
             params: {
-                "view": "mRoster",
+                "view": ApiViews.Roster,
                 "scoringPeriodId": weekNumber
             },
         })

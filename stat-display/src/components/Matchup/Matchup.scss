@@ -1,0 +1,11 @@
+.matchup {
+    height: calc(100% - 120px - 1rem);
+    position: relative;
+    display: flex;
+
+    &__team-name {
+        display: flex;
+        height: 150px;        
+        margin-top: auto;
+    }
+}

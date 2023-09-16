@@ -1,0 +1,37 @@
+@import "../../styles/colors.scss";
+
+.scoreboard {
+    display: flex;
+    width: calc(100% - 1rem);
+    height: 120px;
+    position: absolute;
+    bottom: 0;
+    justify-content: center;
+    padding: .5rem;
+    align-items: center;
+    gap: 1rem;
+    background-color: $carrollBlue;
+}
+
+.score-display {
+    background-color: $carrollWhite;
+    padding: 0.5em;
+    border: 1px solid $carrollGray;
+
+    &__team-info {
+        display: flex;
+        gap: 0.5em;
+
+        img {
+            width: 50px;
+        }
+
+        .score-display__team-name {
+            width: 165px;
+        }
+
+        .score-display__team-score {
+            width: 40px;
+        }
+    }
+}
