@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Fantasy-Sports-Stats/static/css/main.76893c8f.css",
-    "main.js": "/Fantasy-Sports-Stats/static/js/main.58e8c8e7.js",
+    "main.css": "/Fantasy-Sports-Stats/static/css/main.ad9babac.css",
+    "main.js": "/Fantasy-Sports-Stats/static/js/main.c999a12e.js",
     "static/js/787.13d1e4f4.chunk.js": "/Fantasy-Sports-Stats/static/js/787.13d1e4f4.chunk.js",
     "index.html": "/Fantasy-Sports-Stats/index.html",
-    "main.76893c8f.css.map": "/Fantasy-Sports-Stats/static/css/main.76893c8f.css.map",
-    "main.58e8c8e7.js.map": "/Fantasy-Sports-Stats/static/js/main.58e8c8e7.js.map",
+    "main.ad9babac.css.map": "/Fantasy-Sports-Stats/static/css/main.ad9babac.css.map",
+    "main.c999a12e.js.map": "/Fantasy-Sports-Stats/static/js/main.c999a12e.js.map",
     "787.13d1e4f4.chunk.js.map": "/Fantasy-Sports-Stats/static/js/787.13d1e4f4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.76893c8f.css",
-    "static/js/main.58e8c8e7.js"
+    "static/css/main.ad9babac.css",
+    "static/js/main.c999a12e.js"
   ]
 }
