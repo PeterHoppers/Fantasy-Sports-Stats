@@ -17,6 +17,12 @@ export const Home = (props) => {
         <>
             <Header/>
             <main className="home-view__main">
+                <section className="home__standings">
+                    <h2>Current Standings</h2>
+                    <div className="home__standings-preview">
+                        <span>Coming Soon</span>
+                    </div>
+                </section>
                 <Scoreboard 
                     scores = {scores}
                     teams = {props.info.teams}

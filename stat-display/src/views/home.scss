@@ -2,6 +2,27 @@
     position: relative;
     height: calc(100vh - 100px);
 
+    .home__standings {
+        display: flex;
+        flex-direction: column;
+
+        h2 {
+            margin: 0;
+            text-align: center;
+            padding: 2em 0 1em;
+        }
+
+        .home__standings-preview {
+            width: 600px;
+            height: 350px;
+            margin: auto;
+            background-color: grey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
     .scoreboard {        
         position: absolute;
         bottom: 0;

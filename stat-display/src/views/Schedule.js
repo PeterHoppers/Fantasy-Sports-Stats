@@ -25,7 +25,7 @@ export const Schedule = (props) => {
             <main className="schedule-view__main">
                 {scores && scores.map((score, index) => 
                     <>
-                        <span>{"Week " + index}</span>
+                        <span className="schedule-view__week">{"Week " + index}</span>
                         <Scoreboard
                             key = {"Week " + index}
                             scores = {score}
