@@ -23,6 +23,7 @@ export const Scoreboard = (props) => {
                         homeScore = {getScoreForTeam(score.home)}
                         awayScore = {getScoreForTeam(score.away)}
                         onClickScoreDisplay = {props.onClickScoreDisplay}
+                        activeMatchup = {props.activeMatchup}
                     />
                 }                
             )}

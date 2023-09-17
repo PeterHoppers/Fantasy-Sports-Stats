@@ -2,8 +2,58 @@
 
 .bottom-nav {
     position: absolute;
+    display: flex;
     bottom: 0;
     height: 50px;
     width: 100%;
+    gap: 60px;        
     background-color: $carrollSilver;
+    border-top: 3px solid black;
+
+    &__link-holder {
+        display: flex;
+        position: relative;
+        z-index: 1;
+        background: $carrollSilver;
+        width: 120px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:hover,
+        &.active-link {
+            background: $carrollBlue;
+            color: $carrollWhite;
+        }
+
+        .bottom-nav__link {
+            margin: auto;
+            padding: 0 1em;
+        }
+        
+        &:before,
+        &:after {
+            background: inherit;
+            content: "";
+            display: block;
+            width: 75%;
+            top: 0;
+            position: absolute;
+            bottom: 0;
+            z-index: -1;
+            -webkit-backface-visibility: hidden;
+        }
+      
+        &:before {
+            left: -25%;
+            transform: skewX(-45deg);
+        }
+        
+        &:after {
+            right: -25%;
+            transform: skewX(-45deg);
+            border-right: 3px solid black;
+        }
+    }
 }

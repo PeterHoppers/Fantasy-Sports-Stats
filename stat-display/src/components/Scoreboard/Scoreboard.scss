@@ -4,8 +4,6 @@
     display: flex;
     width: calc(100% - 1rem);
     height: 120px;
-    position: absolute;
-    bottom: 0;
     justify-content: center;
     padding: .5rem;
     align-items: center;
@@ -17,6 +15,13 @@
     background-color: $carrollWhite;
     padding: 0.5em;
     border: 1px solid $carrollGray;
+
+    &:hover,
+    &.active {
+        cursor: pointer;
+        scale: 1.01;
+        outline: 3px solid black;
+    }
 
     &__team-info {
         display: flex;
