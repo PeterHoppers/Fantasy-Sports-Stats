@@ -3,9 +3,59 @@
     position: relative;
     display: flex;
 
-    &__team-name {
+    &__team {
         display: flex;
         height: 150px;        
         margin-top: auto;
+        width: 20%;
+
+        &.matchup__away-team {
+            justify-content: end;
+        }
+
+        &-logo-holder {
+            width: 100px;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    &__score-section {
+        flex-grow: 1;
+    }
+
+    &__point-info-holder {
+        display: flex;
+        justify-content: center;
+        gap: 10%;
+
+        .matchup__point-total:first-of-type {
+            text-align: right;
+        }
+    }
+
+    &__roster {
+        width: 100%;
+
+        &-score {
+            width: 5%;
+            text-align: center;
+        }
+        &-position {
+            width: 10%;
+            text-align: center;
+        }
+
+        &-home-player {
+            width: 40%;
+            text-align: left;
+        }
+
+        &-away-player {
+            width: 40%;
+            text-align: right;
+        }
     }
 }

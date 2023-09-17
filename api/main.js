@@ -8,7 +8,8 @@ const ApiViews = Object.freeze({
     Roster: "mRoster",
     Settings: "mSettings",
     Scoreboard: "mScoreboard",
-    Matchup: "mMatchupScore"
+    Matchup: "mMatchup",
+    MatchupScore: "mMatchupScore"
 });
 
 //documentation at http://espn-fantasy-football-api.s3-website.us-east-2.amazonaws.com/
@@ -27,10 +28,9 @@ const apiUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${testYear}/s
 const scoreboardInfo = await getScoreboardInfo(apiUrl);
 storedInfo.scores = scoreboardInfo.schedule;
 storedInfo.currentWeek = scoreboardInfo.status.currentMatchupPeriod;
+storedInfo.teams = scoreboardInfo.teams;
 
-const boxscoreInfo = await getBoxscoreInfo(apiUrl);
-storedInfo.teams = boxscoreInfo.teams;
-
+//const boxscoreInfo = await getBoxscoreInfo(apiUrl);
 storedInfo.rosters = await getWeeklyRosters(apiUrl, storedInfo.currentWeek);
 
 var dictstring = JSON.stringify(storedInfo);
@@ -67,9 +67,11 @@ async function getScoreboardInfo(apiURL) {
             Cookie: `swid=${swid}; espn_s2=${s2}`,
         },
         params: {
-            "view": ApiViews.Scoreboard,
-            "view": ApiViews.Matchup
+            "view": [ApiViews.Scoreboard, ApiViews.Matchup, ApiViews.MatchupScore]
         },
+        paramsSerializer: {
+            indexes: null 
+        }        
     })
     .then((response) => {
         console.info("Successfully fetched league endpoint");

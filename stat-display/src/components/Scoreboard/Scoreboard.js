@@ -12,8 +12,6 @@ export const Scoreboard = (props) => {
                         return;
                     }
 
-                    console.log("Score", score);
-                    console.log("Teams", props.teams);
                     const homeTeam = props.teams.find(team => team.id === score.home.teamId);
                     const awayTeam = props.teams.find(team => team.id === score.away.teamId);
                     

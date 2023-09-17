@@ -11,7 +11,7 @@ export const Home = (props) => {
     const [matchup, setActiveMatchup] = useState(null);
 
     useEffect(() => {
-        console.log("All Rosters", props.info);
+        console.log("All Info", props.info);
         const currentScores = props.info.scores.filter(score => score.matchupPeriodId === props.info.currentWeek);
         setScores(currentScores);
     }, [props]);
@@ -58,7 +58,7 @@ export const Home = (props) => {
                         awayTeamInfo = {getTeamForGame(matchup, false)}
                         homeRoster = {getRosterForGame(matchup, true)}
                         awayRoster = {getRosterForGame(matchup, false)}
-                        scoreInfo = {props.info.scores}
+                        scoreInfo = {props.info.scores.find(score => score.id === matchup)}
                     />
                 }
                 <Scoreboard 
