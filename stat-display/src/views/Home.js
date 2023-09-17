@@ -5,7 +5,7 @@ import { Scoreboard } from "../components/Scoreboard/Scoreboard";
 
 import "./home.scss";
 
-export const Home = (props) => {
+export const Home = (props) => {    
     const [scores, setScores] = useState([]);
 
     useEffect(() => {

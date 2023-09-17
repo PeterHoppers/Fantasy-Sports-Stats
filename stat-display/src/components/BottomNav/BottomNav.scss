@@ -56,4 +56,12 @@
             border-right: 3px solid black;
         }
     }
+
+    &__year-select {
+        margin: auto 1em auto auto;
+
+        label {
+            padding-right: .5em;
+        }
+    }
 }

@@ -27,14 +27,12 @@ export const Schedule = (props) => {
                     <>
                         <span>{"Week " + index}</span>
                         <Scoreboard
-                            key = {index}
-                            week = {index}
+                            key = {"Week " + index}
                             scores = {score}
                             teams = {props.info.teams}
                             onClickScoreDisplay = {props.triggerMatchup}
                         />
                     </>
-                    
                 )}
             </main>
         </>

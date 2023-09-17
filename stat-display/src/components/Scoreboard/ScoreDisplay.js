@@ -8,10 +8,16 @@ export const ScoreDisplay = (props) => {
         classes += " active";
     }
 
+    const hasTeams = (props.homeTeam && props.awayTeam);
+
     return (
-        <div className={classes} onClick={() => props.onClickScoreDisplay(props.id)}>
-            <ScoreTeamInfo logo={props.homeTeam.logo} name={props.homeTeam.name} score={props.homeScore}/>
-            <ScoreTeamInfo logo={props.awayTeam.logo} name={props.awayTeam.name} score={props.awayScore}/>    
-        </div>        
+        <>
+            {hasTeams &&
+                <div className={classes} onClick={() => props.onClickScoreDisplay(props.id)}>
+                    <ScoreTeamInfo logo={props.homeTeam.logo} name={props.homeTeam.name} score={props.homeScore}/>
+                    <ScoreTeamInfo logo={props.awayTeam.logo} name={props.awayTeam.name} score={props.awayScore}/>    
+                </div>        
+            }
+        </> 
     );
 }

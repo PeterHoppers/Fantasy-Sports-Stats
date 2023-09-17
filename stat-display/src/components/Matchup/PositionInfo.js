@@ -1,6 +1,4 @@
 export const PositionInfo = (props) => {
-    console.log("Props", props);
-
     const homePlayerScore = getPlayerProjectedScore(props.homePlayer, props.week);
     const awayPlayerScore = getPlayerProjectedScore(props.awayPlayer, props.week);
     return (

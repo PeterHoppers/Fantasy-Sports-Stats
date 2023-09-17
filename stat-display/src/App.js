@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState } from "react";
+import info2022 from "./LeagueInfo/info-2022.json";
 import info2023 from "./LeagueInfo/info-2023.json";
 
 import BottomNav from "./components/BottomNav/BottomNav";
@@ -12,6 +13,7 @@ import { Week } from './views/Week';
 function App() {
   const [currentPage, setPage] = useState(Pages.Home);
   const [matchUp, setActiveMatchup] = useState(null);
+  const [info, setInfo] = useState(info2023);
   
   const updatePage = (newPage) => {
     setPage(newPage);
@@ -22,20 +24,31 @@ function App() {
     setActiveMatchup(gameId);
   }
 
+  const changeYear = (year) => {    
+    switch (year) {
+      case "2022":
+        setInfo(info2022);
+        return;
+      case "2023":
+      default:
+        setInfo(info2023);
+        return;
+    }
+  }
+
   const renderPage = () => {
     if (matchUp) {
-      console.log("M<atchyp", matchUp);
       return <Week 
-        info = {info2023}
+        info = {info}
         matchUp = {matchUp}
         triggerMatchup={triggerMatchup}
       />
     }
     switch(currentPage) {
       case Pages.Home:
-        return <Home info = {info2023} triggerMatchup={triggerMatchup}/>;
+        return <Home info = {info} triggerMatchup={triggerMatchup}/>;
       case Pages.Schedule:
-        return <Schedule info = {info2023} triggerMatchup={triggerMatchup}/>;  
+        return <Schedule info = {info} triggerMatchup={triggerMatchup}/>;  
       default:
         return <span/>
     }    
@@ -44,7 +57,11 @@ function App() {
   return (
     <>
       {renderPage()}
-      <BottomNav onPageClick = {updatePage} currentPage={currentPage}/>
+      <BottomNav 
+        currentPage={currentPage}
+        onPageClick = {updatePage} 
+        onYearChange = {changeYear}
+      />
     </>
       
   );
