@@ -9,6 +9,7 @@
     gap: 60px;        
     background-color: $carrollSilver;
     border-top: 3px solid black;
+    font-family: 'Blockletter';
 
     &__link-holder {
         display: flex;
@@ -62,6 +63,10 @@
 
         label {
             padding-right: .5em;
+        }
+
+        select {
+            height: 25px;
         }
     }
 }
