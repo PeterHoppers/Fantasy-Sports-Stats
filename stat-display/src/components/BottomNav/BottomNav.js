@@ -15,6 +15,7 @@ const BottomNav = (props) => {
             <div className="bottom-nav__year-select">
                 <label htmlFor="year-select">Year:</label>
                 <select onChange={(event) => props.onYearChange(event.target.value)}defaultValue="2023" name="year" id="year-select">
+                    <option value="2021">2021</option>
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
                 </select>

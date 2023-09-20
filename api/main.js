@@ -31,7 +31,7 @@ storedInfo.currentWeek = scoreboardInfo.status.currentMatchupPeriod;
 storedInfo.teams = scoreboardInfo.teams;
 
 //const boxscoreInfo = await getBoxscoreInfo(apiUrl);
-storedInfo.rosters = await getWeeklyRosters(apiUrl, storedInfo.currentWeek);
+storedInfo.rosters = await getWeeklyRosters(apiUrl, scoreboardInfo.scoringPeriodId);
 
 var dictstring = JSON.stringify(storedInfo);
 fs.writeFile(targetDestination, dictstring, (err) => err && console.error(err));

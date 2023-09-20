@@ -27,12 +27,20 @@
         display: flex;
         gap: 0.5em;
 
-        img {
-            width: 50px;
+        .score-display__logo-holder {
+            display: flex;
+            align-items: center;
+            width: 40px;
+
+            img {
+                width: 100%;
+            }
         }
 
         .score-display__team-name {
             width: 165px;
+            text-wrap: nowrap;
+            overflow: hidden;
         }
 
         .score-display__team-score {

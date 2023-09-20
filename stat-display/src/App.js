@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState } from "react";
+import info2021 from "./LeagueInfo/info-2021.json";
 import info2022 from "./LeagueInfo/info-2022.json";
 import info2023 from "./LeagueInfo/info-2023.json";
 
@@ -26,6 +27,9 @@ function App() {
 
   const changeYear = (year) => {    
     switch (year) {
+      case "2021":
+        setInfo(info2021);
+        return;
       case "2022":
         setInfo(info2022);
         return;
