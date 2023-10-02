@@ -1,20 +1,37 @@
+@import "../../styles/mixins.scss";
+@import "../../styles/colors.scss";
+
 .matchup {
-    height: calc(100% - 120px - 1rem);
+    height: calc(100% - 140px - 1rem);
+    max-width: 1000px;
     position: relative;
     display: flex;
+    flex-direction: column;
+    margin: auto;
+
+    &__team-section {
+        display: flex;
+        justify-content: space-between;
+        height: 150px;
+    }
 
     &__team {
-        display: flex;
-        height: 150px;        
-        margin-top: auto;
-        width: 20%;
+        display: flex;     
+        margin: auto;
+        width: 50%;
+        height: 105px;
 
         &.matchup__away-team {
             justify-content: end;
+
+            .matchup__team-name-holder {
+                text-align: end;
+            }
         }
 
         &-logo-holder {
             width: 100px;
+            margin: auto 0;
 
             img {
                 width: 100%;
@@ -22,7 +39,14 @@
         }
 
         &-name-holder {
-            font-family: 'Sports Night';
+            font-family: "Blockletter";
+            font-size: 2rem;
+            margin: 0 0.5em;
+
+            p {
+                margin: 0;                
+                text-shadow: textShadow(0.25, 6, $carrollOrange);
+            }
         }
     }
 
@@ -38,10 +62,20 @@
         .matchup__point-total:first-of-type {
             text-align: right;
         }
+
+        .matchup__point-current {
+            font-size: 2em;
+            margin: 0.75em 0;
+        }
+
+        .matchup__point-live {
+            font-size: 1.25em;
+        }
     }
 
     &__roster {
         width: 100%;
+        font-size: 1.25em;
 
         &-score {
             width: 5%;

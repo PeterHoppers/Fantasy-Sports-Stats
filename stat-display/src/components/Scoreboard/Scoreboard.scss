@@ -1,14 +1,23 @@
 @import "../../styles/colors.scss";
 
 .scoreboard {
-    display: flex;
     width: calc(100% - 1rem);
-    height: 120px;
-    justify-content: center;
     padding: .5rem;
-    align-items: center;
-    gap: 1rem;
     background-color: $carrollBlue;
+    height: 140px;
+
+    &-holder {
+        display: flex;        
+        height: 120px;
+        justify-content: center;        
+        align-items: center;
+        gap: 1rem;        
+    }
+
+    &-week {
+        color: $carrollWhite;
+        padding-left: 1em;
+    }
 }
 
 .score-display {

@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from "react";
-import Header from "../components/Header/Header";
+import React from "react";
 
 import { Scoreboard } from "../components/Scoreboard/Scoreboard";
 import { Matchup } from "../components/Matchup/Matchup";
@@ -18,7 +17,8 @@ export const Week = (props) => {
                    rosters = {props.info.rosters}
                    activeMatchup = {props.matchUp}
                 />
-                <Scoreboard                 
+                <Scoreboard   
+                    week = {targetWeek}              
                     scores={weekScores} 
                     teams={props.info.teams}
                     onClickScoreDisplay = {props.triggerMatchup}

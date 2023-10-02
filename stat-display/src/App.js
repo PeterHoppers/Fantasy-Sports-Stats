@@ -62,7 +62,7 @@ function App() {
     <>
       {renderPage()}
       <BottomNav 
-        currentPage={currentPage}
+        currentPage={matchUp ? null : currentPage}
         onPageClick = {updatePage} 
         onYearChange = {changeYear}
       />

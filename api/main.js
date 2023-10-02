@@ -20,13 +20,14 @@ const storedInfo = {
     rosters: []
 };
 
-const testYear = 2023;
+const testYear = 2022;
 const targetDestination = `Football 2023/Fantasy-Sports-Stats/stat-display/src/LeagueInfo/info-${testYear}.json`;
 const apiUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${testYear}/segments/0/leagues/${leagueId}`;
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
 const scoreboardInfo = await getScoreboardInfo(apiUrl);
 storedInfo.scores = scoreboardInfo.schedule;
+storedInfo.matchupPeriods = scoreboardInfo.settings.scheduleSettings.matchupPeriods;
 storedInfo.currentWeek = scoreboardInfo.status.currentMatchupPeriod;
 storedInfo.teams = scoreboardInfo.teams;
 

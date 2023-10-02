@@ -1,6 +1,14 @@
 import { PositionId, PositionNames } from "../../util";
 import { PositionInfo } from "./PositionInfo";
 
+const dummyInfo = {
+    playerPoolEntry: {
+        player: {
+            fullName: "Empty Position"
+        }
+    }
+};
+
 // a table of PositionInfos
 export const Rosters = (props) => {
     const positionMatchups = [];
@@ -45,6 +53,14 @@ export const Rosters = (props) => {
 function getPositionInfo(positionId, homeRoster, awayRoster, positionName) {
     const homePlayer = homeRoster.entries.filter(entry => entry.lineupSlotId === positionId);
     const awayPlayer = awayRoster.entries.filter(entry => entry.lineupSlotId === positionId);
+
+    while (homePlayer.lengthength > awayPlayer.length) {
+        awayPlayer.push(dummyInfo);
+    }
+
+    while (homePlayer.length < awayPlayer.length) {
+        homePlayer.push(dummyInfo);
+    }
 
     return {
         home: homePlayer,

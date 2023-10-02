@@ -1,0 +1,13 @@
+@function textShadow($precision, $size, $color){
+    $value: null; 
+    $offset: 0;
+    $length: $size * (1 / $precision) - 1;
+  
+    @for $i from 0 through $length {
+        $offset: $offset + $precision;
+        $shadow: $offset + px $offset + px $color;
+        $value: append($value, $shadow, comma);
+    }
+
+    @return $value;
+}

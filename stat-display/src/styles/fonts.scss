@@ -12,22 +12,8 @@
     font-family: "Sports Night";
     src: url('../fonts/SFSportsNight/SFSportsNight.ttf') format('truetype');
 }
-
-@function textShadow($precision, $size, $color){
-    $value: null; 
-    $offset: 0;
-    $length: $size * (1 / $precision) - 1;
   
-    @for $i from 0 through $length {
-      $offset: $offset + $precision;
-      $shadow: $offset + px $offset + px $color;
-      $value: append($value, $shadow, comma);
-    }
-  
-    @return $value;
-  }
-  
-  .playful {
-    color: #5362F6;
-    text-shadow: textShadow(0.25, 6, #E485F8);
-  }
+.playful {
+  color: #5362F6;
+  text-shadow: textShadow(0.25, 6, #E485F8);
+}

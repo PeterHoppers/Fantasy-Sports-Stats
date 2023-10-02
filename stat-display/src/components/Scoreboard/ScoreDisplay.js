@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { ScoreTeamInfo } from "./ScoreTeamInfo";
 
 export const ScoreDisplay = (props) => {

@@ -16,7 +16,6 @@ export const Schedule = (props) => {
             const weekScores = nonByeScores.filter(score => score.matchupPeriodId === scoreWeek);
             scoreSchedule[scoreWeek] = weekScores;
         }
-        console.log("Scores", scoreSchedule);
         setScores(scoreSchedule);
     }, [props]);
 
@@ -25,9 +24,9 @@ export const Schedule = (props) => {
             <main className="schedule-view__main">
                 {scores && scores.map((score, index) => 
                     <>
-                        <span className="schedule-view__week">{"Week " + index}</span>
                         <Scoreboard
                             key = {"Week " + index}
+                            week = {index}
                             scores = {score}
                             teams = {props.info.teams}
                             onClickScoreDisplay = {props.triggerMatchup}

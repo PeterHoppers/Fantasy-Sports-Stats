@@ -5,11 +5,11 @@ export const PointTotal = (props) => {
             {isLive 
                 ?
                 <>
-                    <p>{props.scoreInfo.totalPointsLive.toFixed(1)}</p>
-                    <p>{props.scoreInfo.totalProjectedPointsLive.toFixed(1)}</p>
+                    <p className="matchup__point-current">{props.scoreInfo.totalPointsLive.toFixed(1)}</p>
+                    <p className="matchup__point-live">{props.scoreInfo.totalProjectedPointsLive.toFixed(1)}</p>
                 </>                    
                 :
-                    <p>{props.scoreInfo.totalPoints.toFixed(1)}</p>
+                    <p className="matchup__point-current">{props.scoreInfo.totalPoints.toFixed(1)}</p>
             }
         </section>
     );

@@ -44,8 +44,7 @@ export const Matchup = (props) => {
     const scoreInfo = props.scores.find(score => score.id === matchup);
 
     return (
-        <section className="matchup">
-            <TeamName isHome = {true} teamInfo = {homeTeamInfo}/>
+        <section className="matchup">           
             <div className="matchup__score-section">
                 <div className="matchup__point-info-holder">
                     <PointTotal scoreInfo = {scoreInfo.home} />
@@ -57,7 +56,10 @@ export const Matchup = (props) => {
                     week = {scoreInfo.matchupPeriodId}
                 />
             </div>
-            <TeamName isHome = {false} teamInfo = {awayTeamInfo}/>
+            <div className="matchup__team-section">
+                <TeamName isHome = {true} teamInfo = {homeTeamInfo}/>
+                <TeamName isHome = {false} teamInfo = {awayTeamInfo}/>
+            </div>
         </section>
     );
 }

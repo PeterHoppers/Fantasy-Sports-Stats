@@ -28,9 +28,9 @@ function getPlayerName(player) {
 }
 
 function getPlayerProjectedScore(player, week) {
-    const scoreEntries = player.playerPoolEntry.player.stats.filter(stat => stat.scoringPeriodId === week);
+    const scoreEntries = player.playerPoolEntry.player.stats?.filter(stat => stat.scoringPeriodId === week);
 
-    if (scoreEntries.length === 0) {
+    if (!scoreEntries?.length) {
         return {
             projected : 0.0,
             actual: "--"

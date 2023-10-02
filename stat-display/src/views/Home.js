@@ -24,6 +24,7 @@ export const Home = (props) => {
                     </div>
                 </section>
                 <Scoreboard 
+                    week = {props.info.currentWeek}
                     scores = {scores}
                     teams = {props.info.teams}
                     onClickScoreDisplay = {props.triggerMatchup}
