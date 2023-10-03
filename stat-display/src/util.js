@@ -1,7 +1,8 @@
 const Pages = Object.freeze({
     Home: "Scoreboard",
     Schedule: "Schedule",
-    Standings: "Standings"
+    Standings: "Standings",
+    Analysis: "Analysis",
 });
 
 const PositionId = {

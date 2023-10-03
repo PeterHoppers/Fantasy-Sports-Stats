@@ -12,6 +12,9 @@ const BottomNav = (props) => {
             <div className={"bottom-nav__link-holder" + ((props.currentPage === Pages.Schedule) ? " active-link" : "")}  onClick={() => props.onPageClick(Pages.Schedule)}>
                 <span className="bottom-nav__link">Schedule</span>
             </div>
+            <div className={"bottom-nav__link-holder" + ((props.currentPage === Pages.Analysis) ? " active-link" : "")}  onClick={() => props.onPageClick(Pages.Analysis)}>
+                <span className="bottom-nav__link">Analysis</span>
+            </div>
             <div className="bottom-nav__year-select">
                 <label htmlFor="year-select">Year:</label>
                 <select onChange={(event) => props.onYearChange(event.target.value)}defaultValue="2023" name="year" id="year-select">

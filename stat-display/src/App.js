@@ -10,6 +10,7 @@ import { Pages } from './util';
 import { Home } from './views/Home';
 import { Schedule } from './views/Schedule';
 import { Week } from './views/Week';
+import { Analysis } from './views/Analysis';
 
 function App() {
   const [currentPage, setPage] = useState(Pages.Home);
@@ -52,7 +53,9 @@ function App() {
       case Pages.Home:
         return <Home info = {info} triggerMatchup={triggerMatchup}/>;
       case Pages.Schedule:
-        return <Schedule info = {info} triggerMatchup={triggerMatchup}/>;  
+        return <Schedule info = {info} triggerMatchup={triggerMatchup}/>;
+      case Pages.Analysis:
+        return <Analysis info = {info}/>;
       default:
         return <span/>
     }    
