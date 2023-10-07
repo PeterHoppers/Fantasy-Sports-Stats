@@ -20,7 +20,7 @@ const storedInfo = {
     rosters: []
 };
 
-const testYear = 2022;
+const testYear = 2023;
 const targetDestination = `Football 2023/Fantasy-Sports-Stats/stat-display/src/LeagueInfo/info-${testYear}.json`;
 const apiUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${testYear}/segments/0/leagues/${leagueId}`;
 
