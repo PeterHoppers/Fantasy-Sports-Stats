@@ -4,11 +4,10 @@
     width: calc(100% - 1rem);
     padding: .5rem;
     background-color: $carrollBlue;
-    height: 140px;
 
     &-holder {
-        display: flex;        
-        height: 120px;
+        display: flex;
+        flex-wrap: wrap;
         justify-content: center;        
         align-items: center;
         gap: 1rem;        
@@ -28,7 +27,7 @@
     &:hover,
     &.active {
         cursor: pointer;
-        scale: 1.01;
+        scale: 1.03;
         outline: 3px solid black;
     }
 

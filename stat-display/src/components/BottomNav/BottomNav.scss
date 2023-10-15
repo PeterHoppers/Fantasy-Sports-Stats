@@ -6,7 +6,7 @@
     bottom: 0;
     height: 50px;
     width: 100%;
-    gap: 60px;        
+    gap: 3.75rem;        
     background-color: $carrollSilver;
     border-top: 3px solid black;
     font-family: 'Blockletter';
@@ -16,7 +16,7 @@
         position: relative;
         z-index: 1;
         background: $carrollSilver;
-        width: 120px;
+        width: 7.5rem;
 
         &:hover {
             cursor: pointer;

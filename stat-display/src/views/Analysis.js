@@ -17,11 +17,13 @@ export const Analysis = (props) => {
 
     const lastWeek = (LAST_REGULAR_SEASON_WEEK < props.info.currentWeek) ? LAST_REGULAR_SEASON_WEEK : props.info.currentWeek - 1;
 
+    const matchups = getMatchupByWeek(scores, lastWeek);
     const totalPointsScores = getScoreByWeek(scores, lastWeek);
     const projectedScores = getProjectedScoreByWeek(teams, rosters, lastWeek);
     const rankingScores = getRankingByWeek(totalPointsScores, lastWeek);
 
     const projectedVsScoredData = getProjectedVsScoredData(teams, totalPointsScores, projectedScores);
+    const opponentProjectedVsScoredData = getOpponentProjectedVsScoredData(teams, matchups, totalPointsScores, projectedScores);
     const rankingData = getRankingData(teams, rankingScores);
 
     const screenWidth = window.screen.width;
@@ -32,8 +34,22 @@ export const Analysis = (props) => {
             <main className="analysis-view__main">
                 {projectedVsScoredData.length > 0 &&
                     <>
-                        <h2>Projected Points vs. Scored Points</h2>
+                        <h2>Projected Points vs. Actual Points</h2>
                         <BarChart width={graphWidth} height={350} data={projectedVsScoredData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="projected" fill="#8884d8" />
+                            <Bar dataKey="scored" fill="#82ca9d" />
+                        </BarChart> 
+                    </>                    
+                }
+                {opponentProjectedVsScoredData.length > 0 &&
+                    <>
+                        <h2>Projected Points Against vs. Actual Points Against</h2>
+                        <BarChart width={graphWidth} height={350} data={opponentProjectedVsScoredData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
@@ -62,6 +78,21 @@ export const Analysis = (props) => {
         </>
         
     );
+
+    function getMatchupByWeek(scores, lastWeek) {
+        const matchupPerWeek = [];
+        for (let week = 1; week <= lastWeek; week++) {
+            const weekScores = scores.filter(score => score.matchupPeriodId === week);
+            matchupPerWeek[week] = [];
+            weekScores.forEach(score => {
+                if (score.home && score.away) {
+                    matchupPerWeek[week][score.home.teamId] = score.away.teamId;
+                    matchupPerWeek[week][score.away.teamId] = score.home.teamId;                    
+                }
+            });
+        }
+        return matchupPerWeek;
+    }
 
     function getScoreByWeek(scores, lastWeek) {
         const scorePerWeek = [];
@@ -153,7 +184,35 @@ export const Analysis = (props) => {
             });
         });
 
-        data.sort((a, b) => a.projectedPoints - b.projectedPoints);
+        return data;
+    }
+
+    function getOpponentProjectedVsScoredData(teams, matchups, scoresByWeek, projectedScoresByWeek) {
+        const data = [];
+        teams.forEach(team => {
+            let opponentPointsProjected = 0;
+            let opponentPointsScored = 0;
+            for (let week = 1; week <= lastWeek; week++) {
+                const opponentId = matchups[week][team.id];
+
+                //if we didn't play anyone that week, don't both with finding an opponent
+                if (!opponentId) {
+                    continue;
+                }
+
+                const opponentProjected = projectedScoresByWeek[week].find(projected => projected.teamId === opponentId);
+                const opponentScored = scoresByWeek[week].find(projected => projected.teamId === opponentId);
+                opponentPointsProjected += opponentProjected.points;
+                opponentPointsScored += opponentScored.points;
+            }
+    
+            data.push({
+                "name": team.name,
+                "projected": opponentPointsProjected,
+                "scored": opponentPointsScored
+            });
+        });
+
         return data;
     }
 

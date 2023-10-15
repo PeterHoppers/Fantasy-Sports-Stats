@@ -3,7 +3,7 @@
 
 .matchup {
     height: calc(100% - 140px - 1rem);
-    max-width: 1000px;
+    width: min(1000px, 95vw);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -65,17 +65,17 @@
 
         .matchup__point-current {
             font-size: 2em;
-            margin: 0.75em 0;
+            margin: 0.75rem 0;
         }
 
         .matchup__point-live {
-            font-size: 1.25em;
+            font-size: 1.25rem;
         }
     }
 
     &__roster {
         width: 100%;
-        font-size: 1.25em;
+        font-size: 1.25rem;
 
         &-score {
             width: 5%;
