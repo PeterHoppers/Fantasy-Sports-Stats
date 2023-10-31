@@ -1,4 +1,3 @@
-//import pkg from 'espn-fantasy-football-api/node.js'; // node
 import axios from 'axios';
 import fs from 'fs';
 import { leagueId, testPublicId, s2, swid} from '../secrets/secrets.js';

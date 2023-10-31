@@ -1,10 +1,11 @@
 import './App.css';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import info2021 from "./LeagueInfo/info-2021.json";
 import info2022 from "./LeagueInfo/info-2022.json";
 import info2023 from "./LeagueInfo/info-2023.json";
 
 import BottomNav from "./components/BottomNav/BottomNav";
+import LoadingMessage from './components/LoadingMessage/LoadingMessage';
 import { Pages } from './util';
 
 import { Home } from './views/Home';
@@ -12,10 +13,20 @@ import { Schedule } from './views/Schedule';
 import { Week } from './views/Week';
 import { Analysis } from './views/Analysis';
 
+import {getCurrentInformation} from './api/api.js';
+
 function App() {
   const [currentPage, setPage] = useState(Pages.Home);
   const [matchUp, setActiveMatchup] = useState(null);
+  const [currentInfo, setCurrentInfo] = useState(null);
   const [info, setInfo] = useState(info2023);
+
+  useEffect(() => {
+    getCurrentInformation(2023).then((apiInfo) => {
+      setCurrentInfo(apiInfo);
+      setInfo(apiInfo);
+    });    
+  }, [])
   
   const updatePage = (newPage) => {
     setPage(newPage);
@@ -36,7 +47,7 @@ function App() {
         return;
       case "2023":
       default:
-        setInfo(info2023);
+        setInfo(currentInfo);
         return;
     }
   }
@@ -63,6 +74,9 @@ function App() {
   
   return (
     <>
+      {currentInfo === null &&
+        <LoadingMessage message = {"Gathering updated information..."} />
+      }
       {renderPage()}
       <BottomNav 
         currentPage={matchUp ? null : currentPage}
