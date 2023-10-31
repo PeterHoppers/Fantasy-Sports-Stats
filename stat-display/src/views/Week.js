@@ -16,6 +16,7 @@ export const Week = (props) => {
                    teams={props.info.teams}
                    rosters = {props.info.rosters}
                    activeMatchup = {props.matchUp}
+                   closeMatchup = {props.closeMatchup}
                 />
                 <Scoreboard   
                     week = {targetWeek}              

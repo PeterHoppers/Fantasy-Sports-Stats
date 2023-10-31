@@ -37,6 +37,10 @@ function App() {
     setActiveMatchup(gameId);
   }
 
+  const clearMatchup = () => {
+    setActiveMatchup(null);
+  }
+
   const changeYear = (year) => {    
     switch (year) {
       case "2021":
@@ -58,6 +62,7 @@ function App() {
         info = {info}
         matchUp = {matchUp}
         triggerMatchup={triggerMatchup}
+        closeMatchup = {clearMatchup}
       />
     }
     switch(currentPage) {

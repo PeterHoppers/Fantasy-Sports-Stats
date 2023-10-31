@@ -3,6 +3,7 @@ import { TeamName } from "./TeamName";
 import { PointTotal } from "./PointTotal";
 
 import "./Matchup.scss";
+import {ReactComponent as CloseLogo} from "./close-circle.svg";
 
 export const Matchup = (props) => {
     const getTeamForGame = (gameId, isHome) => {
@@ -44,7 +45,8 @@ export const Matchup = (props) => {
     const scoreInfo = props.scores.find(score => score.id === matchup);
 
     return (
-        <section className="matchup">           
+        <section className="matchup">
+            <CloseLogo className="matchup-close" alt="Close matchup" onClick={props.closeMatchup}/>
             <div className="matchup__score-section">
                 <div className="matchup__point-info-holder">
                     <PointTotal scoreInfo = {scoreInfo.home} />

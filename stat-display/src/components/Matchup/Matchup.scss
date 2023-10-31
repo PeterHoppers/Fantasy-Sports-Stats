@@ -9,6 +9,21 @@
     flex-direction: column;
     margin: auto;
 
+    svg {
+        position: absolute;
+        right: -.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        top: 0.5rem;
+
+        &:hover,
+        &:active,
+        &:focus {
+            cursor: pointer;
+            scale: 1.05;
+        }
+    }
+
     &__team-section {
         display: flex;
         justify-content: space-between;
