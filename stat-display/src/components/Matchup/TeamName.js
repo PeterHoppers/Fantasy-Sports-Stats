@@ -1,15 +1,25 @@
+import { TeamColors } from "../../util";
+
 export const TeamName = (props) => {
+    const teamColors = TeamColors[props.teamInfo.abbrev];
+    const matchupRoot = document.documentElement;    
+
     let classes = "matchup__team";
 
     if (props.isHome) {
         classes += " matchup__home-team";
+        matchupRoot.style.setProperty('--home-team-primary-color', teamColors['primary']);
+        matchupRoot.style.setProperty('--home-team-secondary-color', teamColors['secondary']);
     } else {
         classes += " matchup__away-team";
+        matchupRoot.style.setProperty('--away-team-primary-color', teamColors['primary']);
+        matchupRoot.style.setProperty('--away-team-secondary-color', teamColors['secondary']);
     }
 
     const teamFullName = props.teamInfo.name;
     const teamLocation = teamFullName.substring(0, teamFullName.indexOf(' '));
     const teamName = teamFullName.substring(teamFullName.indexOf(' ') + 1);
+    
 
     return (
         <section className={classes}>

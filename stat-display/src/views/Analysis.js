@@ -1,13 +1,15 @@
 import React from "react";
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
+import { BarChart, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, Line } from 'recharts';
 
-import { PositionId } from "../util";
+import { PositionId, TeamColors } from "../util";
 
 import "./analysis.scss";
 
 //Look into using https://recharts.org/en-US/api/BarChart
 
 const LAST_REGULAR_SEASON_WEEK = 14;
+const ACCENT_COLOR = "#c07b00";
+const PRIMARY_GRAPH_COLOR = "#00338d";
 
 export const Analysis = (props) => {    
     //create a dictionary of projected scores organized by team id and then week id, since the team id will be used more than the week
@@ -25,6 +27,7 @@ export const Analysis = (props) => {
     const projectedVsScoredData = getProjectedVsScoredData(teams, totalPointsScores, projectedScores);
     const opponentProjectedVsScoredData = getOpponentProjectedVsScoredData(teams, matchups, totalPointsScores, projectedScores);
     const rankingData = getRankingData(teams, rankingScores);
+    const rankingsByWeekData = getRankingsPerWeek(teams, rankingScores);
 
     const screenWidth = window.screen.width;
     const graphWidth = screenWidth - 50;
@@ -41,22 +44,22 @@ export const Analysis = (props) => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="projected" fill="#8884d8" />
-                            <Bar dataKey="scored" fill="#82ca9d" />
+                            <Bar dataKey="projected" fill={ACCENT_COLOR} />
+                            <Bar dataKey="scored" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart> 
                     </>                    
                 }
                 {opponentProjectedVsScoredData.length > 0 &&
                     <>
-                        <h2>Projected Points Against vs. Actual Points Against</h2>
+                        <h2>Average Projected Points Against vs. Average Actual Points Against</h2>
                         <BarChart width={graphWidth} height={350} data={opponentProjectedVsScoredData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="projected" fill="#8884d8" />
-                            <Bar dataKey="scored" fill="#82ca9d" />
+                            <Bar dataKey="projected" fill={ACCENT_COLOR} />
+                            <Bar dataKey="scored" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart> 
                     </>
                     
@@ -70,8 +73,25 @@ export const Analysis = (props) => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="points" fill="#8884d8" />
+                            <Bar dataKey="points" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart>
+                    </>
+                }
+                {rankingsByWeekData.length > 0 &&
+                    <>
+                        <h2>Teams Beaten By Week</h2>
+                        <LineChart width={graphWidth} height={350} data={rankingsByWeekData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            {
+                                teams.map(team => (
+                                    <Line key={team.id} type="monotone" dataKey={team.name} stroke={TeamColors[team.abbrev]["primary"]} />
+                                ))
+                            }
+                        </LineChart>
                     </>
                 }
             </main>
@@ -179,11 +199,12 @@ export const Analysis = (props) => {
     
             data.push({
                 "name": team.name,
-                "projected": projectedPoints,
-                "scored": scoredPoints
+                "projected": projectedPoints.toFixed(2),
+                "scored": scoredPoints.toFixed(2)
             });
         });
 
+        data.sort((a, b) => a.scored - b.scored);
         return data;
     }
 
@@ -192,6 +213,7 @@ export const Analysis = (props) => {
         teams.forEach(team => {
             let opponentPointsProjected = 0;
             let opponentPointsScored = 0;
+            let opponentsPlayed = 0;
             for (let week = 1; week <= lastWeek; week++) {
                 const opponentId = matchups[week][team.id];
 
@@ -199,6 +221,8 @@ export const Analysis = (props) => {
                 if (!opponentId) {
                     continue;
                 }
+
+                opponentsPlayed++;
 
                 const opponentProjected = projectedScoresByWeek[week].find(projected => projected.teamId === opponentId);
                 const opponentScored = scoresByWeek[week].find(projected => projected.teamId === opponentId);
@@ -208,11 +232,12 @@ export const Analysis = (props) => {
     
             data.push({
                 "name": team.name,
-                "projected": opponentPointsProjected,
-                "scored": opponentPointsScored
+                "projected": (opponentPointsProjected / opponentsPlayed).toFixed(2),
+                "scored": (opponentPointsScored / opponentsPlayed).toFixed(2)
             });
         });
 
+        data.sort((a, b) => a.scored - b.scored);
         return data;
     }
 
@@ -229,6 +254,26 @@ export const Analysis = (props) => {
         });
 
         data.sort((a, b) => a.points - b.points);
+        return data;
+    }
+
+    function getRankingsPerWeek(teams, rankingScores)
+    {
+        const data = [];
+        let weekNumber = 0;
+        rankingScores.forEach(week => {
+            const weekData = {};
+
+            weekNumber++;
+            weekData["name"] = "Week " + weekNumber;
+            teams.forEach(team => {
+                const teamInfo = week.filter(rank => rank.teamId === team.id);
+                weekData[team.name] = teamInfo[0].points;
+            });
+
+            data.push(weekData);
+        });
+
         return data;
     }
 }
