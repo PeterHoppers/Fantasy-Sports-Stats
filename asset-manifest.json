@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Fantasy-Sports-Stats/static/css/main.edc749ab.css",
-    "main.js": "/Fantasy-Sports-Stats/static/js/main.a3e76d9f.js",
+    "main.js": "/Fantasy-Sports-Stats/static/js/main.14c916b6.js",
     "static/js/787.13d1e4f4.chunk.js": "/Fantasy-Sports-Stats/static/js/787.13d1e4f4.chunk.js",
     "static/media/Blockletter.otf": "/Fantasy-Sports-Stats/static/media/Blockletter.1148b96b8d22acea8b8c.otf",
     "static/media/whitney-medium.otf": "/Fantasy-Sports-Stats/static/media/whitney-medium.cbc95f17e2ae0622f573.otf",
@@ -9,11 +9,11 @@
     "static/media/close-circle.svg": "/Fantasy-Sports-Stats/static/media/close-circle.7c07995baabe98967b54327a2fb5bf8f.svg",
     "index.html": "/Fantasy-Sports-Stats/index.html",
     "main.edc749ab.css.map": "/Fantasy-Sports-Stats/static/css/main.edc749ab.css.map",
-    "main.a3e76d9f.js.map": "/Fantasy-Sports-Stats/static/js/main.a3e76d9f.js.map",
+    "main.14c916b6.js.map": "/Fantasy-Sports-Stats/static/js/main.14c916b6.js.map",
     "787.13d1e4f4.chunk.js.map": "/Fantasy-Sports-Stats/static/js/787.13d1e4f4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.edc749ab.css",
-    "static/js/main.a3e76d9f.js"
+    "static/js/main.14c916b6.js"
   ]
 }
