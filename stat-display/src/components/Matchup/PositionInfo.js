@@ -24,11 +24,11 @@ export const PositionInfo = (props) => {
 }
 
 function getPlayerName(player) {
-    return player.playerPoolEntry.player.fullName;
+    return player?.playerPoolEntry.player.fullName;
 }
 
 function getPlayerProjectedScore(player, week) {
-    const scoreEntries = player.playerPoolEntry.player.stats?.filter(stat => stat.scoringPeriodId === week);
+    const scoreEntries = player?.playerPoolEntry?.player.stats?.filter(stat => stat.scoringPeriodId === week);
 
     if (!scoreEntries?.length) {
         return {

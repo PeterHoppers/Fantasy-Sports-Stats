@@ -40,6 +40,14 @@ const TeamColors = {
         "primary": "#b215f1",
         "secondary": "#b2b2b2"
     },
+    "JAZZ": {
+        "primary": "#cdc307",
+        "secondary": "#b2b2b2"
+    },
+    "HWDY": {
+        "primary": "#610a00",
+        "secondary": "#b2b2b2"
+    },
     "SLIM": {
         "primary": "#15c2f1",
         "secondary": "#1554f1"
@@ -47,6 +55,14 @@ const TeamColors = {
     "T2": {
         "primary": "#f14415",
         "secondary": "#ffff00"
+    },
+    "ZRBA": {
+        "primary": "#f14415",
+        "secondary": "#ffff00"
+    },
+    "SQRT": {
+        "primary": "#9b4b51",
+        "secondary": "#fdb627"
     },
     "BS": {
         "primary": "#009a9a",
@@ -63,6 +79,34 @@ const TeamColors = {
     "BUNN": {
         "primary": "#fc69a4",
         "secondary": "#fefefe"
+    },
+    "BULA": {
+        "primary": "#e47e67",
+        "secondary": "#b16300"
+    },
+    "ADD": {
+        "primary": "#610a00",
+        "secondary": "#d09251"
+    },
+    "TD#1": {
+        "primary": "#000643",
+        "secondary": "#31fcff"
+    },
+    "RIBT": {
+        "primary": "#1554f1",
+        "secondary": "#000000"
+    },
+    "HOS": {
+        "primary": "#9ec8cf",
+        "secondary": "#4d6869"        
+    },
+    "LZBZ": {
+        "primary": "#65a843",
+        "secondary": "#000000"
+    },
+    "TBD": {
+        "primary": "#8bc992",
+        "secondary": "#494949"
     }
   };
 
