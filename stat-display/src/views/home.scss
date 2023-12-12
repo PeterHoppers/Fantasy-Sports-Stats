@@ -1,4 +1,5 @@
 .home-view__main {
+    display: flex;
     position: relative;
     height: calc(100vh - 100px);
     min-height: 600px;
@@ -6,21 +7,25 @@
     .home__standings {
         display: flex;
         flex-direction: column;
+        padding-bottom: 160px;
+        margin: auto;
 
         h2 {
             margin: 0;
             text-align: center;
-            padding: 2em 0 1em;
+            padding: 0.25em;
+            color: black;
+            font-size: 1.75rem;
         }
 
         .home__standings-preview {
             width: 600px;
-            height: 350px;
             margin: auto;
             background-color: grey;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
     }
 

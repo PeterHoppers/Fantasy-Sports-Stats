@@ -6,7 +6,8 @@ const ApiViews = Object.freeze({
     Settings: "mSettings",
     Scoreboard: "mScoreboard",
     Matchup: "mMatchup",
-    MatchupScore: "mMatchupScore"
+    MatchupScore: "mMatchupScore",
+    Teams: "mTeam"
 });
 
 //documentation at http://espn-fantasy-football-api.s3-website.us-east-2.amazonaws.com/
@@ -38,7 +39,7 @@ async function getScoreboardInfo(apiURL) {
     await axios
     .get(apiURL, {
         params: {
-            "view": [ApiViews.Scoreboard, ApiViews.Matchup, ApiViews.MatchupScore]
+            "view": [ApiViews.Scoreboard, ApiViews.Matchup, ApiViews.MatchupScore, ApiViews.Teams]
         },
         paramsSerializer: {
             indexes: null 

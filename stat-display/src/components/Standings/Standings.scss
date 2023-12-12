@@ -1,0 +1,44 @@
+.standings {
+    width: 100%;
+
+    tr {
+        height: 35px;
+        display: flex;
+        background-color: white;
+        gap: 1em;
+        align-items: center;
+    }
+
+    .standings__standing-row:first-of-type {
+        padding-top: 0.25rem;
+    }
+
+    img {
+        width: 30px;
+        max-width: 30px;
+    }
+
+    &__header-rank {
+        width: 50px;
+    }
+
+    &__standing-rank {
+        text-align: center;
+        display: flex;
+        width: 40px;
+        padding-left: 1rem
+    }
+
+    &__header-name {
+        width: calc(30px + 355px + 1rem);
+        text-align: left;
+    }
+
+    &__standing-name {
+        min-width: 350px;
+    }
+
+    &__standing-wins {
+        width: 1rem;
+    }
+}

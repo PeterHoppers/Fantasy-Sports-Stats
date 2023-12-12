@@ -2,10 +2,11 @@ import React, {useEffect, useState} from "react";
 import Header from "../components/Header/Header";
 
 import { Scoreboard } from "../components/Scoreboard/Scoreboard";
+import { Standings } from "../components/Standings/Standings";
 
 import "./home.scss";
 
-export const Home = (props) => {    
+export const Home = (props) => {
     const [scores, setScores] = useState([]);
 
     useEffect(() => {
@@ -17,10 +18,11 @@ export const Home = (props) => {
         <>
             <Header/>
             <main className="home-view__main">
-                <section className="home__standings">
-                    <h2>Current Standings</h2>
+                <section className="home__standings">                    
                     <div className="home__standings-preview">
-                        <span>Coming Soon</span>
+                       <Standings
+                            teams = {props.info.teams}
+                        />
                     </div>
                 </section>
                 <Scoreboard 
