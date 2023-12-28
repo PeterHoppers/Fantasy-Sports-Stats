@@ -12,13 +12,15 @@
     "react-scripts": "5.0.1",
     "recharts": "^2.8.0",
     "sass": "^1.67.0",
+    "source-map-explorer": "^2.5.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts --max_old_space_size=8096 start",
-    "build": "react-scripts --max_old_space_size=4096 build",
+    "build": "react-scripts --max_old_space_size=8096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
