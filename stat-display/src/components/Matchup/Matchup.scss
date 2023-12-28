@@ -128,4 +128,30 @@
             text-align: right;
         }
     }
+
+    &__week-toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        
+        button {
+            font-size: 1.5rem;
+            font-family: "Blockletter";
+            padding: 0.25rem 0.75rem;
+            cursor: pointer;
+            background-color: $carrollSilver;
+            width: 105px;
+            border: 2px solid transparent;
+
+            &:hover {
+                border-color: $carrollOrange;
+            }
+
+            &.selected-btn {
+                border-color: $carrollBlue;
+            }
+        }
+    }
 }

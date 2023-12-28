@@ -45,13 +45,16 @@ function App() {
     switch (year) {
       case "2021":
         setInfo(info2021);
+        setActiveMatchup(null);
         return;
       case "2022":
         setInfo(info2022);
+        setActiveMatchup(null);
         return;
       case "2023":
       default:
         setInfo(currentInfo);
+        setActiveMatchup(null);
         return;
     }
   }

@@ -60,7 +60,7 @@ async function getScoreboardInfo(apiURL) {
 async function getWeeklyRosters(apiURL, weeks) {
     const rosters = [];
     const requests = [];
-    for (let weekNumber = 1; weekNumber <= weeks; weekNumber++) {
+    for (let weekNumber = 1; weekNumber <= weeks + 1; weekNumber++) {
         requests.push(axios
         .get(apiURL, {
             params: {

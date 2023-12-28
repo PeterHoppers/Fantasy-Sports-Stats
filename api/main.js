@@ -20,7 +20,7 @@ const storedInfo = {
     rosters: []
 };
 
-const testYear = 2023;
+const testYear = 2021;
 const targetDestination = `Football 2023/Fantasy-Sports-Stats/stat-display/src/LeagueInfo/info-${testYear}.json`;
 const apiUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${testYear}/segments/0/leagues/${leagueId}`;
 
@@ -36,29 +36,6 @@ storedInfo.rosters = await getWeeklyRosters(apiUrl, scoreboardInfo.scoringPeriod
 
 var dictstring = JSON.stringify(storedInfo);
 fs.writeFile(targetDestination, dictstring, (err) => err && console.error(err));
-
-async function getBoxscoreInfo(apiURL) {
-    let scoreInfo;
-    await axios
-    .get(apiURL, {
-        headers: {
-            Cookie: `swid=${swid}; espn_s2=${s2}`,
-        },
-        params: {
-            "view": ApiViews.BoxScore
-        },
-    })
-    .then((response) => {
-        console.info("Successfully fetched league endpoint");
-        scoreInfo = response.data;
-    })
-    .catch(function (error) {
-        // handle error
-        console.log(error);
-    });
-
-    return scoreInfo;
-}
 
 async function getScoreboardInfo(apiURL) {
     let scoreboardInfo;
@@ -86,11 +63,11 @@ async function getScoreboardInfo(apiURL) {
     return scoreboardInfo;
 }
 
-
 async function getWeeklyRosters(apiURL, weeks) {
     const rosters = [];
-    for (let weekNumber = 1; weekNumber <= weeks; weekNumber++) {
-        await axios
+    const requests = [];
+    for (let weekNumber = 1; weekNumber <= weeks + 1; weekNumber++) {
+        requests.push(axios
         .get(apiURL, {
             headers: {
                 Cookie: `swid=${swid}; espn_s2=${s2}`,
@@ -101,13 +78,14 @@ async function getWeeklyRosters(apiURL, weeks) {
             },
         })
         .then((response) => {
-            console.info("Successfully fetched league endpoint");
             rosters[response.data.scoringPeriodId] = response.data.teams;
         })
         .catch(function (error) {
-            // handle error
             console.log(error);
-        });
+        }));
     }
+    await axios.all(requests).then(() => {
+        console.info("Successfully fetched league endpoint");  
+    });
     return rosters;
 }
