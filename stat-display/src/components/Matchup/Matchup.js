@@ -54,7 +54,8 @@ export const Matchup = (props) => {
 
     const matchup = props.activeMatchup;
     const scoreInfo = props.scores.find(score => score.id === matchup);
-    const matchupPeriodId = props.matchupPeriod[matchupPeriodIndex];
+    const sortedMatchupPeriods = props.matchupPeriod.sort();
+    const matchupPeriodId = sortedMatchupPeriods[matchupPeriodIndex];
     const homeTeamInfo = getTeamForGame(scoreInfo, true);
     const awayTeamInfo = getTeamForGame(scoreInfo, false);
     const homeRoster = getRosterForGame(scoreInfo, matchupPeriodId, true);
