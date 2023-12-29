@@ -2,7 +2,6 @@ import './App.css';
 import React, { useState, useEffect } from "react";
 import info2021 from "./LeagueInfo/info-2021.json";
 import info2022 from "./LeagueInfo/info-2022.json";
-import info2023 from "./LeagueInfo/info-2023.json";
 
 import BottomNav from "./components/BottomNav/BottomNav";
 import LoadingMessage from './components/LoadingMessage/LoadingMessage';
@@ -19,7 +18,7 @@ function App() {
   const [currentPage, setPage] = useState(Pages.Home);
   const [matchUp, setActiveMatchup] = useState(null);
   const [currentInfo, setCurrentInfo] = useState(null);
-  const [info, setInfo] = useState(info2023);
+  const [info, setInfo] = useState(info2021);
 
   useEffect(() => {
     getCurrentInformation(2023).then((apiInfo) => {
