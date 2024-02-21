@@ -2,7 +2,7 @@ import { StandingRow } from "./StandingRow";
 import "./Standings.scss";
 
 export const Standings = (props) => {
-    const isCurrentStandings = (props.teams[0].currentProjectedRank);
+    const isCurrentStandings = !(props.teams[0].rankCalculatedFinal);
     let organizedStandings = [];
     
     if (isCurrentStandings) {
@@ -13,7 +13,8 @@ export const Standings = (props) => {
 
     return (
         <>
-            {isCurrentStandings 
+            { 
+            isCurrentStandings 
                 ? <h2>Current Standings</h2>
                 : <h2>Final Standings</h2>
             }
@@ -23,7 +24,7 @@ export const Standings = (props) => {
                     <tr>
                         <th className="standings__header-rank">RK</th>
                         <th className="standings__header-name">Team</th>
-                        <th scope="col">W</th>                      
+                        <th className="standings__header-wins" scope="col">W</th>                      
                         <th scope="col">L</th>
                     </tr>
                 </thead>

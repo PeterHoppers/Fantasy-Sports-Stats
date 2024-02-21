@@ -29,13 +29,12 @@
         padding-left: 1rem
     }
 
-    &__header-name {
-        width: calc(30px + 355px + 1rem);
-        text-align: left;
+    &__header-wins {        
+        margin-left: calc(55% + 15px);
     }
 
     &__standing-name {
-        min-width: 350px;
+        min-width: 55%;
     }
 
     &__standing-wins {

@@ -1,3 +1,5 @@
+import { TeamLogo } from "./../Generic/TeamLogo";
+
 export const StandingRow = (props) => {
     return (
         <>
@@ -7,7 +9,7 @@ export const StandingRow = (props) => {
                 </td>
                 <td className="standings__standing-logo">
                     <div className="standings__standing-logo-holder">
-                        <img src={props.logo} alt="Logo"/>
+                        <TeamLogo logo={props.logo}/>
                     </div>                    
                 </td>
                 <td className="standings__standing-name">

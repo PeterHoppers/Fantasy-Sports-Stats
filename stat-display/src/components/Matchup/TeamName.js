@@ -1,4 +1,5 @@
 import { TeamColors } from "../../util";
+import { TeamLogo } from "./../Generic/TeamLogo";
 
 export const TeamName = (props) => {
     const teamColors = TeamColors[props.teamInfo.abbrev];
@@ -29,7 +30,7 @@ export const TeamName = (props) => {
         <section className={classes}>
             {props.isHome && 
                 <div className="matchup__team-logo-holder">
-                    <img src={props.teamInfo.logo} alt="Home team's logo"/>
+                    <TeamLogo logo={props.teamInfo.logo}/>
                 </div>
             }
             <div className="matchup__team-name-holder">
@@ -38,7 +39,7 @@ export const TeamName = (props) => {
             </div>        
             {!props.isHome && 
                 <div className="matchup__team-logo-holder">
-                    <img src={props.teamInfo.logo} alt="Away team's logo"/>
+                    <TeamLogo logo={props.teamInfo.logo}/>
                 </div>                
             }    
         </section>

@@ -2,7 +2,8 @@
 
 .scoreboard {
     width: calc(100% - 1rem);
-    padding: .5rem;
+    padding: .5rem;    
+    padding-bottom: 1.5rem;
     background-color: $carrollBlue;
 
     &-holder {
@@ -10,12 +11,14 @@
         flex-wrap: wrap;
         justify-content: center;        
         align-items: center;
-        gap: 1rem;        
+        gap: 1rem;   
+        padding-top: 0.5rem;
     }
 
     &-week {
         color: $carrollWhite;
-        padding-left: 1em;
+        padding-left: 1em;        
+        font-size: 1.25rem;
     }
 }
 
