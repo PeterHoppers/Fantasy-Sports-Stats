@@ -15,15 +15,24 @@ import { Analysis } from './views/Analysis';
 import {getCurrentInformation} from './api/api.js';
 
 function App() {
+  const defaultYears = [2021, 2022, 2023];
+
   const [currentPage, setPage] = useState(Pages.Home);
   const [matchUp, setActiveMatchup] = useState(null);
   const [currentInfo, setCurrentInfo] = useState(null);
   const [info, setInfo] = useState(info2021);
+  const [years, setYears] = useState(defaultYears)
 
   useEffect(() => {
     getCurrentInformation(2023).then((apiInfo) => {
-      setCurrentInfo(apiInfo);
-      setInfo(apiInfo);
+      if (apiInfo.errorMessage !== null || apiInfo.teams.length === 0) {
+        console.warn("Failed to get API call. Displaying only local information.");
+        setYears(defaultYears.slice(0, -1));
+        setCurrentInfo({});
+      } else {
+        setCurrentInfo(apiInfo);
+        setInfo(apiInfo);
+      }      
     });    
   }, [])
   
@@ -89,6 +98,7 @@ function App() {
         currentPage={matchUp ? null : currentPage}
         onPageClick = {updatePage} 
         onYearChange = {changeYear}
+        years = {years}
       />
     </>
       

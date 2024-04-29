@@ -12,6 +12,7 @@ const ApiViews = Object.freeze({
 
 //documentation at http://espn-fantasy-football-api.s3-website.us-east-2.amazonaws.com/
 const storedInfo = {
+    errorMessage: null,
     currentWeek: 0,
     teams: [],
     scores: [],
@@ -20,23 +21,30 @@ const storedInfo = {
 
 export const getCurrentInformation = async(currentYear) => {
     const apiUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${currentYear}/segments/0/leagues/1177758424`;
+    storedInfo.hasGottenInfo = false;
     
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
-    const scoreboardInfo = await getScoreboardInfo(apiUrl);
-    storedInfo.scores = scoreboardInfo.schedule;
-    storedInfo.matchupPeriods = scoreboardInfo.settings.scheduleSettings.matchupPeriods;
-    storedInfo.currentWeek = scoreboardInfo.status.currentMatchupPeriod;
-    storedInfo.teams = scoreboardInfo.teams;
-    
-    //const boxscoreInfo = await getBoxscoreInfo(apiUrl);
-    storedInfo.rosters = await getWeeklyRosters(apiUrl, scoreboardInfo.scoringPeriodId);
+    getScoreboardInfo(apiUrl).then((scoreResponse) => {
+        if(!scoreResponse) {
+            storedInfo.errorMessage = "Calling ESPN API failed";
+        }
+
+        const scoreboardInfo = scoreResponse.data;
+        storedInfo.scores = scoreboardInfo.schedule;
+        storedInfo.matchupPeriods = scoreboardInfo.settings.scheduleSettings.matchupPeriods;
+        storedInfo.currentWeek = scoreboardInfo.status.currentMatchupPeriod;
+        storedInfo.teams = scoreboardInfo.teams;
+
+        storedInfo.rosters = getWeeklyRosters(apiUrl, scoreboardInfo.scoringPeriodId);
+    }).catch((error) => {
+        storedInfo.errorMessage = error.message;
+    });   
 
     return storedInfo;
 }
 
 async function getScoreboardInfo(apiURL) {
-    let scoreboardInfo;
-    await axios
+    return axios
     .get(apiURL, {
         params: {
             "view": [ApiViews.Scoreboard, ApiViews.Matchup, ApiViews.MatchupScore, ApiViews.Teams]
@@ -44,17 +52,9 @@ async function getScoreboardInfo(apiURL) {
         paramsSerializer: {
             indexes: null 
         }        
-    })
-    .then((response) => {
-        console.info("Successfully fetched league endpoint");
-        scoreboardInfo = response.data;
-    })
-    .catch(function (error) {
-        // handle error
-        console.log(error);
+    }).catch((error) => {
+        console.warn(`ESPN API Returned with : ${error.message}`);
     });
-
-    return scoreboardInfo;
 }
 
 async function getWeeklyRosters(apiURL, weeks) {
@@ -72,7 +72,7 @@ async function getWeeklyRosters(apiURL, weeks) {
             rosters[response.data.scoringPeriodId] = response.data.teams;
         })
         .catch(function (error) {
-            console.log(error);
+            console.warn(`ESPN API Returned with : ${error.message}`);
         }));
     }
     await axios.all(requests).then(() => {
