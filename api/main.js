@@ -22,7 +22,7 @@ const storedInfo = {
 
 const testYear = 2021;
 const targetDestination = `Football 2023/Fantasy-Sports-Stats/stat-display/src/LeagueInfo/info-${testYear}.json`;
-const apiUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${testYear}/segments/0/leagues/${leagueId}`;
+const apiUrl = `https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/${testYear}/segments/0/leagues/${leagueId}`;
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
 const scoreboardInfo = await getScoreboardInfo(apiUrl);

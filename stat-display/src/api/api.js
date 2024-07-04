@@ -20,11 +20,11 @@ const storedInfo = {
 };
 
 export const getCurrentInformation = async(currentYear) => {
-    const apiUrl = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${currentYear}/segments/0/leagues/1177758424`;
+    const apiUrl = `https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/${currentYear}/segments/0/leagues/1177758424`;
     storedInfo.hasGottenInfo = false;
     
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
-    getScoreboardInfo(apiUrl).then((scoreResponse) => {
+    await getScoreboardInfo(apiUrl).then((scoreResponse) => {
         if(!scoreResponse) {
             storedInfo.errorMessage = "Calling ESPN API failed";
         }
@@ -35,7 +35,7 @@ export const getCurrentInformation = async(currentYear) => {
         storedInfo.currentWeek = scoreboardInfo.status.currentMatchupPeriod;
         storedInfo.teams = scoreboardInfo.teams;
 
-        storedInfo.rosters = getWeeklyRosters(apiUrl, scoreboardInfo.scoringPeriodId);
+        getWeeklyRosters(apiUrl, scoreboardInfo.scoringPeriodId).then(results => storedInfo.rosters = results);
     }).catch((error) => {
         storedInfo.errorMessage = error.message;
     });   

@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from "react";
 import info2021 from "./LeagueInfo/info-2021.json";
 import info2022 from "./LeagueInfo/info-2022.json";
+import info2023 from './LeagueInfo/info-2023.json';
 
 import BottomNav from "./components/BottomNav/BottomNav";
 import LoadingMessage from './components/LoadingMessage/LoadingMessage';
@@ -15,21 +16,23 @@ import { Analysis } from './views/Analysis';
 import {getCurrentInformation} from './api/api.js';
 
 function App() {
-  const defaultYears = [2021, 2022, 2023];
+  const defaultYears = [2021, 2022, 2023, 2024];
+  const currentYear = defaultYears[defaultYears.length - 1];
 
   const [currentPage, setPage] = useState(Pages.Home);
   const [matchUp, setActiveMatchup] = useState(null);
   const [currentInfo, setCurrentInfo] = useState(null);
-  const [info, setInfo] = useState(info2021);
+  const [info, setInfo] = useState(info2023);
   const [years, setYears] = useState(defaultYears)
 
   useEffect(() => {
-    getCurrentInformation(2023).then((apiInfo) => {
+    getCurrentInformation(currentYear).then((apiInfo) => {
       if (apiInfo.errorMessage !== null || apiInfo.teams.length === 0) {
-        console.warn("Failed to get API call. Displaying only local information.");
+        console.warn(`Failed to get API call for ${currentYear}. Displaying only local information.`);
         setYears(defaultYears.slice(0, -1));
         setCurrentInfo({});
-      } else {
+      } else {        
+        setYears(defaultYears);
         setCurrentInfo(apiInfo);
         setInfo(apiInfo);
       }      
@@ -49,20 +52,20 @@ function App() {
     setActiveMatchup(null);
   }
 
-  const changeYear = (year) => {    
+  const changeYear = (year) => {
+    setActiveMatchup(null);
     switch (year) {
       case "2021":
         setInfo(info2021);
-        setActiveMatchup(null);
         return;
       case "2022":
         setInfo(info2022);
-        setActiveMatchup(null);
         return;
       case "2023":
+        setInfo(info2023);
+        return;
       default:
         setInfo(currentInfo);
-        setActiveMatchup(null);
         return;
     }
   }
