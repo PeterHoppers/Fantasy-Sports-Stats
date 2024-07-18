@@ -1,19 +1,20 @@
 {
   "files": {
-    "main.css": "/Fantasy-Sports-Stats/static/css/main.ddde437c.css",
-    "main.js": "/Fantasy-Sports-Stats/static/js/main.a3e97209.js",
+    "main.css": "/Fantasy-Sports-Stats/static/css/main.c26eb81e.css",
+    "main.js": "/Fantasy-Sports-Stats/static/js/main.98bcdf68.js",
     "static/js/787.5a2b7898.chunk.js": "/Fantasy-Sports-Stats/static/js/787.5a2b7898.chunk.js",
     "static/media/defaultLogo.png": "/Fantasy-Sports-Stats/static/media/defaultLogo.af54c4850144c1ca6ca7.png",
     "static/media/Blockletter.otf": "/Fantasy-Sports-Stats/static/media/Blockletter.1148b96b8d22acea8b8c.otf",
     "static/media/whitney-medium.otf": "/Fantasy-Sports-Stats/static/media/whitney-medium.cbc95f17e2ae0622f573.otf",
     "static/media/close-circle.svg": "/Fantasy-Sports-Stats/static/media/close-circle.7c07995baabe98967b54327a2fb5bf8f.svg",
     "index.html": "/Fantasy-Sports-Stats/index.html",
-    "main.ddde437c.css.map": "/Fantasy-Sports-Stats/static/css/main.ddde437c.css.map",
-    "main.a3e97209.js.map": "/Fantasy-Sports-Stats/static/js/main.a3e97209.js.map",
+    "static/media/info-circle.svg": "/Fantasy-Sports-Stats/static/media/info-circle.3858203a22e255991c28a05747799b37.svg",
+    "main.c26eb81e.css.map": "/Fantasy-Sports-Stats/static/css/main.c26eb81e.css.map",
+    "main.98bcdf68.js.map": "/Fantasy-Sports-Stats/static/js/main.98bcdf68.js.map",
     "787.5a2b7898.chunk.js.map": "/Fantasy-Sports-Stats/static/js/787.5a2b7898.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ddde437c.css",
-    "static/js/main.a3e97209.js"
+    "static/css/main.c26eb81e.css",
+    "static/js/main.98bcdf68.js"
   ]
 }
