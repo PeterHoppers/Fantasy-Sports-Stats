@@ -19,7 +19,7 @@ const BottomNav = (props) => {
                 <label htmlFor="year-select">Year:</label>
                 <select onChange={(event) => props.onYearChange(event.target.value)} defaultValue={props.years[props.years.length - 1]} name="year" id="year-select">
                     {props.years.map((year) => {
-                        return <option value={year.toString()}>{year}</option>
+                        return <option key={year} value={year.toString()}>{year}</option>
                     })}                    
                 </select>
             </div>            

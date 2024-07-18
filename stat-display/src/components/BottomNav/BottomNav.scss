@@ -10,6 +10,8 @@
     background-color: $carrollSilver;
     border-top: 3px solid black;
     font-family: 'Blockletter';
+    max-width: 100vw;
+    overflow-y: auto;
 
     &__link-holder {
         display: flex;

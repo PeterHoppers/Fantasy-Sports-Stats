@@ -60,3 +60,15 @@
         }
     }
 }
+
+@media (max-height: 700px) {
+    .scoreboard {
+        padding-bottom: 4rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .scoreboard {
+        padding-bottom: 4rem;
+    }
+}
