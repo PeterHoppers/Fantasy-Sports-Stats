@@ -2,7 +2,10 @@ import { TeamColors } from "../../util";
 import { TeamLogo } from "./../Generic/TeamLogo";
 
 export const TeamName = (props) => {
-    const teamColors = TeamColors[props.teamInfo.abbrev];
+    let teamColors = TeamColors[props.teamInfo.abbrev];
+    if (!teamColors) {
+        teamColors = TeamColors["Default"];
+    }
     const matchupRoot = document.documentElement;    
 
     let classes = "matchup__team";

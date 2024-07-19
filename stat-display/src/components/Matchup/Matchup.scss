@@ -155,3 +155,9 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .matchup__team-logo-holder {
+        display: none;
+    }
+}

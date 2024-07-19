@@ -26,11 +26,22 @@
 
         &:hover {
             filter: brightness(85%);
+            scale: 1.03;
         }
 
         img {
             height: 100%;
         }
+    }
+}
+
+@media (max-width: 576px) {
+    .welcome-header__message {
+        font-size: 2.5rem;
+    }
+
+    .welcome-header__link {
+        height: calc(100% - 20px);
     }
 }
 

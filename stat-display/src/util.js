@@ -107,6 +107,10 @@ const TeamColors = {
     "TBD": {
         "primary": "#8bc992",
         "secondary": "#494949"
+    },
+    "Default": {
+        "primary": "#f26722",
+        "secondary": "#FFFFFF"
     }
   };
 

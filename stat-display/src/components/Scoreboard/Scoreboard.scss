@@ -4,7 +4,8 @@
     width: calc(100% - 1rem);
     padding: .5rem;    
     padding-bottom: 1.5rem;
-    background-color: $carrollBlue;
+    background-color: $carrollOrange;
+    border-top: 3px solid $carrollBlack;
 
     &-holder {
         display: flex;
@@ -18,20 +19,22 @@
     &-week {
         color: $carrollWhite;
         padding-left: 1em;        
-        font-size: 1.25rem;
+        font-size: 1.75rem;
+        text-shadow: 0px 1px 3px $carrollBlack;
     }
 }
 
 .score-display {
     background-color: $carrollWhite;
     padding: 0.5em;
-    border: 1px solid $carrollGray;
+    border: 2px solid $carrollGray;
+    transition: all .125s;
 
     &:hover,
     &.active {
         cursor: pointer;
         scale: 1.03;
-        outline: 3px solid black;
+        outline: 3px solid $carrollBlack;
     }
 
     &__team-info {
@@ -58,17 +61,5 @@
             width: 40px;
             text-align: end;
         }
-    }
-}
-
-@media (max-height: 700px) {
-    .scoreboard {
-        padding-bottom: 4rem;
-    }
-}
-
-@media (max-width: 992px) {
-    .scoreboard {
-        padding-bottom: 4rem;
     }
 }

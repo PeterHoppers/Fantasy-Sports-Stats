@@ -1,11 +1,9 @@
 @import "../styles/colors.scss";
 
 .home-view__main {
-    display: flex;
-    position: relative;
-    height: calc(100vh - 100px);
-    min-height: 600px;    
+    display: flex;    
     flex-direction: column;
+    flex-grow: 1;
 
     .home__standings {
         margin: auto;
@@ -24,9 +22,5 @@
             margin: auto;
             background-color: $carrollBlue;
         }
-    }
-
-    .scoreboard {        
-        margin-top: auto;
     }
 }

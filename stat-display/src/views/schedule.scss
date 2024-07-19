@@ -1,10 +1,7 @@
-.schedule-view__main {
-    position: relative;
-    height: calc(100vh - 50px);
-    overflow-y: scroll;
-    background-color: black;
+@import "../styles/colors.scss";
 
+.schedule-view__main {
     .scoreboard {
-        margin: 0.5em 0;
+        background-color: $carrollSilver;
     }
 }

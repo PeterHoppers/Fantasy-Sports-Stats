@@ -1,14 +1,16 @@
 @import "./../../styles/colors.scss";
 
 .bottom-nav {
-    position: absolute;
     display: flex;
+    position: absolute;
     bottom: 0;
-    height: 50px;
+    height: var(--footer-height);
+    min-height: var(--footer-height);
     width: 100%;
-    gap: 3.75rem;        
-    background-color: $carrollSilver;
-    border-top: 3px solid black;
+    gap: 3.75rem;
+    background-color: $carrollGray;
+    color: $carrollWhite;
+    border-top: 3px solid $carrollBlack;
     font-family: 'Blockletter';
     max-width: 100vw;
     overflow-y: auto;
@@ -17,7 +19,7 @@
         display: flex;
         position: relative;
         z-index: 1;
-        background: $carrollSilver;
+        background: $carrollGray;
         width: 7.5rem;
 
         &:hover {
@@ -28,6 +30,7 @@
         &.active-link {
             background: $carrollBlue;
             color: $carrollWhite;
+            z-index: 2;
         }
 
         .bottom-nav__link {

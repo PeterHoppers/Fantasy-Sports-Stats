@@ -1,3 +1,7 @@
+:root {
+  --footer-height: 50px;
+}
+
 body {
   margin: 0;
   font-family: "Whitney", 'Helvetica Neue',
@@ -7,7 +11,9 @@ body {
 }
 
 #root {
-  height: 100vh;
+  height: calc(100svh - var(--footer-height));
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
