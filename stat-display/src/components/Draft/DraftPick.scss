@@ -1,0 +1,43 @@
+@import "../../styles/colors.scss";
+
+.draft-pick {
+    display: grid;
+    border: 2px solid $carrollBlue;
+    padding: .5em;
+    background-color: $carrollWhite;
+
+    &__title {
+        text-align: center;
+        font-size: 1.25em;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__name {
+        margin: .75em 0;
+        font-size: 1.05em;
+        text-align: center;
+    }
+
+    &__stats-holder {
+        display: flex;
+        gap: 1em;
+    }
+
+    &__stat {
+        text-align: center;
+
+        p {
+            text-decoration: underline;
+            margin: 0.25em 0;
+        }
+
+        span {
+            font-size: 1.25em;
+        }
+    }
+}
+

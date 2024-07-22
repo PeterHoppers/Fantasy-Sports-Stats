@@ -14,6 +14,7 @@ import { Week } from './views/Week';
 import { Analysis } from './views/Analysis';
 
 import {getCurrentInformation} from './api/api.js';
+import { Draft } from './views/Draft.js';
 
 function App() {
   const defaultYears = [2021, 2022, 2023, 2024];
@@ -23,16 +24,20 @@ function App() {
   const [matchUp, setActiveMatchup] = useState(null);
   const [currentInfo, setCurrentInfo] = useState(null);
   const [info, setInfo] = useState(info2023);
-  const [years, setYears] = useState(defaultYears)
+  const [years, setYears] = useState(defaultYears);
+  const [selectedYear, setSelectedYear] = useState(currentYear);
 
   useEffect(() => {
     getCurrentInformation(currentYear).then((apiInfo) => {
       if (apiInfo.errorMessage !== null || apiInfo.teams.length === 0) {
         console.warn(`Failed to get API call for ${currentYear}. Displaying only local information.`);
-        setYears(defaultYears.slice(0, -1));
+        const possibleYears = defaultYears.slice(0, -1);
+        setYears(possibleYears);
+        setSelectedYear(possibleYears[possibleYears.length - 1]);
         setCurrentInfo({});
       } else {        
         setYears(defaultYears);
+        setSelectedYear(defaultYears[defaultYears.length - 1]);
         setCurrentInfo(apiInfo);
         setInfo(apiInfo);
       }      
@@ -54,6 +59,7 @@ function App() {
 
   const changeYear = (year) => {
     setActiveMatchup(null);
+    setSelectedYear(year);
     switch (year) {
       case "2021":
         setInfo(info2021);
@@ -86,6 +92,8 @@ function App() {
         return <Schedule info = {info} triggerMatchup={triggerMatchup}/>;
       case Pages.Analysis:
         return <Analysis info = {info}/>;
+      case Pages.Draft:
+        return <Draft info = {info} year = {selectedYear}/>;
       default:
         return <span/>
     }    

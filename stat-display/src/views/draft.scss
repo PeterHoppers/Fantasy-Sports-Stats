@@ -1,0 +1,30 @@
+@import "../styles/colors.scss";
+
+.draft-view__main {
+    display: flex;
+    overflow-y: scroll;
+    padding: 1em;
+    flex-direction: column;    
+    background-color: $carrollSilver;
+}
+
+.draft-view__draft-pick-holder {
+    h2 {
+        margin-bottom: .5em;
+        padding-bottom: .5em;
+        border-bottom: 1px solid $carrollBlack;
+    }
+}
+
+.draft-view__draft-round-holder {
+    display: grid;
+    max-width: 1400px;
+    margin: auto;
+}
+
+.draft-view__draft-round {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+}

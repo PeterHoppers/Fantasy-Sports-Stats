@@ -1,8 +1,8 @@
 const Pages = Object.freeze({
-    Home: "Scoreboard",
+    Home: "Home",
     Schedule: "Schedule",
-    Standings: "Standings",
     Analysis: "Analysis",
+    Draft: "Draft"
 });
 
 const PositionId = {
@@ -26,6 +26,15 @@ const PositionNames= {
     20: "Bench",
     23: "Flex"
 };
+
+const DefaultPositionNames = {
+    1: "QB",
+    2: "RB",
+    3: "WR",
+    4: "TE",
+    5: "K",
+    16: "D/ST"
+}
 
 const TeamColors = {
     "LUNA": {
@@ -118,5 +127,6 @@ export {
     Pages,
     PositionId,
     PositionNames,
+    DefaultPositionNames,
     TeamColors
 };
