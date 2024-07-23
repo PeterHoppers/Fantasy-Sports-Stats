@@ -1,8 +1,8 @@
 import React from "react";
-import { BarChart, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, Line } from 'recharts';
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 import TeamLineGraph from "../components/TeamLineGraph/TeamLineGraph";
 
-import { PositionId, TeamColors } from "../util";
+import { PositionId } from "../util";
 
 import "./analysis.scss";
 
@@ -21,14 +21,16 @@ export const Analysis = (props) => {
     const lastWeek = (LAST_REGULAR_SEASON_WEEK < props.info.currentWeek) ? LAST_REGULAR_SEASON_WEEK : props.info.currentWeek - 1;
 
     const matchups = getMatchupByWeek(scores, lastWeek);
-    const totalPointsScores = getScoreByWeek(scores, lastWeek);
+    const totalPointsScores = getScoreByWeek(scores, lastWeek); 
     const projectedScores = getProjectedScoreByWeek(teams, rosters, lastWeek);
     const rankingScores = getRankingByWeek(totalPointsScores, lastWeek);
 
-    const projectedVsScoredData = getProjectedVsScoredData(teams, totalPointsScores, projectedScores);
+    const totalPointsPerWeek = formatPoints(teams, totalPointsScores);
+    const projectedPointsPerWeek = formatPoints(teams, projectedScores);
+    const projectedVsScoredData = getProjectedVsScoredData(teams, totalPointsScores, projectedScores, lastWeek);
     const opponentProjectedVsScoredData = getOpponentProjectedVsScoredData(teams, matchups, totalPointsScores, projectedScores);
-    const rankingData = getRankingData(teams, rankingScores);
     const rankingsByWeekData = getRankingsPerWeek(teams, rankingScores);
+    const rankingData = getRankingData(teams, rankingScores, lastWeek);
 
     const screenWidth = window.screen.width;
     const graphWidth = screenWidth - 50;
@@ -36,27 +38,39 @@ export const Analysis = (props) => {
     return (
         <>
             <main className="analysis-view__main">
+                {projectedPointsPerWeek.length > 0 &&
+                    <>
+                        <h2>Points Projected Per Week</h2>
+                        <TeamLineGraph graphWidth={graphWidth} data={projectedPointsPerWeek} teamData={teams} min={85} max={145}/>                        
+                    </>
+                }
+                {totalPointsPerWeek.length > 0 &&
+                    <>
+                        <h2>Points Scored Per Week</h2>
+                        <TeamLineGraph graphWidth={graphWidth} data={totalPointsPerWeek} teamData={teams} min={35} max={200}/>                        
+                    </>
+                }
                 {projectedVsScoredData.length > 0 &&
                     <>
-                        <h2>Projected Points vs. Actual Points</h2>
+                        <h2>Average Points Projected vs. Average Points Scored</h2>
                         <BarChart width={graphWidth} height={350} data={projectedVsScoredData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
-                            <YAxis />
+                            <YAxis domain={[80, 140]}/>
                             <Tooltip />
                             <Legend />
                             <Bar dataKey="projected" name="Points Projected" fill={ACCENT_COLOR} />
-                            <Bar dataKey="scored" name="Points Scores" fill={PRIMARY_GRAPH_COLOR} />
+                            <Bar dataKey="scored" name="Points Scored" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart> 
                     </>                    
                 }
                 {opponentProjectedVsScoredData.length > 0 &&
                     <>
-                        <h2>Average Projected Points Against vs. Average Actual Points Against</h2>
+                        <h2>Average Points Projected Against vs. Average Points Scored Against</h2>
                         <BarChart width={graphWidth} height={350} data={opponentProjectedVsScoredData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
-                            <YAxis />
+                            <YAxis domain={[80, 140]}/>
                             <Tooltip />
                             <Legend />
                             <Bar dataKey="projected" name="Average Projected Points Against" fill={ACCENT_COLOR} />
@@ -65,25 +79,27 @@ export const Analysis = (props) => {
                     </>
                     
                 }
+                {rankingsByWeekData.length > 0 &&
+                    <>
+                        <h2>Teams Beaten By Week</h2>
+                        <TeamLineGraph graphWidth={graphWidth} data={rankingsByWeekData} teamData={teams} min={0} max={teams.length - 1}/>                        
+                    </>
+                }
                 {rankingData.length > 0 &&
                     <>
-                        <h2>Teams Beaten</h2>
+                        <h2>Estimated Teams Beaten vs Actual Total Teams Beaten</h2>
+                        <p>The estimation of number of teams beaten corresponds with a team's record. It estimates that a win equals beating ~75% of the other teams, while a lose equals only beating ~25% of the other teams. A bye week equals ~50%.</p>
                         <BarChart width={graphWidth} height={350} data={rankingData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
                             <Tooltip />
                             <Legend />
+                            <Bar dataKey="projected" name="Estimated Teams Beaten" fill={ACCENT_COLOR} />
                             <Bar dataKey="points" name="Total Teams Beaten" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart>
                     </>
-                }
-                {rankingsByWeekData.length > 0 &&
-                    <>
-                        <h2>Teams Beaten By Week</h2>
-                        <TeamLineGraph graphWidth={graphWidth} data={rankingsByWeekData} teamData={teams}/>                        
-                    </>
-                }
+                }                
             </main>
         </>
         
@@ -179,7 +195,25 @@ export const Analysis = (props) => {
         return rankingScores;
     }
 
-    function getProjectedVsScoredData(teams, scoresByWeek, projectedScoresByWeek) {
+    function formatPoints(teams, totalPointData) {
+        const data = [];
+        totalPointData.forEach((weekData, index) => {
+            const dataName = "Week " + (index);
+            const teamData = [];
+            weekData.forEach(score => {
+                const team = teams.find(x => x.id === score.teamId);
+                teamData[team.name] = score.points.toFixed(2);
+            });
+            data.push({
+                name: dataName,
+                ...teamData
+            });
+        });
+
+        return data;
+    }
+
+    function getProjectedVsScoredData(teams, scoresByWeek, projectedScoresByWeek, totalWeeks) {
         const data = [];
         teams.forEach(team => {
             const teamScores = scoresByWeek.flat().filter(score => score.teamId === team.id);
@@ -189,8 +223,8 @@ export const Analysis = (props) => {
     
             data.push({
                 "name": team.name,
-                "projected": projectedPoints.toFixed(2),
-                "scored": scoredPoints.toFixed(2)
+                "projected": (projectedPoints / totalWeeks).toFixed(2),
+                "scored": (scoredPoints/ totalWeeks).toFixed(2)
             });
         });
 
@@ -231,24 +265,34 @@ export const Analysis = (props) => {
         return data;
     }
 
-    function getRankingData(teams, rankingScores) {
+    function getRankingData(teams, rankingScores, totalWeeks) {
         const data = [];
+        const totalTeams = teams.length;
+        const estimatedTeamsBeatenPerWin = Math.floor(totalTeams / 10 * 7.5);
+        const estimatedTeamsBeatenPerLoss = Math.floor(totalTeams / 10 * 2.5);
+        const estimatedTeamsBeatenPerMiss = totalTeams / 2;
+
         teams.forEach(team => {
             const teamRankings = rankingScores.flat().filter(score => score.teamId === team.id);
             const teamTotalRank = teamRankings.reduce((accumulator, currentValue) => accumulator + currentValue.points, 0);
+            const estimateForWins = team.record.overall.wins * estimatedTeamsBeatenPerWin;
+            const estimateForLoss = team.record.overall.losses * estimatedTeamsBeatenPerLoss;
+            const missedWeeks = totalWeeks - team.record.overall.wins - team.record.overall.losses;
+            const estimateForMiss = estimatedTeamsBeatenPerMiss * missedWeeks;
+            const estimateRank = Math.floor(estimateForWins + estimateForLoss + estimateForMiss);
 
             data.push({
                 "name": team.name,
                 "points": teamTotalRank,
+                "projected": estimateRank
             });
         });
 
-        data.sort((a, b) => a.points - b.points);
+        data.sort((a, b) => a.projected - b.projected);
         return data;
     }
 
-    function getRankingsPerWeek(teams, rankingScores)
-    {
+    function getRankingsPerWeek(teams, rankingScores) {
         const data = [];
         let weekNumber = 0;
         rankingScores.forEach(week => {

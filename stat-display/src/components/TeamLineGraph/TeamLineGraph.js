@@ -57,7 +57,7 @@ const TeamLineGraph = (props) => {
                 <LineChart width={graphWidth} height={height} data={rankingsByWeekData} data-hidden={hiddenTeams.length}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
-                    <YAxis domain={[0, teams.length - 1]}/>
+                    <YAxis domain={[props.min, props.max]}/>
                     <Tooltip />
                     <Legend  
                         onMouseOver={handleLegendMouseEnter}
