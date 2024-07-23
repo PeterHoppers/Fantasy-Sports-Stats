@@ -5,6 +5,7 @@ import { MissingPlayers } from "../components/Draft/MissingPlayers";
 import { DraftFormat } from "../util";
 import { useMemo, useState } from "react";
 import DraftPickDisplay from "../components/Draft/DraftPickDisplay";
+import Header from "../components/Header/Header";
 
 import "./draft.scss";
 
@@ -64,12 +65,10 @@ export const Draft = (props) => {
         setFormat(newFormat);
     }
 
-    console.log(pickInfos);
-
     return (
         <>
-            <main className="draft-view__main">
-                <h1>Draft Summary</h1>
+            <Header message="Draft Summary"/>
+            <main className="draft-view__main">                
                 {pickInfos ?
                     <section className="draft-view__draft-pick-holder">
                         <div className="draft-view__draft-sort-holder">

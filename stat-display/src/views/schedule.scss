@@ -3,5 +3,9 @@
 .schedule-view__main {
     .scoreboard {
         background-color: $carrollSilver;
+
+        &:first-of-type {
+            border: none;
+        }
     }
 }

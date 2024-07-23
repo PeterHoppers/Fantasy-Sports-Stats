@@ -1,6 +1,7 @@
 import React from "react";
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 import TeamLineGraph from "../components/TeamLineGraph/TeamLineGraph";
+import Header from "../components/Header/Header";
 
 import { PositionId } from "../util";
 
@@ -37,6 +38,7 @@ export const Analysis = (props) => {
 
     return (
         <>
+            <Header message={"Analysis"}/>
             <main className="analysis-view__main">
                 {projectedPointsPerWeek.length > 0 &&
                     <>

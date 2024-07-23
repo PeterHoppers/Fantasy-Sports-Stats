@@ -16,7 +16,7 @@ export const Home = (props) => {
 
     return (
         <>
-            <Header/>
+            <Header message={"Welcome to the CUFFL!"} hasLink={true}/>
             <main className="home-view__main">
                 <section className="home__standings">                    
                     <div className="home__standings-preview">

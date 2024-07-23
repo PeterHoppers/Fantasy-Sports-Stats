@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import Header from "../components/Header/Header";
 
 import "./schedule.scss";
 
@@ -21,6 +22,7 @@ export const Schedule = (props) => {
 
     return (
         <>
+            <Header message={"Schedule"}/>
             <main className="schedule-view__main">
                 {scores && scores.map((score, index) => 
                     <>

@@ -4,9 +4,11 @@
     display: flex;
     position: relative;
     height: 50px;
+    min-height: 50px;
     align-items: center;
     background-color: $carrollOrange;
     color: $carrollWhite;
+    border-bottom: 3px solid $carrollBlack;
 
     &__message {
         position: absolute;
@@ -14,9 +16,11 @@
         right: 0;
         text-align: center;
         font-size: 2.75rem;
-        -webkit-text-stroke: 2px black;
+        -webkit-text-stroke: 2px $carrollBlack;
         font-family: "Blockletter";
         letter-spacing: .05em;
+        font-weight: normal;
+        margin: 0;
     }
 
     &__link {
@@ -44,4 +48,3 @@
         height: calc(100% - 20px);
     }
 }
-
