@@ -34,7 +34,13 @@ const DefaultPositionNames = {
     4: "TE",
     5: "K",
     16: "D/ST"
-}
+};
+
+const DraftFormat = Object.freeze({
+    Round: "Round",
+    Position: "Position",
+    Team: "Team"
+});
 
 const TeamColors = {
     "LUNA": {
@@ -128,5 +134,6 @@ export {
     PositionId,
     PositionNames,
     DefaultPositionNames,
+    DraftFormat,
     TeamColors
 };

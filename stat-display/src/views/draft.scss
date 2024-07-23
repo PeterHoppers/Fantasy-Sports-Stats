@@ -9,22 +9,15 @@
 }
 
 .draft-view__draft-pick-holder {
-    h2 {
-        margin-bottom: .5em;
-        padding-bottom: .5em;
-        border-bottom: 1px solid $carrollBlack;
-    }
-}
-
-.draft-view__draft-round-holder {
-    display: grid;
     max-width: 1400px;
-    margin: auto;
+    margin: auto;    
 }
 
-.draft-view__draft-round {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1em;
+.draft-view__draft-sort-holder {
+    font-size: 1.5em;
+    select {
+        font-size: .9em;
+        margin-left: .25em;
+        border: 2px solid $carrollBlack;
+    }
 }

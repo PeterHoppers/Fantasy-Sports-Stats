@@ -1,17 +1,20 @@
 import React from "react";
-import { PositionId, TeamColors } from "../util";
 import { getDraftData } from "../api/draftData";
 import DraftPick from "../components/Draft/DraftPick";
 import { MissingPlayers } from "../components/Draft/MissingPlayers";
+import { DraftFormat } from "../util";
+import { useMemo, useState } from "react";
+import DraftPickDisplay from "../components/Draft/DraftPickDisplay";
 
 import "./draft.scss";
 
-export const Draft = (props) => {    
-    const draftData = getDraftData(props.year);
-    const roundInfo = [];
+export const Draft = (props) => {
+    const [format, setFormat] = useState(DraftFormat.Round);
+    const draftData = useMemo(() => getDraftData(props.year), [props.year]);
+    const teams = props.info.teams;
+    let pickInfos;
 
     if (draftData) {
-        const teams = props.info.teams;
         const rosters = props.info.rosters[1];
         const teamRosterInfo = teams.map(team => {
             const startingRoster = rosters.find((roster) => roster.id === team.id);
@@ -24,7 +27,7 @@ export const Draft = (props) => {
     
         
         const picks = draftData.draftDetail.picks;
-        const pickInfos = picks.map(pick => {
+        pickInfos = picks.map(pick => {
             const teamRoster = teamRosterInfo.find((team) => pick.teamId === team.id);        
             let playerEntry = teamRoster.rosterInfo.entries.find(entry => entry.playerId === pick.playerId);
     
@@ -39,8 +42,8 @@ export const Draft = (props) => {
             if (!playerEntry) {
                 return {
                     id: pick.id,
-                    roundNumber: pick.roundId,
-                    teamPicked: teamRoster.teamInfo
+                    roundNumber: 0,
+                    teamPicked: null
                 }
             }
     
@@ -51,45 +54,38 @@ export const Draft = (props) => {
                 roundNumber: pick.roundId,
                 teamPicked: teamRoster.teamInfo,
                 playerInfo: playerInfo,
+                playerPosition: playerInfo.defaultPositionId,
                 playerRatings: playerRatings[0]
             }
         });
-    
-        const lastRound = pickInfos.findLast(x => x.playerInfo).roundNumber;
-    
-        for (let roundNumber = 1; roundNumber <= lastRound; roundNumber++) {
-            const picksInRound = pickInfos.filter(pick => pick.roundNumber === roundNumber);
-            roundInfo.push({
-                picks: picksInRound,
-                number: roundNumber
-            });
-        }
     }    
+
+    function onSortByChange(newFormat) {
+        setFormat(newFormat);
+    }
+
+    console.log(pickInfos);
 
     return (
         <>
             <main className="draft-view__main">
                 <h1>Draft Summary</h1>
-                {roundInfo.length > 0 ?
+                {pickInfos ?
                     <section className="draft-view__draft-pick-holder">
-                        {roundInfo.map(round => {
-                            return (
-                                <section className="draft-view__draft-round-holder">
-                                    <h2>Round {round.number}</h2>
-                                    <div className="draft-view__draft-round">
-                                        {round.picks.map(pickInfo => {
-                                            return <DraftPick key={pickInfo.id} pick={pickInfo}/>
-                                        })}
-                                    </div>
-                                </section>
-                            )
-                                                  
-                        })}
+                        <div className="draft-view__draft-sort-holder">
+                            <label htmlFor="sort-select">Sort By:</label>
+                            <select onChange={(event) => onSortByChange(event.target.value)} defaultValue={DraftFormat.Round} name="sortOptions" id="sort-select">
+                                {Object.keys(DraftFormat).map(format => {
+                                    return <option key={format} value={format}>{format}</option>;
+                                })}
+                            </select>
+                        </div>
+
+                        <DraftPickDisplay data={pickInfos} format={format} teams={teams}/>
                     </section>   
                     :
                     <p className="draft-view__error">Draft information will be displayed after the draft.</p> 
                 }
-                            
             </main>
         </>
     );
