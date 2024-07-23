@@ -1,5 +1,6 @@
 import React from "react";
 import { BarChart, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, Line } from 'recharts';
+import TeamLineGraph from "../components/TeamLineGraph/TeamLineGraph";
 
 import { PositionId, TeamColors } from "../util";
 
@@ -44,8 +45,8 @@ export const Analysis = (props) => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="projected" fill={ACCENT_COLOR} />
-                            <Bar dataKey="scored" fill={PRIMARY_GRAPH_COLOR} />
+                            <Bar dataKey="projected" name="Points Projected" fill={ACCENT_COLOR} />
+                            <Bar dataKey="scored" name="Points Scores" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart> 
                     </>                    
                 }
@@ -58,8 +59,8 @@ export const Analysis = (props) => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="projected" fill={ACCENT_COLOR} />
-                            <Bar dataKey="scored" fill={PRIMARY_GRAPH_COLOR} />
+                            <Bar dataKey="projected" name="Average Projected Points Against" fill={ACCENT_COLOR} />
+                            <Bar dataKey="scored" name="Average Points Scored Against" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart> 
                     </>
                     
@@ -73,25 +74,14 @@ export const Analysis = (props) => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="points" fill={PRIMARY_GRAPH_COLOR} />
+                            <Bar dataKey="points" name="Total Teams Beaten" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart>
                     </>
                 }
                 {rankingsByWeekData.length > 0 &&
                     <>
                         <h2>Teams Beaten By Week</h2>
-                        <LineChart width={graphWidth} height={350} data={rankingsByWeekData}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            {
-                                teams.map(team => (
-                                    <Line key={team.id} type="monotone" dataKey={team.name} stroke={TeamColors[team.abbrev]["primary"]} />
-                                ))
-                            }
-                        </LineChart>
+                        <TeamLineGraph graphWidth={graphWidth} data={rankingsByWeekData} teamData={teams}/>                        
                     </>
                 }
             </main>
