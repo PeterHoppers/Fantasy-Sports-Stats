@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Fantasy-Sports-Stats/static/css/main.cd6f5627.css",
-    "main.js": "/Fantasy-Sports-Stats/static/js/main.9234d50e.js",
+    "main.css": "/Fantasy-Sports-Stats/static/css/main.c4489543.css",
+    "main.js": "/Fantasy-Sports-Stats/static/js/main.5c910599.js",
     "static/js/787.5a2b7898.chunk.js": "/Fantasy-Sports-Stats/static/js/787.5a2b7898.chunk.js",
     "static/media/defaultLogo.png": "/Fantasy-Sports-Stats/static/media/defaultLogo.af54c4850144c1ca6ca7.png",
     "static/media/Blockletter.otf": "/Fantasy-Sports-Stats/static/media/Blockletter.1148b96b8d22acea8b8c.otf",
@@ -9,12 +9,12 @@
     "static/media/close-circle.svg": "/Fantasy-Sports-Stats/static/media/close-circle.7c07995baabe98967b54327a2fb5bf8f.svg",
     "index.html": "/Fantasy-Sports-Stats/index.html",
     "static/media/info-circle.svg": "/Fantasy-Sports-Stats/static/media/info-circle.3858203a22e255991c28a05747799b37.svg",
-    "main.cd6f5627.css.map": "/Fantasy-Sports-Stats/static/css/main.cd6f5627.css.map",
-    "main.9234d50e.js.map": "/Fantasy-Sports-Stats/static/js/main.9234d50e.js.map",
+    "main.c4489543.css.map": "/Fantasy-Sports-Stats/static/css/main.c4489543.css.map",
+    "main.5c910599.js.map": "/Fantasy-Sports-Stats/static/js/main.5c910599.js.map",
     "787.5a2b7898.chunk.js.map": "/Fantasy-Sports-Stats/static/js/787.5a2b7898.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cd6f5627.css",
-    "static/js/main.9234d50e.js"
+    "static/css/main.c4489543.css",
+    "static/js/main.5c910599.js"
   ]
 }
