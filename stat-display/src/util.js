@@ -38,8 +38,9 @@ const DefaultPositionNames = {
 
 const DraftFormat = Object.freeze({
     Round: "Round",
-    Position: "Position",
-    Team: "Team"
+    Team: "Team",    
+    PositionPick: "Position then Pick #",
+    PositionRank: "Position then Rank #"
 });
 
 const TeamColors = {

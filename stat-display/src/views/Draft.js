@@ -1,6 +1,5 @@
 import React from "react";
 import { getDraftData } from "../api/draftData";
-import DraftPick from "../components/Draft/DraftPick";
 import { MissingPlayers } from "../components/Draft/MissingPlayers";
 import { DraftFormat } from "../util";
 import { useMemo, useState } from "react";
@@ -56,7 +55,8 @@ export const Draft = (props) => {
                 teamPicked: teamRoster.teamInfo,
                 playerInfo: playerInfo,
                 playerPosition: playerInfo.defaultPositionId,
-                playerRatings: playerRatings[0]
+                playerRatings: playerRatings[0],
+                playerRank: (playerRatings[0].totalRanking === 0) ? 1000 : playerRatings[0].totalRanking
             }
         });
     }    
@@ -74,7 +74,7 @@ export const Draft = (props) => {
                         <div className="draft-view__draft-sort-holder">
                             <label htmlFor="sort-select">Sort By:</label>
                             <select onChange={(event) => onSortByChange(event.target.value)} defaultValue={DraftFormat.Round} name="sortOptions" id="sort-select">
-                                {Object.keys(DraftFormat).map(format => {
+                                {Object.values(DraftFormat).map(format => {
                                     return <option key={format} value={format}>{format}</option>;
                                 })}
                             </select>

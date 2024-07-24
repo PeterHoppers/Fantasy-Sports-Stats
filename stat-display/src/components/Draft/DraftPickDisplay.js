@@ -17,8 +17,11 @@ const DraftPickDisplay = (props) => {
         case DraftFormat.Team:
             formattedInfo = formatInfoByTeam(pickInfos, teams);
             break;
-        case DraftFormat.Position:
-            formattedInfo = formatInfoByPosition(pickInfos);
+        case DraftFormat.PositionRank:
+            formattedInfo = formatInfoByPosition(pickInfos, true);
+            break;
+        case DraftFormat.PositionPick:
+            formattedInfo = formatInfoByPosition(pickInfos, false);
             break;
         default:
             break;
@@ -71,13 +74,19 @@ function formatInfoByTeam(pickInfos, teams) {
     return formattedInfo;
 }
 
-function formatInfoByPosition(pickInfos) {
+function formatInfoByPosition(pickInfos, isOrderedByRank) {
     const formattedInfo = []
 
     Object.keys(DefaultPositionNames).forEach(position => {
         const positionPicks = pickInfos.filter(pick => pick?.playerPosition?.toString() === position);
 
         if (positionPicks.length > 0) {
+            if (isOrderedByRank) {
+                positionPicks.sort((a, b) => {
+                    return a.playerRank - b.playerRank;
+                });
+            }
+           
             formattedInfo.push({
                 picks: positionPicks,
                 title: `${DefaultPositionNames[position]}s Picked`
