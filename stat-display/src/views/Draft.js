@@ -1,15 +1,17 @@
 import React from "react";
 import { getDraftData } from "../api/draftData";
 import { MissingPlayers } from "../components/Draft/MissingPlayers";
-import { DraftFormat } from "../util";
+import { DraftFormat, DraftView } from "../definitions";
 import { useMemo, useState } from "react";
 import DraftPickDisplay from "../components/Draft/DraftPickDisplay";
 import Header from "../components/Header/Header";
+import DraftStats from "../components/Draft/DraftStats";
 
 import "./draft.scss";
 
 export const Draft = (props) => {
     const [format, setFormat] = useState(DraftFormat.Round);
+    const [view, setView] = useState(DraftView.Overview);
     const draftData = useMemo(() => getDraftData(props.year), [props.year]);
     const teams = props.info.teams;
     let pickInfos;
@@ -23,8 +25,7 @@ export const Draft = (props) => {
                 teamInfo: team,
                 rosterInfo: startingRoster.roster
             }
-        });
-    
+        });    
         
         const picks = draftData.draftDetail.picks;
         pickInfos = picks.map(pick => {
@@ -65,22 +66,44 @@ export const Draft = (props) => {
         setFormat(newFormat);
     }
 
+    function onViewChange(newView) {
+        setView(newView);
+    }
+
     return (
         <>
             <Header message="Draft Summary"/>
             <main className="draft-view__main">                
                 {pickInfos ?
                     <section className="draft-view__draft-pick-holder">
-                        <div className="draft-view__draft-sort-holder">
-                            <label htmlFor="sort-select">Sort By:</label>
-                            <select onChange={(event) => onSortByChange(event.target.value)} defaultValue={DraftFormat.Round} name="sortOptions" id="sort-select">
-                                {Object.values(DraftFormat).map(format => {
-                                    return <option key={format} value={format}>{format}</option>;
-                                })}
-                            </select>
-                        </div>
+                        <div className="draft-view__draft-selects-holder">
+                            <div className="draft-view__draft-sort-holder">
+                                {view === DraftView.Overview &&
+                                    <>
+                                        <label htmlFor="sort-select">Sort By:</label>
+                                        <select onChange={(event) => onSortByChange(event.target.value)} defaultValue={DraftFormat.Round} name="sortOptions" id="sort-select">
+                                            {Object.values(DraftFormat).map(format => {
+                                                return <option key={format} value={format}>{format}</option>;
+                                            })}
+                                        </select>
+                                    </>
+                                }                                
+                            </div>
+                            <div className="draft-view__draft-sort-holder">
+                                <label htmlFor="view-select">View:</label>
+                                <select onChange={(event) => onViewChange(event.target.value)} defaultValue={DraftView.Overview} name="viewOptions" id="view-select">
+                                    {Object.values(DraftView).map(format => {
+                                        return <option key={format} value={format}>{format}</option>;
+                                    })}
+                                </select>
+                            </div>
+                        </div>                        
 
-                        <DraftPickDisplay data={pickInfos} format={format} teams={teams}/>
+                        {view === DraftView.Overview 
+                            ? <DraftPickDisplay data={pickInfos} format={format} teams={teams}/>
+                            : <DraftStats data={pickInfos} teams={teams}/>
+                        }
+                        
                     </section>   
                     :
                     <p className="draft-view__error">Draft information will be displayed after the draft.</p> 

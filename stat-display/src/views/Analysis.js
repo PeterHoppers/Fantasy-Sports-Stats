@@ -3,15 +3,11 @@ import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'rec
 import TeamLineGraph from "../components/TeamLineGraph/TeamLineGraph";
 import Header from "../components/Header/Header";
 
-import { PositionId } from "../util";
+import { PositionId, LAST_REGULAR_SEASON_WEEK, ACCENT_COLOR, PRIMARY_GRAPH_COLOR } from "../definitions";
 
 import "./analysis.scss";
 
 //Look into using https://recharts.org/en-US/api/BarChart
-
-const LAST_REGULAR_SEASON_WEEK = 14;
-const ACCENT_COLOR = "#c07b00";
-const PRIMARY_GRAPH_COLOR = "#00338d";
 
 export const Analysis = (props) => {    
     //create a dictionary of projected scores organized by team id and then week id, since the team id will be used more than the week

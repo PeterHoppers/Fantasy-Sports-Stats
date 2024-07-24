@@ -12,6 +12,11 @@
     margin: auto;    
 }
 
+.draft-view__draft-selects-holder {
+    display: flex;
+    justify-content: space-between;
+}
+
 .draft-view__draft-sort-holder {
     font-size: 1.5em;
     select {

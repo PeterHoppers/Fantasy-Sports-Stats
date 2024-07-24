@@ -36,11 +36,25 @@ const DefaultPositionNames = {
     16: "D/ST"
 };
 
+const StartingAmountPerPosition = Object.freeze({
+    1: 1,
+    2: 2,
+    3: 2,
+    4: 1,
+    5: 1,
+    16: 1
+});
+
 const DraftFormat = Object.freeze({
     Round: "Round",
     Team: "Team",    
     PositionPick: "Position then Pick #",
     PositionRank: "Position then Rank #"
+});
+
+const DraftView = Object.freeze({
+    Overview: "Overview",
+    Stats: "Stats"
 });
 
 const TeamColors = {
@@ -128,13 +142,22 @@ const TeamColors = {
         "primary": "#f26722",
         "secondary": "#FFFFFF"
     }
-  };
+};
+
+const LAST_REGULAR_SEASON_WEEK = 14;
+const ACCENT_COLOR = "#c07b00";
+const PRIMARY_GRAPH_COLOR = "#00338d";
 
 export {
     Pages,
     PositionId,
     PositionNames,
     DefaultPositionNames,
+    StartingAmountPerPosition,
     DraftFormat,
-    TeamColors
+    DraftView,
+    TeamColors,
+    LAST_REGULAR_SEASON_WEEK,
+    ACCENT_COLOR,
+    PRIMARY_GRAPH_COLOR
 };

@@ -17,3 +17,6 @@ body {
   flex-direction: column;
 }
 
+text.recharts-text.recharts-cartesian-axis-tick-value {
+  font-size: small;
+}

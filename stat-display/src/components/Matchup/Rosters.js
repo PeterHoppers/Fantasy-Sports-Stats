@@ -1,4 +1,4 @@
-import { PositionId, PositionNames } from "../../util";
+import { PositionId, PositionNames } from "../../definitions";
 import { PositionInfo } from "./PositionInfo";
 
 const dummyInfo = {

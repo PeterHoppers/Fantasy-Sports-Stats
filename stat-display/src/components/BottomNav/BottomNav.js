@@ -1,7 +1,7 @@
 import React from "react";
 import './BottomNav.scss';
 
-import { Pages } from './../../util';
+import { Pages } from "../../definitions";
 
 const BottomNav = (props) => {   
     return (

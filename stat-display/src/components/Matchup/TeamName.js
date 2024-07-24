@@ -1,4 +1,4 @@
-import { TeamColors } from "../../util";
+import { TeamColors } from "../../definitions";
 import { TeamLogo } from "./../Generic/TeamLogo";
 
 export const TeamName = (props) => {

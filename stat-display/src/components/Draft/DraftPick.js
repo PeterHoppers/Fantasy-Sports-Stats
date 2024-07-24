@@ -1,5 +1,5 @@
 import React from "react";
-import { DefaultPositionNames } from "../../util";
+import { DefaultPositionNames } from "../../definitions";
 import './DraftPick.scss';
 
 const DraftPick = (props) => {   

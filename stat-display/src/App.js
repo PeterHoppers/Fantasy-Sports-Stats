@@ -6,7 +6,7 @@ import info2023 from './LeagueInfo/info-2023.json';
 
 import BottomNav from "./components/BottomNav/BottomNav";
 import LoadingMessage from './components/LoadingMessage/LoadingMessage';
-import { Pages } from './util';
+import { Pages } from './definitions.js';
 
 import { Home } from './views/Home';
 import { Schedule } from './views/Schedule';

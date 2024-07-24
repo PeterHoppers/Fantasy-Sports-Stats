@@ -1,8 +1,8 @@
 import React from "react";
-import { DefaultPositionNames } from "../../util";
+import { DefaultPositionNames } from "../../definitions";
 import './DraftPickDisplay.scss';
 import DraftPick from "./DraftPick";
-import { DraftFormat } from "../../util";
+import { DraftFormat } from "../../definitions";
 
 const DraftPickDisplay = (props) => {      
     const pickInfos = props.data;

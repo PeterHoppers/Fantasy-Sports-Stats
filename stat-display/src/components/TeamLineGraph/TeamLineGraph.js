@@ -1,6 +1,6 @@
 import React from "react";
 import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from 'recharts';
-import { TeamColors } from "../../util";
+import { TeamColors } from "../../definitions";
 import { useState } from "react";
 import './TeamLineGraph.scss';
 
