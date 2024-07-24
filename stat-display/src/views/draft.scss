@@ -5,10 +5,14 @@
     padding: 1em;
     flex-direction: column;    
     background-color: $carrollSilver;
+
+    &.draft-view__stats {
+        background-color: $carrollWhite;
+    }
 }
 
 .draft-view__draft-pick-holder {
-    max-width: 1400px;
+    max-width: 1500px;
     margin: auto;    
 }
 
