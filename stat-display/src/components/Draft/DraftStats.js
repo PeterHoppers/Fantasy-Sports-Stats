@@ -6,11 +6,17 @@ import DraftPick from "./DraftPick";
 
 const DraftStats = (props) => {      
     const pickInfos = props.data;
-    const teams = props.teams;
+    const isCurrentStandings = !(props.teams[0].rankCalculatedFinal);
+    let teams;
+    if (isCurrentStandings) { //TODO: Move this to shared logic with the standings
+        teams = props.teams.sort((a, b) => a.currentProjectedRank - b.currentProjectedRank);
+    } else {
+        teams = props.teams.sort((a, b) => a.rankCalculatedFinal - b.rankCalculatedFinal);
+    }
+
     const teamsDraftData = getDraftDataPerTeam(pickInfos, teams);
     const teamAmount = teams.length;
     const top10SleeperPicks = getPicksBySleeperValue(pickInfos, teamAmount, 10, true);
-    console.log(top10SleeperPicks);
     const worse10Picks = getPicksBySleeperValue(pickInfos, teamAmount, 10, false);
 
     const screenWidth = window.screen.width;
