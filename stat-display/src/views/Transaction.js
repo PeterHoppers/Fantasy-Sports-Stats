@@ -8,6 +8,7 @@ import Header from "../components/Header/Header";
 import DraftStats from "../components/Draft/DraftStats";
 
 import "./draft.scss";
+import Transaction from "../components/Transactions/Transaction";
 
 const TransactionTypes = {
     Waiver: "WAIVER",
@@ -19,64 +20,85 @@ const TransactionTypes = {
 export const Transactions = (props) => {    
     const teams = props.info.teams;
     const transactionsPerWeek = props.info.transactions;
-    
-    const rosters = props.info.rosters;
-    console.log(rosters);
+    const executedTransactions = [];    
 
-    if (transactionsPerWeek) {
-        const executedTransactions = [];
-        const singleTeamTransaction = [];
+    const rosters = props.info.rosters;
+
+    if (transactionsPerWeek) {       
         transactionsPerWeek.forEach((transactionWeek, index) => {
             if (transactionWeek) {
-                executedTransactions[index] = [];
+                executedTransactions[index] = {
+                    title: `Prior to Week ${index}`
+                };
                 const successfullyExecuted = transactionWeek.filter(x => x?.status === "EXECUTED");
                 const waiverTransactions = successfullyExecuted.filter(x => x.type === TransactionTypes.Waiver || x.type === TransactionTypes.FreeAgent || x.type === TransactionTypes.Roster);
 
+                const formattedTransactions = [];
                 waiverTransactions.forEach(transaction => {
+                    const teamMakingTransaction = teams.find(x => x.id === transaction.teamId);
                     const addItem = transaction.items.find(x => x?.type === "ADD");
                     const dropItem = transaction.items.find(x => x?.type === "DROP");
+
                     let addedPlayer;
+                    let addedPointsScored;
                     let droppedPlayer;
+                    let droppedPointsScored;
 
                     if (addItem) {
-                        addedPlayer = searchThroughAllTeams(rosters, addItem.playerId);
+                        addedPlayer = searchThroughAllTeams(rosters, addItem.playerId); //Rather than searching through all teams, just look through the teams that added them
+                        addedPointsScored = pointsScoredForTeam(teamMakingTransaction.id, rosters, addItem.playerId);
                     }
 
                     if (dropItem) {
                         droppedPlayer = searchThroughAllTeams(rosters, dropItem.playerId);
+                        const playerScored = droppedPlayer.playerPoolEntry.ratings[0].totalRating;
+                        droppedPointsScored = playerScored - pointsScoredForTeam(teamMakingTransaction.id, rosters, dropItem.playerId);
                     }
-                    executedTransactions[index].push({
+
+                    formattedTransactions.push({
                         id: transaction.id,
                         scoringPeriodId: transaction.scoringPeriodId,
                         type: transaction.type,
                         add: addItem,
-                        drop: dropItem,
+                        addedPointsScored: addedPointsScored,
                         adddedPlayer: addedPlayer,
+                        drop: dropItem,
+                        droppedPointsScored: droppedPointsScored,
                         droppedPlayer: droppedPlayer,
-                        team: teams.find(x => x.id === transaction.teamId)
-                    })
+                        team: teamMakingTransaction
+                    });
                 });
+
+                executedTransactions[index].transactions = formattedTransactions;
             }            
         });
-
-        executedTransactions.forEach(executedWeek => {
-            var teamTransactions = executedWeek.filter(x => x.team.id === 6);
-            singleTeamTransaction.push(...teamTransactions);
-        });
-        const added = singleTeamTransaction.filter(x => x.add);
-        const drops = singleTeamTransaction.filter(x => x.drop);
     }
-
 
     return (
         <>
             <Header message="Transactions"/>
             <main className="transactions-view__main">                
-                
+                {executedTransactions.map(weeksTransactions => {
+                    if (!weeksTransactions) {
+                        return;
+                    }
+                    return (
+                        <section className="draft-view__draft-section-holder">
+                            <h2>{weeksTransactions.title}</h2>
+                            <div className="draft-view__draft-section">
+                                {weeksTransactions.transactions.map(transaction => {
+                                    return <Transaction key={transaction.id} transaction={transaction}/>
+                                })}
+                            </div>
+                        </section>
+                    )
+                })} 
             </main>
         </>
     );
 }
+
+/* */
 
 function searchThroughAllTeams(rosters, playerId) {
     let foundPlayer;
@@ -96,21 +118,31 @@ function searchThroughAllTeams(rosters, playerId) {
     return foundPlayer;
 }
 
-function getPlayerProjectedScore(player, week) {
-    const scoreEntries = player?.playerPoolEntry?.player.stats?.filter(stat => stat.scoringPeriodId === week);
-
-    if (!scoreEntries?.length) {
-        return {
-            projected : 0.0,
-            actual: "--"
+function pointsScoredForTeam(teamId, rosters, playerId) {
+    let pointsScored = 0;
+    rosters.forEach((rosterWeek, weekNumber) => {
+        if (!rosterWeek) {
+            return;
         }
-    }
 
-    const projectedEntry = scoreEntries.find(entry => entry.statSourceId === 1);
-    const actualEntry = scoreEntries.find(entry => entry.statSourceId === 0);
+        const teamRoster = rosterWeek.find(x => x.id === teamId);
+        const playerInfo = teamRoster.roster.entries.find(x => x.playerId === playerId);
+        const playerStats = playerInfo?.playerPoolEntry?.player.stats;
+        
+        if (!playerStats) {
+            return;
+        }
 
-    return {
-        projected : projectedEntry.appliedTotal.toFixed(1),
-        actual: (actualEntry) ? actualEntry.appliedTotal.toFixed(1) : "--"
-    }
+        const scoreEntries = playerStats.filter(stat => stat.scoringPeriodId === weekNumber);        
+        if (!scoreEntries) {
+            return;
+        }
+
+        const actualEntry = scoreEntries.find(entry => entry.statSourceId === 0);
+        if (actualEntry) {
+            pointsScored += actualEntry.appliedTotal;
+        }                
+    });
+
+    return pointsScored.toFixed(2);
 }

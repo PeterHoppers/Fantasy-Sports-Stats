@@ -1,0 +1,24 @@
+@import "../../styles/colors.scss";
+
+.transaction-display {
+    display: grid;
+    border: 2px solid $carrollBlue;
+    padding: .5em;
+    background-color: $carrollWhite;
+
+    &__title {
+        text-align: center;
+        font-size: 1.25em;
+    }
+
+    &__player-holders {
+        display: flex;
+        text-align: center;
+        gap: 1em;
+    }
+
+    &__player-section {
+        flex-grow: 1;
+    }
+}
+

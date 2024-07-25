@@ -1,0 +1,41 @@
+@import "../../styles/colors.scss";
+
+.player-display {
+    &__holder {
+        display: grid;
+        border: 2px solid $carrollBlue;
+        padding: .5em;
+        background-color: $carrollWhite;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__name {
+        margin: .75em 0;
+        font-size: 1.05em;
+        text-align: center;
+    }
+
+    &__stats-holder {
+        display: flex;
+        gap: 1em;
+        justify-content: center;
+    }
+
+    &__stat {
+        text-align: center;
+
+        p {
+            text-decoration: underline;
+            margin: 0.25em 0;
+        }
+
+        span {
+            font-size: 1.25em;
+        }
+    }
+}
+
