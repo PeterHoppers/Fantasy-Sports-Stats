@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from "react";
 import info2021 from "./LeagueInfo/info-2021.json";
 import info2022 from "./LeagueInfo/info-2022.json";
-import info2023 from './LeagueInfo/info-2023.json';
+import info2023 from './LeagueInfo/info-2023-new.json';
 
 import BottomNav from "./components/BottomNav/BottomNav";
 import LoadingMessage from './components/LoadingMessage/LoadingMessage';
@@ -15,6 +15,7 @@ import { Analysis } from './views/Analysis';
 
 import {getCurrentInformation} from './api/api.js';
 import { Draft } from './views/Draft.js';
+import { Transactions } from './views/Transaction.js';
 
 function App() {
   const defaultYears = [2021, 2022, 2023, 2024];
@@ -94,6 +95,8 @@ function App() {
         return <Analysis info = {info}/>;
       case Pages.Draft:
         return <Draft info = {info} year = {selectedYear}/>;
+      case Pages.Transactions:
+        return <Transactions info = {info}/>;
       default:
         return <span/>
     }    

@@ -2,7 +2,8 @@ const Pages = Object.freeze({
     Home: "Home",
     Schedule: "Schedule",
     Analysis: "Analysis",
-    Draft: "Draft"
+    Draft: "Draft",
+    Transactions: "Transactions",
 });
 
 const PositionId = {

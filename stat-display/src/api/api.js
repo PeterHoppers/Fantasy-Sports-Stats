@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+//documentation at http://espn-fantasy-football-api.s3-website.us-east-2.amazonaws.com/
 const ApiViews = Object.freeze({
     BoxScore: "mBoxscore",
     Roster: "mRoster",
@@ -7,11 +8,13 @@ const ApiViews = Object.freeze({
     Scoreboard: "mScoreboard",
     Matchup: "mMatchup",
     MatchupScore: "mMatchupScore",
-    Teams: "mTeam"
+    DraftDetail: "mDraftDetail",
+    Status: "mStatus",
+    Teams: "mTeam",
+    Transactions: "mTransactions2",
 });
 
-//documentation at http://espn-fantasy-football-api.s3-website.us-east-2.amazonaws.com/
-const storedInfo = {
+export const storedInfo = {
     errorMessage: null,
     currentWeek: 0,
     teams: [],
