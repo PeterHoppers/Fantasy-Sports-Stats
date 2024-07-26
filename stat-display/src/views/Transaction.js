@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import "./transaction.scss";
 import TransactionDisplay from "../components/Transactions/TransactionDisplay";
+import TransactionStats from "../components/Transactions/TransactionStats";
 
 import { TransactionView, TransactionFormat } from "../definitions";
 import { MissingPlayers } from "../components/Draft/MissingPlayers";
@@ -11,6 +12,7 @@ import { MissingPlayers } from "../components/Draft/MissingPlayers";
 const TransactionTypes = {
     Waiver: "WAIVER",
     TradeProposal: "TRADE_PROPOSAL",
+    TradeAccepted: "TRADE_ACCEPT",
     Roster: "ROSTER",
     FreeAgent: "FREEAGENT"
 }
@@ -24,7 +26,8 @@ export const Transactions = (props) => {
     const rosters = props.info.rosters;
     const matchupPeriods = props.info.matchupPeriods;
 
-    const executedTransactions = useMemo(() => createTransactionInfo(transactionsPerWeek, teams, rosters, matchupPeriods), [transactionsPerWeek, rosters, teams]);    
+    const executedTransactions = useMemo(() => createTransactionInfo(transactionsPerWeek, teams, rosters, matchupPeriods), [transactionsPerWeek, rosters, teams]);
+    const tradePurposals = useMemo(() => getNumberofTradePurposals(transactionsPerWeek, teams), [transactionsPerWeek, teams]);
 
     function onSortByChange(newFormat) {
         setFormat(newFormat);
@@ -38,14 +41,14 @@ export const Transactions = (props) => {
         <>
             <Header message="Transactions"/>
             <main className="transactions-view__main item-list-view">                
-            {executedTransactions.length > 0 ?
+            {executedTransactions?.length > 0 ?
                     <section className="item-list-view__items-holder">
                         <div className="draft-view__draft-selects-holder">
                             <div className="draft-view__draft-sort-holder">
                                 {view === TransactionView.AddDrop &&
                                     <>
                                         <label htmlFor="sort-select">Sort By:</label>
-                                        <select onChange={(event) => onSortByChange(event.target.value)} defaultValue={TransactionFormat.Round} name="sortOptions" id="sort-select">
+                                        <select onChange={(event) => onSortByChange(event.target.value)} defaultValue={format} name="sortOptions" id="sort-select">
                                             {Object.values(TransactionFormat).map(format => {
                                                 return <option key={format} value={format}>{format}</option>;
                                             })}
@@ -66,6 +69,10 @@ export const Transactions = (props) => {
                         {view === TransactionView.AddDrop &&
                             <TransactionDisplay data={executedTransactions} format={format} teams={teams}/>
                         }
+
+                        {view === TransactionView.Stats &&
+                            <TransactionStats data={executedTransactions} teams={teams}/>
+                        }
                         
                     </section>   
                     :
@@ -77,78 +84,82 @@ export const Transactions = (props) => {
 }
 
 function createTransactionInfo(transactionsPerWeek, teams, rosters, matchupPeriods) {
-    const executedTransactions = [];
-    if (transactionsPerWeek) {       
-        const validTransactionWeeks = transactionsPerWeek.filter(x => x != null);
-        const weekAmount = validTransactionWeeks.length;
-        const amountOfMatchups = Object.keys(matchupPeriods).length;
-        const finalMatchup = matchupPeriods[amountOfMatchups];
-        finalMatchup.sort();
-        const finalWeek = finalMatchup[finalMatchup.length - 1];
+    if (!transactionsPerWeek) {       
+        return;
+    }
 
-        transactionsPerWeek.forEach((transactionWeek, index) => {
-            if (!transactionWeek) {
-                return;
+    const executedTransactions = [];
+    const validTransactionWeeks = transactionsPerWeek.filter(x => x != null);
+    const weekAmount = validTransactionWeeks.length;
+    const amountOfMatchups = Object.keys(matchupPeriods).length;
+    const finalMatchup = matchupPeriods[amountOfMatchups];
+    finalMatchup.sort();
+    const finalWeek = finalMatchup[finalMatchup.length - 1];
+
+    transactionsPerWeek.forEach((transactionWeek, index) => {
+        if (!transactionWeek) {
+            return;
+        }
+
+        const successfullyExecuted = transactionWeek.filter(x => x?.status === "EXECUTED");
+        const waiverTransactions = successfullyExecuted.filter(x => x.type === TransactionTypes.Waiver || x.type === TransactionTypes.FreeAgent || x.type === TransactionTypes.Roster);
+
+        waiverTransactions.forEach(transaction => {
+            console.log(transaction);
+            const teamMakingTransaction = teams.find(x => x.id === transaction.teamId);
+            const addItem = transaction.items.find(x => x?.type === "ADD");
+            const dropItem = transaction.items.find(x => x?.type === "DROP");
+
+            let addInfo;
+            let dropInfo;
+
+            if (addItem) {
+                let addedPlayer = searchThroughAllTeams(rosters, addItem.playerId); //Rather than searching through all teams, just look through the teams that added them
+                if (!addedPlayer) {
+                    addedPlayer = searchThroughMissingPlayers(addItem.playerId);
+                }
+                const addedPlayerStats = getPlayerInfoWithTeam(teamMakingTransaction.id, rosters, addItem.playerId, finalWeek)
+                const addedPointsScored = addedPlayerStats.points;
+
+                addInfo = {
+                    item: addItem,
+                    player: addedPlayer,
+                    points: addedPointsScored,
+                    weeks: addedPlayerStats.weeks
+                }
             }
 
-            const successfullyExecuted = transactionWeek.filter(x => x?.status === "EXECUTED");
-            const waiverTransactions = successfullyExecuted.filter(x => x.type === TransactionTypes.Waiver || x.type === TransactionTypes.FreeAgent || x.type === TransactionTypes.Roster);
-
-            waiverTransactions.forEach(transaction => {
-                const teamMakingTransaction = teams.find(x => x.id === transaction.teamId);
-                const addItem = transaction.items.find(x => x?.type === "ADD");
-                const dropItem = transaction.items.find(x => x?.type === "DROP");
-
-                let addInfo;
-                let dropInfo;
-
-                if (addItem) {
-                    let addedPlayer = searchThroughAllTeams(rosters, addItem.playerId); //Rather than searching through all teams, just look through the teams that added them
-                    if (!addedPlayer) {
-                        addedPlayer = searchThroughMissingPlayers(addItem.playerId);
-                    }
-                    const addedPlayerStats = getPlayerInfoWithTeam(teamMakingTransaction.id, rosters, addItem.playerId, finalWeek)
-                    const addedPointsScored = addedPlayerStats.points;
-
-                    addInfo = {
-                        item: addItem,
-                        player: addedPlayer,
-                        points: addedPointsScored,
-                        weeks: addedPlayerStats.weeks
-                    }
+            if (dropItem) {
+                let droppedPlayer = searchThroughAllTeams(rosters, dropItem.playerId);
+                if (!droppedPlayer) {
+                    droppedPlayer = searchThroughMissingPlayers(dropItem.playerId);
                 }
+                
+                const playerScored = droppedPlayer?.playerPoolEntry?.ratings[0].totalRating ?? 0;
+                const droppedPlayerStats = getPlayerInfoWithTeam(teamMakingTransaction.id, rosters, dropItem.playerId, finalWeek);
+                const droppedPointsScored = (playerScored - droppedPlayerStats.points).toFixed(2);
+                const weeksOffRoster = weekAmount - droppedPlayerStats.weeks;
 
-                if (dropItem) {
-                    let droppedPlayer = searchThroughAllTeams(rosters, dropItem.playerId);
-                    if (!droppedPlayer) {
-                        droppedPlayer = searchThroughMissingPlayers(dropItem.playerId);
-                    }
-                    
-                    const playerScored = droppedPlayer?.playerPoolEntry?.ratings[0].totalRating ?? 0;
-                    const droppedPlayerStats = getPlayerInfoWithTeam(teamMakingTransaction.id, rosters, dropItem.playerId, finalWeek);
-                    const droppedPointsScored = (playerScored - droppedPlayerStats.points).toFixed(2);
-                    const weeksOffRoster = weekAmount - droppedPlayerStats.weeks;
+                dropInfo = {
+                    item: dropItem,
+                    player: droppedPlayer,
+                    points: droppedPointsScored,
+                    weeks: weeksOffRoster
+                }                                    
+            }
 
-                    dropInfo = {
-                        item: dropItem,
-                        player: droppedPlayer,
-                        points: droppedPointsScored,
-                        weeks: weeksOffRoster
-                    }
-                                      
-                }
-
-                executedTransactions.push({
-                    id: transaction.id,
-                    period: index,
-                    type: transaction.type,
-                    addInfo: addInfo,
-                    dropInfo: dropInfo,
-                    team: teamMakingTransaction
-                });
+            executedTransactions.push({
+                id: transaction.id,
+                period: index,
+                proposedDate: transaction.proposedDate,
+                type: transaction.type,
+                addInfo: addInfo,
+                dropInfo: dropInfo,
+                team: teamMakingTransaction
             });
         });
-    }
+    });
+    
 
     return executedTransactions;
 }
@@ -214,4 +225,21 @@ function getPlayerInfoWithTeam(teamId, rosters, playerId, maxWeek) {
 
 function searchThroughMissingPlayers(playerId) {
     return MissingPlayers.find(player => player.playerId === playerId);
+}
+
+function getNumberofTradePurposals(transactionsPerWeek, teams) {
+    if (!transactionsPerWeek) {       
+        return;
+    }
+
+    const tradePurposals = [];
+    transactionsPerWeek.forEach((transactionWeek, index) => {
+        if (!transactionWeek) {
+            return;
+        }
+        const possiblePurposals = transactionWeek.filter(x => x.type === TransactionTypes.TradeProposal);
+        tradePurposals.push(...possiblePurposals);
+    });
+
+    return tradePurposals;
 }

@@ -9,7 +9,7 @@ const PlayerDisplay = (props) => {
 
     return (
         <div className="player-display__holder">
-            <p className="player-display__name">{playerInfo?.fullName ?? "Unkown Player"}, {DefaultPositionNames[playerInfo?.defaultPositionId ?? 0]}</p>
+            <p className="player-display__name">{playerInfo?.fullName ?? "Unknown Player"}, {DefaultPositionNames[playerInfo?.defaultPositionId ?? 0]}</p>
             {playerRankings && 
                 <div className="player-display__stats-holder">
                     <div className="player-display__stat">

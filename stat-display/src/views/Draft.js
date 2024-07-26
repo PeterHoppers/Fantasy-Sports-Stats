@@ -93,7 +93,7 @@ export const Draft = (props) => {
                                 {view === DraftView.Overview &&
                                     <>
                                         <label htmlFor="sort-select">Sort By:</label>
-                                        <select onChange={(event) => onSortByChange(event.target.value)} defaultValue={DraftFormat.Round} name="sortOptions" id="sort-select">
+                                        <select onChange={(event) => onSortByChange(event.target.value)} defaultValue={format} name="sortOptions" id="sort-select">
                                             {Object.values(DraftFormat).map(format => {
                                                 return <option key={format} value={format}>{format}</option>;
                                             })}

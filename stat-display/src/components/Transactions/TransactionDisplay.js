@@ -44,6 +44,7 @@ function formatInfoByRound(transactions) {
     
     for (let weekNumber = 1; weekNumber <= lastWeek; weekNumber++) {
         const transactionInWeek = transactions.filter(pick => pick.period === weekNumber);
+        transactionInWeek.sort((a, b) => a.proposedDate - b.proposedDate);
         formattedInfo.push({
             transactions: transactionInWeek,
             title: `Prior to Week ${weekNumber}`
@@ -58,6 +59,7 @@ function formatInfoByTeam(transactionInfos, teams) {
 
     teams.forEach(team => {
         const teamTransactions = transactionInfos.filter(pick => pick?.team?.id === team.id);
+        teamTransactions.sort((a, b) => a.proposedDate - b.proposedDate);
         formattedInfo.push({
             transactions: teamTransactions,
             title: `${team.name}'s Transactions`

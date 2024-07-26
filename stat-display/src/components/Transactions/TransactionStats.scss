@@ -1,0 +1,12 @@
+@import "../../styles/colors.scss";
+
+.draft-view__draft-stat-description {
+    font-size: 1.25em;
+}
+
+.draft-view__stats {
+    h2 {
+        text-shadow: none;
+        color: $carrollBlack; 
+    }
+}
