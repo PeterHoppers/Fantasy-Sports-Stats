@@ -53,8 +53,18 @@ const DraftFormat = Object.freeze({
     PositionRank: "Position then Rank #"
 });
 
+const TransactionFormat = Object.freeze({
+    Round: "Round",
+    Team: "Team"
+});
+
 const DraftView = Object.freeze({
     Overview: "Overview",
+    Stats: "Stats"
+});
+
+const TransactionView = Object.freeze({
+    AddDrop: "Adds/Drops",
     Stats: "Stats"
 });
 
@@ -155,7 +165,9 @@ export {
     PositionNames,
     DefaultPositionNames,
     StartingAmountPerPosition,
+    TransactionFormat,
     DraftFormat,
+    TransactionView,
     DraftView,
     TeamColors,
     LAST_REGULAR_SEASON_WEEK,

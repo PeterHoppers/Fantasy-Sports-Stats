@@ -1,0 +1,12 @@
+@import "../../styles/colors.scss";
+
+.draft-view__draft-section-holder {
+    display: grid;
+}
+
+.draft-view__draft-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+}

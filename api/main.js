@@ -9,7 +9,7 @@ const swid = chrisSwid;
 //documentation at http://espn-fantasy-football-api.s3-website.us-east-2.amazonaws.com/
 const storedInfo = EmptyInfo;
 
-const targetYear = 2023;
+const targetYear = 2021;
 const targetDestination = `./Fantasy-Sports-Stats/stat-display/src/LeagueInfo/info-${targetYear}-new.json`;
 const apiUrl = `https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/${targetYear}/segments/0/leagues/${leagueId}`;
 
@@ -25,7 +25,7 @@ storedInfo.rosters = await getWeeklyRosters(apiUrl, scoreboardInfo.scoringPeriod
 storedInfo.transactions = await getWeeklyTransactions(apiUrl, scoreboardInfo.scoringPeriodId);
 
 var dictstring = JSON.stringify(storedInfo);
-//fs.writeFile(targetDestination, dictstring, (err) => err && console.error(err));
+fs.writeFile(targetDestination, dictstring, (err) => err && console.error(err));
 
 async function getScoreboardInfo(apiURL) {
     let scoreboardInfo;

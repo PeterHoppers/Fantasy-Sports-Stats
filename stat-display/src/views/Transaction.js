@@ -1,8 +1,11 @@
 import React from "react";
 import Header from "../components/Header/Header";
+import { useMemo, useState } from "react";
 
 import "./transaction.scss";
-import Transaction from "../components/Transactions/Transaction";
+import TransactionDisplay from "../components/Transactions/TransactionDisplay";
+
+import { TransactionView, TransactionFormat } from "../definitions";
 
 const TransactionTypes = {
     Waiver: "WAIVER",
@@ -12,15 +15,71 @@ const TransactionTypes = {
 }
 
 export const Transactions = (props) => {    
+    const [format, setFormat] = useState(TransactionFormat.Round);
+    const [view, setView] = useState(TransactionView.AddDrop);
+    
     const teams = props.info.teams;
-    const transactionsPerWeek = props.info.transactions;     
-    const executedTransactions = [];    
+    const transactionsPerWeek = props.info.transactions;      
     const rosters = props.info.rosters;
+    const matchupPeriods = props.info.matchupPeriods;
 
+    const executedTransactions = useMemo(() => createTransactionInfo(transactionsPerWeek, teams, rosters, matchupPeriods), [transactionsPerWeek, rosters, teams]);    
+
+    function onSortByChange(newFormat) {
+        setFormat(newFormat);
+    }
+
+    function onViewChange(newView) {
+        setView(newView);
+    }
+
+    return (
+        <>
+            <Header message="Transactions"/>
+            <main className="transactions-view__main item-list-view">                
+            {executedTransactions ?
+                    <section className="item-list-view__items-holder">
+                        <div className="draft-view__draft-selects-holder">
+                            <div className="draft-view__draft-sort-holder">
+                                {view === TransactionView.AddDrop &&
+                                    <>
+                                        <label htmlFor="sort-select">Sort By:</label>
+                                        <select onChange={(event) => onSortByChange(event.target.value)} defaultValue={TransactionFormat.Round} name="sortOptions" id="sort-select">
+                                            {Object.values(TransactionFormat).map(format => {
+                                                return <option key={format} value={format}>{format}</option>;
+                                            })}
+                                        </select>
+                                    </>
+                                }                                
+                            </div>
+                            <div className="draft-view__draft-sort-holder">
+                                <label htmlFor="view-select">View:</label>
+                                <select onChange={(event) => onViewChange(event.target.value)} defaultValue={TransactionView.AddDrop} name="viewOptions" id="view-select">
+                                    {Object.values(TransactionView).map(format => {
+                                        return <option key={format} value={format}>{format}</option>;
+                                    })}
+                                </select>
+                            </div>
+                        </div>                        
+
+                        {view === TransactionView.AddDrop &&
+                            <TransactionDisplay data={executedTransactions} format={format} teams={teams}/>
+                        }
+                        
+                    </section>   
+                    :
+                    <p className="draft-view__error">No transactions have been made for this year at the moment.</p> 
+                }
+            </main>
+        </>
+    );
+}
+
+function createTransactionInfo(transactionsPerWeek, teams, rosters, matchupPeriods) {
+    const executedTransactions = [];
     if (transactionsPerWeek) {       
         const validTransactionWeeks = transactionsPerWeek.filter(x => x != null);
         const weekAmount = validTransactionWeeks.length;
-        const matchupPeriods = props.info.matchupPeriods;
         const amountOfMatchups = Object.keys(matchupPeriods).length;
         const finalMatchup = matchupPeriods[amountOfMatchups];
         finalMatchup.sort();
@@ -31,13 +90,9 @@ export const Transactions = (props) => {
                 return;
             }
 
-            executedTransactions[index] = {
-                title: `Prior to Week ${index}`
-            };
             const successfullyExecuted = transactionWeek.filter(x => x?.status === "EXECUTED");
             const waiverTransactions = successfullyExecuted.filter(x => x.type === TransactionTypes.Waiver || x.type === TransactionTypes.FreeAgent || x.type === TransactionTypes.Roster);
 
-            const formattedTransactions = [];
             waiverTransactions.forEach(transaction => {
                 const teamMakingTransaction = teams.find(x => x.id === transaction.teamId);
                 const addItem = transaction.items.find(x => x?.type === "ADD");
@@ -74,45 +129,20 @@ export const Transactions = (props) => {
                     }
                 }
 
-                formattedTransactions.push({
+                executedTransactions.push({
                     id: transaction.id,
-                    scoringPeriodId: transaction.scoringPeriodId,
+                    period: index,
                     type: transaction.type,
                     addInfo: addInfo,
                     dropInfo: dropInfo,
                     team: teamMakingTransaction
                 });
             });
-
-            executedTransactions[index].transactions = formattedTransactions;
         });
     }
 
-    return (
-        <>
-            <Header message="Transactions"/>
-            <main className="transactions-view__main item-list-view">                
-                {executedTransactions.map(weeksTransactions => {
-                    if (!weeksTransactions) {
-                        return;
-                    }
-                    return (
-                        <section className="item-list-view__items-holder">
-                            <h2>{weeksTransactions.title}</h2>
-                            <div className="draft-view__draft-section">
-                                {weeksTransactions.transactions.map(transaction => {
-                                    return <Transaction key={transaction.id} transaction={transaction}/>
-                                })}
-                            </div>
-                        </section>
-                    )
-                })} 
-            </main>
-        </>
-    );
+    return executedTransactions;
 }
-
-/* */
 
 function searchThroughAllTeams(rosters, playerId) {
     let foundPlayer;

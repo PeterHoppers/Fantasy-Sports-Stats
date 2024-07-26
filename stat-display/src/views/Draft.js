@@ -13,54 +13,60 @@ export const Draft = (props) => {
     const [format, setFormat] = useState(DraftFormat.Round);
     const [view, setView] = useState(DraftView.Overview);
     const draftData = useMemo(() => getDraftData(props.year), [props.year]);
+    const pickInfos = useMemo(() => createPickInfo(draftData, props.info.teams, props.info.rosters), [props]);
     const teams = props.info.teams;
-    let pickInfos;
 
-    if (draftData) {
-        const rosters = props.info.rosters[1];
-        const teamRosterInfo = teams.map(team => {
-            const startingRoster = rosters.find((roster) => roster.id === team.id);
-            return {
-                id: team.id,
-                teamInfo: team,
-                rosterInfo: startingRoster.roster
-            }
-        });    
+    function createPickInfo(draftData, teams, rosterWeeks) {
+        let pickInfos;
+
+        if (draftData) {
+            const rosters = rosterWeeks[1];
+            const teamRosterInfo = teams.map(team => {
+                const startingRoster = rosters.find((roster) => roster.id === team.id);
+                return {
+                    id: team.id,
+                    teamInfo: team,
+                    rosterInfo: startingRoster.roster
+                }
+            });    
+            
+            const picks = draftData.draftDetail.picks;
+            pickInfos = picks.map(pick => {
+                const teamRoster = teamRosterInfo.find((team) => pick.teamId === team.id);        
+                let playerEntry = teamRoster.rosterInfo.entries.find(entry => entry.playerId === pick.playerId);
         
-        const picks = draftData.draftDetail.picks;
-        pickInfos = picks.map(pick => {
-            const teamRoster = teamRosterInfo.find((team) => pick.teamId === team.id);        
-            let playerEntry = teamRoster.rosterInfo.entries.find(entry => entry.playerId === pick.playerId);
-    
-            if (!playerEntry) {
-                playerEntry = searchThroughMissingPlayers(pick.playerId);
-            }
+                if (!playerEntry) {
+                    playerEntry = searchThroughMissingPlayers(pick.playerId);
+                }
+            
+                if (!playerEntry) {
+                    playerEntry = searchThroughAllTeams(rosterWeeks, pick.playerId);
+                }
         
-            if (!playerEntry) {
-                playerEntry = searchThroughAllTeams(props.info.rosters, pick.playerId);
-            }
-    
-            if (!playerEntry) {
+                if (!playerEntry) {
+                    return {
+                        id: pick.id,
+                        roundNumber: 0,
+                        teamPicked: null
+                    }
+                }
+        
+                const playerInfo = playerEntry.playerPoolEntry.player;
+                const playerRatings = playerEntry.playerPoolEntry.ratings;
                 return {
                     id: pick.id,
-                    roundNumber: 0,
-                    teamPicked: null
+                    roundNumber: pick.roundId,
+                    teamPicked: teamRoster.teamInfo,
+                    playerInfo: playerInfo,
+                    playerPosition: playerInfo.defaultPositionId,
+                    playerRatings: playerRatings[0],
+                    playerRank: (playerRatings[0].totalRanking === 0) ? 1000 : playerRatings[0].totalRanking
                 }
-            }
-    
-            const playerInfo = playerEntry.playerPoolEntry.player;
-            const playerRatings = playerEntry.playerPoolEntry.ratings;
-            return {
-                id: pick.id,
-                roundNumber: pick.roundId,
-                teamPicked: teamRoster.teamInfo,
-                playerInfo: playerInfo,
-                playerPosition: playerInfo.defaultPositionId,
-                playerRatings: playerRatings[0],
-                playerRank: (playerRatings[0].totalRanking === 0) ? 1000 : playerRatings[0].totalRanking
-            }
-        });
-    }    
+            });
+        }    
+
+        return pickInfos;
+    }
 
     function onSortByChange(newFormat) {
         setFormat(newFormat);
