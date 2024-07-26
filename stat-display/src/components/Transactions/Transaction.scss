@@ -33,6 +33,11 @@
         }
     }
 
+    &__stats {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
     &__stat-section {
         p {
             text-decoration: underline;
