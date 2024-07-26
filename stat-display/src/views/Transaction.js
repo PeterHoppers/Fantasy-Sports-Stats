@@ -18,7 +18,7 @@ const TransactionTypes = {
 }
 
 export const Transactions = (props) => {    
-    const [format, setFormat] = useState(TransactionFormat.Round);
+    const [format, setFormat] = useState(TransactionFormat.Week);
     const [view, setView] = useState(TransactionView.AddDrop);
     
     const teams = props.info.teams;

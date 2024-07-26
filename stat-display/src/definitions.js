@@ -55,7 +55,7 @@ const DraftFormat = Object.freeze({
 });
 
 const TransactionFormat = Object.freeze({
-    Round: "Round",
+    Week: "Week",
     Team: "Team"
 });
 

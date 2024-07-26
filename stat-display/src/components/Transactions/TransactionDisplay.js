@@ -10,7 +10,7 @@ const TransactionDisplay = (props) => {      //This should really be genericed o
 
     let formattedInfo = [];
     switch (format) {
-        case TransactionFormat.Round:
+        case TransactionFormat.Week:
             formattedInfo = formatInfoByRound(transactions);
             break;
         case TransactionFormat.Team:
