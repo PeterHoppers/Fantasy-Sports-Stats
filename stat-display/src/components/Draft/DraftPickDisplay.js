@@ -31,7 +31,7 @@ const DraftPickDisplay = (props) => {
         <>
             {formattedInfo.map(section => {
                 return (
-                    <section className="draft-view__draft-section-holder">
+                    <section key={section.title} className="draft-view__draft-section-holder">
                         <h2>{section.title}</h2>
                         <div className="draft-view__draft-section">
                             {section.picks.map(pickInfo => {

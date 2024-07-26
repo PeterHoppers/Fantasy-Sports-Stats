@@ -1,19 +1,9 @@
 @import "../styles/colors.scss";
 
 .draft-view__main {
-    display: flex;
-    padding: 1em;
-    flex-direction: column;    
-    background-color: $carrollSilver;
-
     &.draft-view__stats {
         background-color: $carrollWhite;
     }
-}
-
-.draft-view__draft-pick-holder {
-    max-width: 1500px;
-    margin: auto;    
 }
 
 .draft-view__draft-selects-holder {

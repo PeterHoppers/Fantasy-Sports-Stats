@@ -10,15 +10,15 @@ const Transaction = (props) => {
     return (
         <div className="transaction-display">
             <div className="transaction-display__title">
-                <span>{`Transaction by ${transaction.team.name}`}</span>
+                <span>{`Transaction by ${transaction.team.abbrev}`}</span>
             </div>
             <div className="transaction-display__player-holders">
                 {addedPlayer && 
                     <section className="transaction-display__player-section">
                         <h3>Added Player</h3>
                         <PlayerDisplay playerInfo={addedPlayer.playerPoolEntry.player} playerRankings={addedPlayer.playerPoolEntry.ratings[0]}/>
-                        <div>
-                            <p>Points Earned On Roster</p>
+                        <div className="transaction-display__stat-section">
+                            <p>Points On Roster</p>
                             <span>{transaction.addedPointsScored}</span>
                         </div>
                     </section>
@@ -28,8 +28,8 @@ const Transaction = (props) => {
                     <section className="transaction-display__player-section">
                         <h3>Dropped Player</h3>
                         <PlayerDisplay playerInfo={droppedPlayer.playerPoolEntry.player} playerRankings={droppedPlayer.playerPoolEntry.ratings[0]}/>
-                        <div>
-                            <p>Points Earned Off Roster</p>
+                        <div className="transaction-display__stat-section">
+                            <p>Points Off Roster</p>
                             <span>{transaction.droppedPointsScored}</span>
                         </div>
                     </section>

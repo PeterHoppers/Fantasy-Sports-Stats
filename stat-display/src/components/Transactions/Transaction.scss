@@ -9,16 +9,39 @@
     &__title {
         text-align: center;
         font-size: 1.25em;
+        text-decoration: underline;
     }
 
     &__player-holders {
         display: flex;
         text-align: center;
-        gap: 1em;
+        padding-top: .75em;
     }
 
     &__player-section {
         flex-grow: 1;
+        padding: 0 .75em;
+
+        &:nth-of-type(2) {
+            border-left: 3px dashed $carrollBlue;
+        }
+
+        h3 {
+            font-size: 1.25em;
+            margin: 0 0 .5em;
+            font-style: italic;
+        }
+    }
+
+    &__stat-section {
+        p {
+            text-decoration: underline;
+            margin: 0.75em 0 .25em;
+        }
+
+        span {
+            font-size: 1.25em;
+        }
     }
 }
 

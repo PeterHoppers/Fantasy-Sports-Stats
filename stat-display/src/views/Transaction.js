@@ -7,7 +7,7 @@ import DraftPickDisplay from "../components/Draft/DraftPickDisplay";
 import Header from "../components/Header/Header";
 import DraftStats from "../components/Draft/DraftStats";
 
-import "./draft.scss";
+import "./transaction.scss";
 import Transaction from "../components/Transactions/Transaction";
 
 const TransactionTypes = {
@@ -52,7 +52,7 @@ export const Transactions = (props) => {
                     if (dropItem) {
                         droppedPlayer = searchThroughAllTeams(rosters, dropItem.playerId);
                         const playerScored = droppedPlayer.playerPoolEntry.ratings[0].totalRating;
-                        droppedPointsScored = playerScored - pointsScoredForTeam(teamMakingTransaction.id, rosters, dropItem.playerId);
+                        droppedPointsScored = (playerScored - pointsScoredForTeam(teamMakingTransaction.id, rosters, dropItem.playerId)).toFixed(2);
                     }
 
                     formattedTransactions.push({
@@ -77,13 +77,13 @@ export const Transactions = (props) => {
     return (
         <>
             <Header message="Transactions"/>
-            <main className="transactions-view__main">                
+            <main className="transactions-view__main item-list-view">                
                 {executedTransactions.map(weeksTransactions => {
                     if (!weeksTransactions) {
                         return;
                     }
                     return (
-                        <section className="draft-view__draft-section-holder">
+                        <section className="item-list-view__items-holder">
                             <h2>{weeksTransactions.title}</h2>
                             <div className="draft-view__draft-section">
                                 {weeksTransactions.transactions.map(transaction => {
@@ -120,6 +120,7 @@ function searchThroughAllTeams(rosters, playerId) {
 
 function pointsScoredForTeam(teamId, rosters, playerId) {
     let pointsScored = 0;
+    let weeksOnRoster = 0;
     rosters.forEach((rosterWeek, weekNumber) => {
         if (!rosterWeek) {
             return;
@@ -141,7 +142,8 @@ function pointsScoredForTeam(teamId, rosters, playerId) {
         const actualEntry = scoreEntries.find(entry => entry.statSourceId === 0);
         if (actualEntry) {
             pointsScored += actualEntry.appliedTotal;
-        }                
+        }
+        weeksOnRoster++;
     });
 
     return pointsScored.toFixed(2);

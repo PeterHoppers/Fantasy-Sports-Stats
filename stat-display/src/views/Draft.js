@@ -70,7 +70,7 @@ export const Draft = (props) => {
         setView(newView);
     }
 
-    let draftViewClass = "draft-view__main";
+    let draftViewClass = "draft-view__main item-list-view";
 
     if (view === DraftView.Stats) {
         draftViewClass += " draft-view__stats";
@@ -81,7 +81,7 @@ export const Draft = (props) => {
             <Header message="Draft Summary"/>
             <main className={draftViewClass}>                
                 {pickInfos ?
-                    <section className="draft-view__draft-pick-holder">
+                    <section className="draft-view__draft-pick-holder item-list-view__items-holder">
                         <div className="draft-view__draft-selects-holder">
                             <div className="draft-view__draft-sort-holder">
                                 {view === DraftView.Overview &&

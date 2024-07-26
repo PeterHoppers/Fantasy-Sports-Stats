@@ -2,15 +2,6 @@
 
 .draft-view__draft-section-holder {
     display: grid;
-    
-    h2 {
-        margin-bottom: .5em;
-        padding-bottom: .5em;
-        border-bottom: 1px solid $carrollBlack;
-        color: $carrollWhite;
-        font-size: 1.75rem;
-        text-shadow: 0px 1px 3px $carrollBlack;
-    }
 }
 
 .draft-view__draft-section {

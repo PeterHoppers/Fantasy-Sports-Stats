@@ -1,0 +1,45 @@
+@import "./styles/colors.scss";
+
+:root {
+  --footer-height: 50px;
+}
+
+body {
+  margin: 0;
+  font-family: "Whitney", 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: calc(100svh - var(--footer-height));
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+text.recharts-text.recharts-cartesian-axis-tick-value {
+  font-size: small;
+}
+
+.item-list-view {
+  display: flex;
+  padding: 1em;
+  flex-direction: column;    
+  background-color: $carrollSilver;
+
+  &__items-holder {
+    max-width: 1500px;
+    margin: auto;
+
+    h2 {
+        margin-bottom: .5em;
+        padding-bottom: .25em;
+        border-bottom: 1px solid $carrollBlack;
+        color: $carrollWhite;
+        font-size: 1.75rem;
+        text-shadow: 0px 1px 3px $carrollBlack;
+    }
+  } 
+}
