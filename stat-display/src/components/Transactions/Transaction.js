@@ -13,10 +13,10 @@ const Transaction = (props) => {
                 <span>{`Transaction by ${transaction.team.abbrev}`}</span>
             </div>
             <div className="transaction-display__player-holders">
-                {addInfo && 
+                {addInfo &&
                     <section className="transaction-display__player-section">
                         <h3>Added Player</h3>
-                        <PlayerDisplay playerInfo={addInfo.player.playerPoolEntry.player} playerRankings={addInfo.player.playerPoolEntry.ratings[0]}/>
+                        <PlayerDisplay playerInfo={addInfo.player?.playerPoolEntry.player} playerRankings={addInfo.player?.playerPoolEntry.ratings[0]}/>
                         <div className="transaction-display__stats">
                             <div className="transaction-display__stat-section">
                                 <p>Weeks On Roster</p>
@@ -30,10 +30,10 @@ const Transaction = (props) => {
                     </section>
                 } 
 
-                {dropInfo && 
+                {dropInfo &&
                     <section className="transaction-display__player-section">
                         <h3>Dropped Player</h3>
-                        <PlayerDisplay playerInfo={dropInfo.player.playerPoolEntry.player} playerRankings={dropInfo.player.playerPoolEntry.ratings[0]}/>
+                        <PlayerDisplay playerInfo={dropInfo.player?.playerPoolEntry.player} playerRankings={dropInfo.player?.playerPoolEntry.ratings[0]}/>
                         <div className="transaction-display__stats">
                             <div className="transaction-display__stat-section">
                                 <p>Weeks Off Roster</p>

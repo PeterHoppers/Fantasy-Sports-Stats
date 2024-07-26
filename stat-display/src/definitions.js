@@ -29,6 +29,7 @@ const PositionNames= {
 };
 
 const DefaultPositionNames = {
+    0: "N/A",
     1: "QB",
     2: "RB",
     3: "WR",

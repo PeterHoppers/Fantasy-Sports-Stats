@@ -9,21 +9,23 @@ const PlayerDisplay = (props) => {
 
     return (
         <div className="player-display__holder">
-            <p className="player-display__name">{playerInfo.fullName}, {DefaultPositionNames[playerInfo.defaultPositionId]}</p>
-            <div className="player-display__stats-holder">
-                <div className="player-display__stat">
-                    <p>Position Rank</p>
-                    <span>{playerRankings.positionalRanking}</span>
+            <p className="player-display__name">{playerInfo?.fullName ?? "Unkown Player"}, {DefaultPositionNames[playerInfo?.defaultPositionId ?? 0]}</p>
+            {playerRankings && 
+                <div className="player-display__stats-holder">
+                    <div className="player-display__stat">
+                        <p>Position Rank</p>
+                        <span>{playerRankings.positionalRanking}</span>
+                    </div>
+                    <div className="player-display__stat">
+                        <p>Total Rank</p>
+                        <span>{playerRankings.totalRanking}</span>
+                    </div>
+                    <div className="player-display__stat">
+                        <p>Total Points</p>
+                        <span>{playerRankings.totalRating.toFixed(2)}</span>
+                    </div>                        
                 </div>
-                <div className="player-display__stat">
-                    <p>Total Rank</p>
-                    <span>{playerRankings.totalRanking}</span>
-                </div>
-                <div className="player-display__stat">
-                    <p>Total Points</p>
-                    <span>{playerRankings.totalRating.toFixed(2)}</span>
-                </div>                        
-            </div>
+            }            
         </div>
             
     );

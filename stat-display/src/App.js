@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from "react";
 import info2021 from "./LeagueInfo/info-2021.json";
 import info2022 from "./LeagueInfo/info-2022.json";
-import info2023 from './LeagueInfo/info-2023-new.json';
+import info2023 from './LeagueInfo/info-2023.json';
 
 import BottomNav from "./components/BottomNav/BottomNav";
 import LoadingMessage from './components/LoadingMessage/LoadingMessage';

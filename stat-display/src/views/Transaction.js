@@ -6,6 +6,7 @@ import "./transaction.scss";
 import TransactionDisplay from "../components/Transactions/TransactionDisplay";
 
 import { TransactionView, TransactionFormat } from "../definitions";
+import { MissingPlayers } from "../components/Draft/MissingPlayers";
 
 const TransactionTypes = {
     Waiver: "WAIVER",
@@ -102,7 +103,10 @@ function createTransactionInfo(transactionsPerWeek, teams, rosters, matchupPerio
                 let dropInfo;
 
                 if (addItem) {
-                    const addedPlayer = searchThroughAllTeams(rosters, addItem.playerId); //Rather than searching through all teams, just look through the teams that added them
+                    let addedPlayer = searchThroughAllTeams(rosters, addItem.playerId); //Rather than searching through all teams, just look through the teams that added them
+                    if (!addedPlayer) {
+                        addedPlayer = searchThroughMissingPlayers(addItem.playerId);
+                    }
                     const addedPlayerStats = getPlayerInfoWithTeam(teamMakingTransaction.id, rosters, addItem.playerId, finalWeek)
                     const addedPointsScored = addedPlayerStats.points;
 
@@ -115,8 +119,12 @@ function createTransactionInfo(transactionsPerWeek, teams, rosters, matchupPerio
                 }
 
                 if (dropItem) {
-                    const droppedPlayer = searchThroughAllTeams(rosters, dropItem.playerId);
-                    const playerScored = droppedPlayer.playerPoolEntry.ratings[0].totalRating;
+                    let droppedPlayer = searchThroughAllTeams(rosters, dropItem.playerId);
+                    if (!droppedPlayer) {
+                        droppedPlayer = searchThroughMissingPlayers(dropItem.playerId);
+                    }
+                    
+                    const playerScored = droppedPlayer?.playerPoolEntry?.ratings[0].totalRating ?? 0;
                     const droppedPlayerStats = getPlayerInfoWithTeam(teamMakingTransaction.id, rosters, dropItem.playerId, finalWeek);
                     const droppedPointsScored = (playerScored - droppedPlayerStats.points).toFixed(2);
                     const weeksOffRoster = weekAmount - droppedPlayerStats.weeks;
@@ -127,6 +135,7 @@ function createTransactionInfo(transactionsPerWeek, teams, rosters, matchupPerio
                         points: droppedPointsScored,
                         weeks: weeksOffRoster
                     }
+                                      
                 }
 
                 executedTransactions.push({
@@ -172,6 +181,10 @@ function getPlayerInfoWithTeam(teamId, rosters, playerId, maxWeek) {
 
         const teamRoster = rosterWeek.find(x => x.id === teamId);
         const playerInfo = teamRoster.roster.entries.find(x => x.playerId === playerId);
+        if (!playerInfo) {
+            return;
+        }
+
         const playerStats = playerInfo?.playerPoolEntry?.player.stats;
         
         if (!playerStats) {
@@ -197,4 +210,8 @@ function getPlayerInfoWithTeam(teamId, rosters, playerId, maxWeek) {
         points: pointsScored.toFixed(2),
         weeks: weeksOnRoster
     }
+}
+
+function searchThroughMissingPlayers(playerId) {
+    return MissingPlayers.find(player => player.playerId === playerId);
 }
