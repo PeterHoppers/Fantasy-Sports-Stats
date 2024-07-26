@@ -38,7 +38,7 @@ export const Transactions = (props) => {
         <>
             <Header message="Transactions"/>
             <main className="transactions-view__main item-list-view">                
-            {executedTransactions ?
+            {executedTransactions.length > 0 ?
                     <section className="item-list-view__items-holder">
                         <div className="draft-view__draft-selects-holder">
                             <div className="draft-view__draft-sort-holder">

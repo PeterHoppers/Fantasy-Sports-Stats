@@ -39,6 +39,7 @@ export const getCurrentInformation = async(currentYear) => {
         storedInfo.teams = scoreboardInfo.teams;
 
         getWeeklyRosters(apiUrl, scoreboardInfo.scoringPeriodId).then(results => storedInfo.rosters = results);
+        getWeeklyTransactions(apiUrl, scoreboardInfo.scoringPeriodId).then(results => storedInfo.transactions = results);
     }).catch((error) => {
         storedInfo.errorMessage = error.message;
     });   
@@ -82,4 +83,28 @@ async function getWeeklyRosters(apiURL, weeks) {
         console.info("Successfully fetched league endpoint");  
     });
     return rosters;
+}
+
+async function getWeeklyTransactions(apiURL, weeks) {
+    const transactions = [];
+    const requests = [];
+    for (let weekNumber = 1; weekNumber <= weeks + 1; weekNumber++) {
+        requests.push(axios
+        .get(apiURL, {
+            params: {
+                "view": ApiViews.Transactions,
+                "scoringPeriodId": weekNumber
+            },
+        })
+        .then((response) => {
+            transactions[response.data.scoringPeriodId] = response.data.transactions;
+        })
+        .catch(function (error) {
+            console.log(error);
+        }));
+    }
+    await axios.all(requests).then(() => {
+        console.info("Successfully fetched league endpoint");  
+    });
+    return transactions;
 }
