@@ -150,6 +150,18 @@ const TeamColors = {
         "primary": "#8bc992",
         "secondary": "#494949"
     },
+    "LD": {
+        "primary": "#89cff0",
+        "secondary": "#FFFFFF"
+    },
+    "SM": {
+        "primary": "#e97451",
+        "secondary": "#90ee90"
+    },
+    "DL" : {
+        "primary": "#1e1e1e",
+        "secondary": "#1e90ff"
+    },
     "Default": {
         "primary": "#f26722",
         "secondary": "#FFFFFF"

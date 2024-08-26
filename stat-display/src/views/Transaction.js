@@ -105,7 +105,6 @@ function createTransactionInfo(transactionsPerWeek, teams, rosters, matchupPerio
         const waiverTransactions = successfullyExecuted.filter(x => x.type === TransactionTypes.Waiver || x.type === TransactionTypes.FreeAgent || x.type === TransactionTypes.Roster);
 
         waiverTransactions.forEach(transaction => {
-            console.log(transaction);
             const teamMakingTransaction = teams.find(x => x.id === transaction.teamId);
             const addItem = transaction.items.find(x => x?.type === "ADD");
             const dropItem = transaction.items.find(x => x?.type === "DROP");
@@ -148,15 +147,17 @@ function createTransactionInfo(transactionsPerWeek, teams, rosters, matchupPerio
                 }                                    
             }
 
-            executedTransactions.push({
-                id: transaction.id,
-                period: index,
-                proposedDate: transaction.proposedDate,
-                type: transaction.type,
-                addInfo: addInfo,
-                dropInfo: dropInfo,
-                team: teamMakingTransaction
-            });
+            if (addItem || dropItem) {
+                executedTransactions.push({
+                    id: transaction.id,
+                    period: index,
+                    proposedDate: transaction.proposedDate,
+                    type: transaction.type,
+                    addInfo: addInfo,
+                    dropInfo: dropInfo,
+                    team: teamMakingTransaction
+                });
+            }            
         });
     });
     

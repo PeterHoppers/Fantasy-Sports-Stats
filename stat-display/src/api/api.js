@@ -108,3 +108,5 @@ async function getWeeklyTransactions(apiURL, weeks) {
     });
     return transactions;
 }
+
+//DRAFT URL: https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2021/segments/0/leagues/1177758424?view=mDraftDetail&view=mSettings&view=mTeam&view=modular&view=mNav

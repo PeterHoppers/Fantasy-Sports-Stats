@@ -8,14 +8,14 @@ const BottomNav = (props) => {
         <footer className="bottom-nav">
             {Object.keys(Pages).map(page => {
                 return <div className={"bottom-nav__link-holder" + ((props.currentPage === page) ? " active-link" : "")} onClick={() => props.onPageClick(page)}>
-                    <span className="bottom-nav__link">{page}</span>
+                    <span key={page} className="bottom-nav__link">{page}</span>
                 </div> 
             })}
             <div className="bottom-nav__year-select">
                 <label htmlFor="year-select">Year:</label>
                 <select onChange={(event) => props.onYearChange(event.target.value)} defaultValue={props.years[props.years.length - 1]} name="year" id="year-select">
                     {props.years.map((year) => {
-                        return <option key={year} value={year.toString()}>{year}</option>
+                        return <option key={year.toString()} value={year.toString()}>{year}</option>
                     })}                    
                 </select>
             </div>            

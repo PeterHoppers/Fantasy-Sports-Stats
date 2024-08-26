@@ -1,8 +1,9 @@
 .standings {
     width: 100%;
+    $rowHeight: 35px;
 
     tr {
-        height: 35px;
+        height: $rowHeight;
         display: flex;
         background-color: white;
         gap: 1em;
@@ -14,8 +15,8 @@
     }
 
     img {
-        width: 30px;
-        max-width: 30px;
+        width: calc($rowHeight - 5px);
+        max-width: calc($rowHeight - 5px);
     }
 
     &__header-rank {
@@ -40,4 +41,19 @@
     &__standing-wins {
         width: 1rem;
     }
+}
+
+@media (max-height: 750px) {
+    .standings {
+        $rowHeight: 32px;
+
+        tr {
+            height: $rowHeight;
+        }
+    
+        img {
+            width: calc($rowHeight - 5px);
+            max-width: calc($rowHeight - 5px);
+        }
+    }   
 }
