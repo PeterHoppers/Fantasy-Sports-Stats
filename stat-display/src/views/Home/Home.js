@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import Header from "../components/Header/Header";
+import Header from "../../components/Header/Header";
 
-import { Scoreboard } from "../components/Scoreboard/Scoreboard";
-import { Standings } from "../components/Standings/Standings";
+import { Scoreboard } from "../../components/Scoreboard/Scoreboard";
+import { Standings } from "../../components/Standings/Standings";
 
 import "./home.scss";
 

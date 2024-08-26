@@ -4,6 +4,7 @@ const Pages = Object.freeze({
     Analysis: "Analysis",
     Draft: "Draft",
     Transactions: "Transactions",
+    Legacy: "Legacy"
 });
 
 const PositionId = {

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import Header from "../components/Header/Header";
+import Header from "../../components/Header/Header";
 
 import "./schedule.scss";
 
-import { Scoreboard } from "../components/Scoreboard/Scoreboard";
+import { Scoreboard } from "../../components/Scoreboard/Scoreboard";
 
 export const Schedule = (props) => {
     const [scores, setScores] = useState([]);

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Scoreboard } from "../components/Scoreboard/Scoreboard";
-import { Matchup } from "../components/Matchup/Matchup";
+import { Scoreboard } from "../../components/Scoreboard/Scoreboard";
+import { Matchup } from "../../components/Matchup/Matchup";
 
 import "./week.scss";
 

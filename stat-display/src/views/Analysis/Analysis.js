@@ -1,9 +1,9 @@
 import React from "react";
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
-import TeamLineGraph from "../components/TeamLineGraph/TeamLineGraph";
-import Header from "../components/Header/Header";
+import TeamLineGraph from "../../components/TeamLineGraph/TeamLineGraph";
+import Header from "../../components/Header/Header";
 
-import { PositionId, LAST_REGULAR_SEASON_WEEK, ACCENT_COLOR, PRIMARY_GRAPH_COLOR } from "../definitions";
+import { PositionId, LAST_REGULAR_SEASON_WEEK, ACCENT_COLOR, PRIMARY_GRAPH_COLOR } from "../../definitions";
 
 import "./analysis.scss";
 

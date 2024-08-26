@@ -8,14 +8,14 @@ import BottomNav from "./components/BottomNav/BottomNav";
 import LoadingMessage from './components/LoadingMessage/LoadingMessage';
 import { Pages } from './definitions.js';
 
-import { Home } from './views/Home';
-import { Schedule } from './views/Schedule';
-import { Week } from './views/Week';
-import { Analysis } from './views/Analysis';
+import { Home } from './views/Home/Home.js';
+import { Schedule } from './views/Schedule/Schedule.js';
+import { Week } from './views/Week/Week.js';
+import { Analysis } from './views/Analysis/Analysis.js';
 
 import {getCurrentInformation} from './api/api.js';
-import { Draft } from './views/Draft.js';
-import { Transactions } from './views/Transaction.js';
+import { Draft } from './views/Draft/Draft.js';
+import { Transactions } from './views/Transaction/Transaction.js';
 
 function App() {
   const defaultYears = [2021, 2022, 2023, 2024];

@@ -1,13 +1,13 @@
 import React from "react";
-import Header from "../components/Header/Header";
+import Header from "../../components/Header/Header";
 import { useMemo, useState } from "react";
 
 import "./transaction.scss";
-import TransactionDisplay from "../components/Transactions/TransactionDisplay";
-import TransactionStats from "../components/Transactions/TransactionStats";
+import TransactionDisplay from "../../components/Transactions/TransactionDisplay";
+import TransactionStats from "../../components/Transactions/TransactionStats";
 
-import { TransactionView, TransactionFormat } from "../definitions";
-import { MissingPlayers } from "../components/Draft/MissingPlayers";
+import { TransactionView, TransactionFormat } from "../../definitions";
+import { MissingPlayers } from "../../components/Draft/MissingPlayers";
 
 const TransactionTypes = {
     Waiver: "WAIVER",

@@ -1,11 +1,11 @@
 import React from "react";
-import { getDraftData } from "../api/draftData";
-import { MissingPlayers } from "../components/Draft/MissingPlayers";
-import { DraftFormat, DraftView } from "../definitions";
+import { getDraftData } from "../../api/draftData";
+import { MissingPlayers } from "../../components/Draft/MissingPlayers";
+import { DraftFormat, DraftView } from "../../definitions";
 import { useMemo, useState } from "react";
-import DraftPickDisplay from "../components/Draft/DraftPickDisplay";
-import Header from "../components/Header/Header";
-import DraftStats from "../components/Draft/DraftStats";
+import DraftPickDisplay from "../../components/Draft/DraftPickDisplay";
+import Header from "../../components/Header/Header";
+import DraftStats from "../../components/Draft/DraftStats";
 
 import "./draft.scss";
 
