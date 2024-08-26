@@ -47,6 +47,7 @@ function App() {
   }, [])
   
   const updatePage = (newPage) => {
+    scrollToTop();
     setPage(newPage);
     setActiveMatchup(null);
   }
@@ -125,6 +126,10 @@ function App() {
     </>
       
   );
+}
+
+function scrollToTop() {
+  document.querySelector("header").scrollIntoView(); //scrolls to the top when you switch pages
 }
 
 export default App;
