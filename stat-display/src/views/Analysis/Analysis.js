@@ -39,7 +39,7 @@ export const Analysis = (props) => {
                 {projectedPointsPerWeek.length > 0 &&
                     <>
                         <h2>Points Projected Per Week</h2>
-                        <TeamLineGraph graphWidth={graphWidth} data={projectedPointsPerWeek} teamData={teams} min={85} max={145}/>                        
+                        <TeamLineGraph graphWidth={graphWidth} data={projectedPointsPerWeek} teamData={teams} min={85} max={145}/>
                     </>
                 }
                 {totalPointsPerWeek.length > 0 &&

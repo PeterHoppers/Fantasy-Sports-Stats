@@ -99,7 +99,12 @@ function App() {
       case Pages.Transactions:
         return <Transactions info = {info}/>;
       case Pages.Legacy:
-        return <Legacy years={[info2021, info2022, info2023, currentYear]}/>;
+        return <Legacy yearInfos={[
+            {year: 2021, info: info2021}, 
+            {year: 2022, info: info2022}, 
+            {year: 2023, info: info2023},
+            {year: 2024, info: currentInfo}
+          ]}/>;
       default:
         return <span/>
     }    

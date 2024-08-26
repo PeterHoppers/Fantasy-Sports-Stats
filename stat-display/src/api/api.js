@@ -37,6 +37,7 @@ export const getCurrentInformation = async(currentYear) => {
         storedInfo.matchupPeriods = scoreboardInfo.settings.scheduleSettings.matchupPeriods;
         storedInfo.currentWeek = scoreboardInfo.status.currentMatchupPeriod;
         storedInfo.teams = scoreboardInfo.teams;
+        storedInfo.hasGottenInfo = true;
 
         getWeeklyRosters(apiUrl, scoreboardInfo.scoringPeriodId).then(results => storedInfo.rosters = results);
         getWeeklyTransactions(apiUrl, scoreboardInfo.scoringPeriodId).then(results => storedInfo.transactions = results);

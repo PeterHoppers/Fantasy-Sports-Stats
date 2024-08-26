@@ -65,8 +65,15 @@ const TeamLineGraph = (props) => {
                         onClick={handleLegendClick}
                     />
                     {
-                        teams.map(team => {
-                            let strokeColor = TeamColors[team.abbrev]["primary"];
+                        teams.map((team) => {
+                            let strokeColor; 
+                            if (team.abbrev) {
+                                const teamColor = TeamColors[team.abbrev];
+                                if (teamColor) {
+                                    strokeColor = teamColor["primary"];
+                                }
+                            }
+                             
                             const isActive = (hoverLabel === team.name || !hoverLabel);
                             if (!isActive) {
                                 strokeColor += "33";
@@ -79,6 +86,7 @@ const TeamLineGraph = (props) => {
                                 dataKey={team.name} 
                                 hide={isHidden}
                                 stroke={strokeColor} 
+                                dot={{strokeWidth: 2}}
                             />
                         })
                     }
