@@ -163,6 +163,14 @@ const TeamColors = {
         "primary": "#1e1e1e",
         "secondary": "#1e90ff"
     },
+    "CBS" : {
+        "primary" : "#841B2D",
+        "secondary" : "#808080"
+    },
+    "TT" : {
+        "primary" : "#808080",
+        "secondary" : "#a0522d"
+    },
     "Default": {
         "primary": "#f26722",
         "secondary": "#FFFFFF"

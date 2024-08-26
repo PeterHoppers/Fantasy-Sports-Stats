@@ -56,6 +56,16 @@ export const Legacy = (props) => {
     const screenWidth = window.screen.width;
     const graphWidth = screenWidth - 50;
 
+    const percentageRender = (value, name, props) => {
+        return `${(value * 100).toFixed(1)}%`;
+    }
+
+    const rankFormatter = (value, name, props) => {
+        const teams = props.payload.teamCount;
+        const formattedValue = convertDecimalRankIntoWholeNumber(teams, value);
+        return `${value} (#${formattedValue})`;
+    }
+
     return (
         <>
             <Header message="Legacy Stats"/>
@@ -66,8 +76,8 @@ export const Legacy = (props) => {
                         <BarChart width={graphWidth} height={350} data={ownersRecordInfo}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
+                            <YAxis/>
+                            <Tooltip formatter={percentageRender}/>
                             <Legend />
                             <Bar dataKey="averageWinPercentage" name="Win Percentage" fill={ACCENT_COLOR} />
                         </BarChart> 
@@ -91,7 +101,7 @@ export const Legacy = (props) => {
                     <>
                         <h2>Final Rank By Year</h2>
                         <p>Rankings have been converted to a scale of 0 - 1, with 0 being last place and 1 being first place. This helps average out the differing amount of players between years.</p>
-                        <TeamLineGraph graphWidth={graphWidth} data={finishedRankPerYear} teamData={ownerNames} min={0} max={1}/>
+                        <TeamLineGraph graphWidth={graphWidth} data={finishedRankPerYear} teamData={ownerNames} min={0} max={1} customFormatter={rankFormatter}/>
                     </>
                 }
                 {validAverageFinishedRankOfOwners.length > 0 &&
@@ -110,7 +120,7 @@ export const Legacy = (props) => {
                 {draftRankPerYear.length > 0 &&
                     <>
                         <h2>Draft Day Projected Rank by Year</h2>
-                        <TeamLineGraph graphWidth={graphWidth} data={draftRankPerYear} teamData={ownerNames} min={0} max={1}/>
+                        <TeamLineGraph graphWidth={graphWidth} data={draftRankPerYear} teamData={ownerNames} min={0} max={1} customFormatter={rankFormatter}/>
                     </>
                 }
                 {averageRanksOfOwners.length > 0 &&
@@ -149,6 +159,7 @@ function getOwnerRankPerYear(teamsByOwner, yearSpecificStats, nameOfRank) {
         if (Object.keys(teamData).length > 0) {
             data.push({
                 name: dataName,
+                teamCount: yearSpecificStats[year].teamNumber,
                 ...teamData
             });
         }       
@@ -187,9 +198,9 @@ function getOwnerRankings(teamsByOwner, yearSpecificStats) {
         ownerTeams.forEach(team => {
             const teamsInYear = yearSpecificStats[team.year].teamNumber;
             ownerRanks.push({
-                [DRAFT_DAY_RANK]: (teamsInYear - team.draftDayProjectedRank) / (teamsInYear - 1), //translates the position of 1 - team number into 1 - 0, where 1 is first and 0 is last
+                [DRAFT_DAY_RANK]: convertRankingIntoDecimal(teamsInYear, team.draftDayProjectedRank), //translates the position of 1 - team number into 1 - 0, where 1 is first and 0 is last
                 unCalcFinalRank: team.rankCalculatedFinal,
-                [FINISHED_RANK]: (teamsInYear - team.rankCalculatedFinal) / (teamsInYear - 1),
+                [FINISHED_RANK]: convertRankingIntoDecimal(teamsInYear, team.rankCalculatedFinal),
                 year: team.year
             });            
         });
@@ -266,4 +277,12 @@ function getNumberOfRegularSeasonWeeksSoFar(scores) {
     }
 
     return playedRegularSeasonGames[playedRegularSeasonGames.length - 1].matchupPeriodId;
+}
+
+function convertRankingIntoDecimal(teamsInYear, rank) {
+    return (teamsInYear - rank) / (teamsInYear - 1);
+}
+
+function convertDecimalRankIntoWholeNumber(teamsInYear, decimalRank) {
+    return Math.round(teamsInYear - ((teamsInYear - 1) * decimalRank)); 
 }

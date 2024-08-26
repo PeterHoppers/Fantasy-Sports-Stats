@@ -58,7 +58,13 @@ const TeamLineGraph = (props) => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis domain={[props.min, props.max]}/>
-                    <Tooltip />
+                    {props.customFormatter 
+                        ?
+                            <Tooltip formatter={props.customFormatter} />
+                        :
+                            <Tooltip />
+                    }
+                    
                     <Legend  
                         onMouseOver={handleLegendMouseEnter}
                         onMouseOut={handleLegendMouseLeave}

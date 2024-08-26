@@ -129,7 +129,11 @@ function App() {
 }
 
 function scrollToTop() {
-  document.querySelector("header").scrollIntoView(); //scrolls to the top when you switch pages
+  const header = document.querySelector("header");
+
+  if (header) {
+    document.querySelector("header").scrollIntoView(); //scrolls to the top when you switch pages
+  }
 }
 
 export default App;
