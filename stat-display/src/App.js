@@ -16,6 +16,7 @@ import { Analysis } from './views/Analysis/Analysis.js';
 import {getCurrentInformation} from './api/api.js';
 import { Draft } from './views/Draft/Draft.js';
 import { Transactions } from './views/Transaction/Transaction.js';
+import { Legacy } from './views/Legacy/Legacy.js';
 
 function App() {
   const defaultYears = [2021, 2022, 2023, 2024];
@@ -97,6 +98,8 @@ function App() {
         return <Draft info = {info} year = {selectedYear}/>;
       case Pages.Transactions:
         return <Transactions info = {info}/>;
+      case Pages.Legacy:
+        return <Legacy years={[info2021, info2022, info2023, currentYear]}/>;
       default:
         return <span/>
     }    
