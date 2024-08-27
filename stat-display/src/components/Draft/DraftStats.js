@@ -3,6 +3,7 @@ import { DefaultPositionNames, ACCENT_COLOR, StartingAmountPerPosition, PRIMARY_
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 import './DraftStats.scss';
 import DraftPick from "./DraftPick";
+import { getGraphWidth } from "../../api/graphData";
 
 const DraftStats = (props) => {      
     const pickInfos = props.data;
@@ -19,9 +20,8 @@ const DraftStats = (props) => {
     const top10SleeperPicks = getPicksBySleeperValue(pickInfos, teamAmount, 10, true);
     const worse10Picks = getPicksBySleeperValue(pickInfos, teamAmount, 10, false);
 
-    const screenWidth = window.screen.width;
-    const parentWidth = 1500; //we could grap this, and if we start adjusting things, we should
-    const graphWidth = (screenWidth - 50 > parentWidth) ? parentWidth : screenWidth - 50;
+    const parentElement = document.querySelector(".draft-view__draft-section-holder");
+    const graphWidth = getGraphWidth(parentElement);
 
     return (
         <>

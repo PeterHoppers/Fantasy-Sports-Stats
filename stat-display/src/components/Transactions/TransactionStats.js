@@ -2,6 +2,7 @@ import React from "react";
 import { ACCENT_COLOR, PRIMARY_GRAPH_COLOR } from "../../definitions";
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 import './TransactionStats.scss';
+import { getGraphWidth, DEFAULT_HEIGHT } from "../../api/graphData";
 
 const TransactionStats = (props) => {      
     const transactionInfos = props.data;
@@ -13,9 +14,8 @@ const TransactionStats = (props) => {
         teams = props.teams.sort((a, b) => a.rankCalculatedFinal - b.rankCalculatedFinal);
     }
 
-    const screenWidth = window.screen.width;
-    const parentWidth = 1500; //we could grap this, and if we start adjusting things, we should
-    const graphWidth = (screenWidth - 50 > parentWidth) ? parentWidth : screenWidth - 50;
+    const parentElement = document.querySelector(".draft-view__draft-section-holder");
+    const graphWidth = getGraphWidth(parentElement);
 
     const teamsDraftData = getTransactionDataPerTeam(transactionInfos, teams);
 
@@ -26,7 +26,7 @@ const TransactionStats = (props) => {
                 {teamsDraftData.length > 0 &&
                     <>
                         <h2>Total Transactions</h2>
-                        <BarChart width={graphWidth} height={350} data={teamsDraftData}>
+                        <BarChart width={graphWidth} height={DEFAULT_HEIGHT} data={teamsDraftData}>
                             <CartesianGrid strokeDasharray="3 3"/>
                             <XAxis dataKey="name"/>
                             <YAxis/>
@@ -35,7 +35,7 @@ const TransactionStats = (props) => {
                             <Bar dataKey="amount" name="Amount of Transactions" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart> 
                         <h2>Players Added</h2>
-                        <BarChart width={graphWidth} height={350} data={teamsDraftData}>
+                        <BarChart width={graphWidth} height={DEFAULT_HEIGHT} data={teamsDraftData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name"/>
                             <YAxis/>
@@ -44,7 +44,7 @@ const TransactionStats = (props) => {
                             <Bar dataKey="playersAdded" name="Players Added" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart>                         
                         <h2>Players Dropped</h2>
-                        <BarChart width={graphWidth} height={350} data={teamsDraftData}>
+                        <BarChart width={graphWidth} height={DEFAULT_HEIGHT} data={teamsDraftData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />

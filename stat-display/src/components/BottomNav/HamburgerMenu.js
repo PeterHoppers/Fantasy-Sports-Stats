@@ -13,12 +13,12 @@ export const HamburgerMenu = (props) => {
     return (
         <>
             <input id="menu-toggle" type="checkbox" onChange={onToggleChange} checked={isMenuOpen}/>
-            <label class='menu-button-container' for="menu-toggle">
-                <div class='menu-button'></div>
+            <label className='menu-button-container' htmlFor="menu-toggle">
+                <div className='menu-button'></div>
             </label>
-            <ul class="menu">
+            <ul className="menu">
                 {props.options.map(page => {
-                    return <li className={(props.currentPage === page ? "selected-link" : "")} onClick={() => {
+                    return <li key={page} className={(props.currentPage === page ? "selected-link" : "")} onClick={() => {
                         props.onPageClick(page);
                         setMenuOpenState(false);
                     }}>

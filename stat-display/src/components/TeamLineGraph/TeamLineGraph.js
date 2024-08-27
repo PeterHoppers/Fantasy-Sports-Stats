@@ -3,6 +3,7 @@ import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from 'r
 import { TeamColors } from "../../definitions";
 import { useState } from "react";
 import './TeamLineGraph.scss';
+import { DEFAULT_HEIGHT } from "../../api/graphData";
 
 const TeamLineGraph = (props) => {
     const [hoverLabel, setHoverLabel] = useState(null);
@@ -47,7 +48,7 @@ const TeamLineGraph = (props) => {
     const rerenderGraph = (hasHidden) => {
         //in order for the graph to properly update when we hide/show something, we need to modify a property that adjusts how the graph is displayed
         //best way I got is to change the height very slightly. It's real jank, but it works without adding complexity to any other code
-        const newHeight = (hasHidden) ? 350 : 350.000001;
+        const newHeight = (hasHidden) ? DEFAULT_HEIGHT : DEFAULT_HEIGHT + .000001;
         setHeight(newHeight);
     }
 
@@ -71,7 +72,7 @@ const TeamLineGraph = (props) => {
                         onClick={handleLegendClick}
                     />
                     {
-                        teams.map((team) => {
+                        teams.map((team, index) => {
                             let strokeColor; 
                             if (team.abbrev) {
                                 const teamColor = TeamColors[team.abbrev];
@@ -87,7 +88,7 @@ const TeamLineGraph = (props) => {
                             const isHidden = isTeamHidden(team.name);
 
                             return <Line 
-                                key={team.id} 
+                                key={index} 
                                 type="monotone" 
                                 dataKey={team.name} 
                                 hide={isHidden}

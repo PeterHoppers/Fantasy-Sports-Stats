@@ -4,6 +4,7 @@ import Header from "../../components/Header/Header";
 import { NameOfOwnerGuid } from "../../definitions";
 import { ACCENT_COLOR, PRIMARY_GRAPH_COLOR } from "../../definitions";
 import TeamLineGraph from "../../components/TeamLineGraph/TeamLineGraph";
+import { getGraphWidth } from "../../api/graphData";
 
 import "./legacy.scss";
 
@@ -53,8 +54,7 @@ export const Legacy = (props) => {
     const validAverageFinishedRankOfOwners = averageRanksOfOwners.filter(x => !isNaN(x.averageFinishedRank));
     validAverageFinishedRankOfOwners.sort((a, b) => a.averageFinishedRank - b.averageFinishedRank);
 
-    const screenWidth = window.screen.width;
-    const graphWidth = screenWidth - 50;
+    const graphWidth = getGraphWidth();
 
     const percentageRender = (value, name, props) => {
         return `${(value * 100).toFixed(1)}%`;

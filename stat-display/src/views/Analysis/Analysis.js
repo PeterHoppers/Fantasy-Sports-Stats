@@ -6,6 +6,7 @@ import Header from "../../components/Header/Header";
 import { PositionId, LAST_REGULAR_SEASON_WEEK, ACCENT_COLOR, PRIMARY_GRAPH_COLOR } from "../../definitions";
 
 import "./analysis.scss";
+import { getGraphWidth, DEFAULT_HEIGHT } from "../../api/graphData";
 
 //Look into using https://recharts.org/en-US/api/BarChart
 
@@ -29,8 +30,8 @@ export const Analysis = (props) => {
     const rankingsByWeekData = getRankingsPerWeek(teams, rankingScores);
     const rankingData = getRankingData(teams, rankingScores, lastWeek);
 
-    const screenWidth = window.screen.width;
-    const graphWidth = screenWidth - 50;
+    const holderElement = document.querySelector("analysis-view__main");
+    const graphWidth = getGraphWidth(holderElement);
 
     return (
         <>
@@ -51,7 +52,7 @@ export const Analysis = (props) => {
                 {projectedVsScoredData.length > 0 &&
                     <>
                         <h2>Average Points Projected vs. Average Points Scored</h2>
-                        <BarChart width={graphWidth} height={350} data={projectedVsScoredData}>
+                        <BarChart width={graphWidth} height={DEFAULT_HEIGHT} data={projectedVsScoredData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis domain={[80, 140]}/>
@@ -65,7 +66,7 @@ export const Analysis = (props) => {
                 {opponentProjectedVsScoredData.length > 0 &&
                     <>
                         <h2>Average Points Projected Against vs. Average Points Scored Against</h2>
-                        <BarChart width={graphWidth} height={350} data={opponentProjectedVsScoredData}>
+                        <BarChart width={graphWidth} height={DEFAULT_HEIGHT} data={opponentProjectedVsScoredData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis domain={[80, 140]}/>
@@ -87,7 +88,7 @@ export const Analysis = (props) => {
                     <>
                         <h2>Estimated Teams Beaten vs Actual Total Teams Beaten</h2>
                         <p>The estimation of number of teams beaten corresponds with a team's record. It estimates that a win equals beating ~75% of the other teams, while a lose equals only beating ~25% of the other teams. A bye week equals ~50%.</p>
-                        <BarChart width={graphWidth} height={350} data={rankingData}>
+                        <BarChart width={graphWidth} height={DEFAULT_HEIGHT} data={rankingData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
