@@ -7,6 +7,7 @@ import { Scoreboard } from "../../components/Scoreboard/Scoreboard";
 
 export const Schedule = (props) => {
     const [scores, setScores] = useState([]);
+    const currentWeek = props.info.currentWeek;
 
     useEffect(() => {
         const scoreSchedule = [];
@@ -32,6 +33,7 @@ export const Schedule = (props) => {
                             scores = {score}
                             teams = {props.info.teams}
                             onClickScoreDisplay = {props.triggerMatchup}
+                            isWeekDisabled = {(currentWeek < index)}
                         />
                     </>
                 )}

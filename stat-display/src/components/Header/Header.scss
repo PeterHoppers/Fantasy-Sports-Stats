@@ -1,14 +1,17 @@
 @import "../../styles/colors.scss";
 
 .welcome-header {
+    --border-height: 3px;
+    --calc-header-height: calc(var(--header-height) - var(--border-height));
+
     display: flex;
     position: relative;
-    height: 50px;
-    min-height: 50px;
+    height: var(--calc-header-height);
+    min-height: var(--calc-header-height);
     align-items: center;
     background-color: $carrollOrange;
     color: $carrollWhite;
-    border-bottom: 3px solid $carrollBlack;
+    border-bottom: var(--border-height) solid $carrollBlack;
 
     &__message {
         position: absolute;

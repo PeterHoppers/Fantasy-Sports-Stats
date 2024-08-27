@@ -3756,4 +3756,417 @@ export const MissingPlayers = [
             ]
         }
     },
+    {
+        "acquisitionDate": 1638259478433,
+        "acquisitionType": "TRADE",
+        "injuryStatus": "NORMAL",
+        "lineupSlotId": 20, //update that this as well possibly
+        "pendingTransactionIds": null,
+        "playerId": -16012, //need to change
+        "playerPoolEntry": {
+            "appliedStatTotal": 140,
+            "draftAuctionValue": 0,
+            "id": -16012,
+            "keeperValue": 16,
+            "keeperValueFuture": 0,
+            "lineupLocked": false,
+            "onTeamId": 0,
+            "player": {
+                "active": true,
+                "defaultPositionId": 16,
+                "draftRanksByRankType": {
+                    "STANDARD": {
+                        "auctionValue": 0,
+                        "rank": 238,
+                        "rankSourceId": 0,
+                        "rankType": "STANDARD",
+                        "slotId": 0
+                    },
+                    "PPR": {
+                        "auctionValue": 0,
+                        "rank": 238,
+                        "rankSourceId": 0,
+                        "rankType": "PPR",
+                        "slotId": 0
+                    }
+                },
+                "droppable": true,
+                "eligibleSlots": [
+                    16,
+                    20,
+                    21
+                ],
+                "firstName": "Chiefs",
+                "fullName": "Chiefs D/ST",
+                "id": -16012,
+                "injured": false,
+                "invalid": false,
+                "lastName": "D/ST",
+                "ownership": {
+                    "auctionValueAverage": 0.9455980779131629,
+                    "auctionValueAverageChange": 0.061877147680604705,
+                    "averageDraftPosition": 148.15810274100014,
+                    "averageDraftPositionPercentChange": -1.781712470632101,
+                    "percentChange": 1.1046694327278885,
+                    "percentOwned": 67.31430119237736,
+                    "percentStarted": 51.112810297445385
+                },
+                "proTeamId": 12,
+                "rankings": {
+                    "0": [
+                        {
+                            "auctionValue": 0,
+                            "rank": 7,
+                            "rankSourceId": 3,
+                            "rankType": "STANDARD",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 9,
+                            "rankSourceId": 5,
+                            "rankType": "PPR",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 9,
+                            "rankSourceId": 5,
+                            "rankType": "STANDARD",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 12,
+                            "rankSourceId": 6,
+                            "rankType": "PPR",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 11,
+                            "rankSourceId": 7,
+                            "rankType": "PPR",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 11,
+                            "rankSourceId": 7,
+                            "rankType": "STANDARD",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 9,
+                            "rankSourceId": 9,
+                            "rankType": "PPR",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 12,
+                            "rankSourceId": 10,
+                            "rankType": "PPR",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 6,
+                            "rankSourceId": 11,
+                            "rankType": "PPR",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 6,
+                            "rankSourceId": 11,
+                            "rankType": "STANDARD",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 9,
+                            "rankSourceId": 12,
+                            "rankType": "PPR",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 0,
+                            "rankSourceId": 0,
+                            "rankType": "PPR",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 0,
+                            "rankSourceId": 0,
+                            "rankType": "STANDARD",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 7,
+                            "rankSourceId": 3,
+                            "rankType": "PPR",
+                            "slotId": 16
+                        }
+                    ],
+                    "1": [
+                        {
+                            "auctionValue": 0,
+                            "rank": 15,
+                            "rankSourceId": 11,
+                            "rankType": "PPR",
+                            "slotId": 16
+                        },
+                        {
+                            "auctionValue": 0,
+                            "rank": 15,
+                            "rankSourceId": 11,
+                            "rankType": "STANDARD",
+                            "slotId": 16
+                        }
+                    ]
+                },
+                "seasonOutlook": "The No. 6 defense in terms of fantasy scoring in 2023, in large part due to their 57 sacks (second in NFL), the Chiefs were thankfully able to retain every key part from their defensive line. DT Chris Jones and DE Mike Danna, who totaled 17 of those sacks, were re-signed, as were DTs Derrick Nnadi and Tershawn Wharton as well as Drue Tranquill, who led their linebacking crew in sacks (4 �) and tackles (79). That should provide some stability to this fantasy-worthy unit, which reaps the benefit of six games within the AFC West, which isn't loaded with otherworldly offensive talent, not to mention 2024 alignment with an NFC South team that was one of the league's lower scoring divisions last year.",        
+                "universeId": 1
+            },
+            "ratings": {
+                "0": {
+                    "positionalRanking": 0,
+                    "totalRanking": 0,
+                    "totalRating": 0
+                }
+            },
+            "rosterLocked": false,
+            "status": "WAIVERS",
+            "tradeLocked": false,
+            "transactions": [
+                {
+                    "bidAmount": 0,
+                    "executionType": "EXECUTE",
+                    "id": "4bb18c5d-39f1-46d8-ad3d-ed5a1f15a488",
+                    "isActingAsTeamOwner": false,
+                    "isLeagueManager": false,
+                    "isPending": false,
+                    "items": [
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 3,
+                            "playerId": 4427366,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 18,
+                            "playerId": 4262921,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 23,
+                            "playerId": 4361529,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 38,
+                            "playerId": 4258173,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 43,
+                            "playerId": 3054850,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 58,
+                            "playerId": 3116365,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 63,
+                            "playerId": 4241478,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 78,
+                            "playerId": 4428331,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 83,
+                            "playerId": 4678008,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 98,
+                            "playerId": 15818,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 103,
+                            "playerId": 4038815,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 118,
+                            "playerId": -16025,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 123,
+                            "playerId": 4360310,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 138,
+                            "playerId": -16012,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 143,
+                            "playerId": 4429096,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        },
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 158,
+                            "playerId": 4242431,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DRAFT"
+                        }
+                    ],
+                    "memberId": "{0D2E536B-00DF-4337-A2BC-1750974EDD92}",
+                    "proposedDate": 1724635386244,
+                    "rating": 0,
+                    "scoringPeriodId": 1,
+                    "skipTransactionCounters": false,
+                    "status": "EXECUTED",
+                    "subOrder": 0,
+                    "teamId": 6,
+                    "type": "DRAFT"
+                },
+                {
+                    "bidAmount": 0,
+                    "executionType": "PROCESS",
+                    "id": "534d60eb-5a94-4a77-975f-2c1a969c644c",
+                    "isActingAsTeamOwner": false,
+                    "isLeagueManager": false,
+                    "isPending": false,
+                    "items": [
+                        {
+                            "fromLineupSlotId": -1,
+                            "fromTeamId": 0,
+                            "isKeeper": false,
+                            "overallPickNumber": 0,
+                            "playerId": 4426348,
+                            "toLineupSlotId": 20,
+                            "toTeamId": 6,
+                            "type": "ADD"
+                        },
+                        {
+                            "fromLineupSlotId": 20,
+                            "fromTeamId": 6,
+                            "isKeeper": false,
+                            "overallPickNumber": 0,
+                            "playerId": -16012,
+                            "toLineupSlotId": -1,
+                            "toTeamId": 0,
+                            "type": "DROP"
+                        }
+                    ],
+                    "memberId": "NightlyLeagueUpdateTaskProcessor",
+                    "processDate": 1724742771922,
+                    "proposedDate": 1724742771892,
+                    "rating": 0,
+                    "relatedTransactionId": "e1d4d5f0-b02a-4f24-9de6-9f318583135d",
+                    "scoringPeriodId": 1,
+                    "skipTransactionCounters": false,
+                    "status": "EXECUTED",
+                    "subOrder": 3,
+                    "teamId": 6,
+                    "type": "WAIVER"
+                }
+            ],
+            "waiverDate": 1724742000000,
+            "waiverProcessDate": 1724828400000
+        }
+    },      
 ]

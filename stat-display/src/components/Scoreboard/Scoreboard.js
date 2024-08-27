@@ -4,6 +4,7 @@ import {ScoreDisplay} from "./ScoreDisplay.js";
 import "./Scoreboard.scss";
 
 export const Scoreboard = (props) => {
+    const isEnabled = !props.isWeekDisabled;
     return (
         <section className="scoreboard">
             <span className="scoreboard-week">{"Week " + props.week}</span>
@@ -26,6 +27,7 @@ export const Scoreboard = (props) => {
                             awayScore = {getScoreForTeam(score.away)}
                             onClickScoreDisplay = {props.onClickScoreDisplay}
                             activeMatchup = {props.activeMatchup}
+                            isEnabled = {isEnabled}
                         />
                     }                
                 )}

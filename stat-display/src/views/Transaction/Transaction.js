@@ -37,14 +37,20 @@ export const Transactions = (props) => {
         setView(newView);
     }
 
+    let transactionViewClass = "transactions-view__main item-list-view";
+
+    if (view === TransactionView.Stats) {
+        transactionViewClass += " item-view__stats";
+    }
+
     return (
         <>
             <Header message="Transactions"/>
-            <main className="transactions-view__main item-list-view">                
+            <main className={transactionViewClass}>                
             {executedTransactions?.length > 0 ?
                     <section className="item-list-view__items-holder">
-                        <div className="draft-view__draft-selects-holder">
-                            <div className="draft-view__draft-sort-holder">
+                        <div className="item-list-view__selects-holder">
+                            <div className="item-list-view__sort-holder">
                                 {view === TransactionView.AddDrop &&
                                     <>
                                         <label htmlFor="sort-select">Sort By:</label>
@@ -56,7 +62,7 @@ export const Transactions = (props) => {
                                     </>
                                 }                                
                             </div>
-                            <div className="draft-view__draft-sort-holder">
+                            <div className="item-list-view__sort-holder">
                                 <label htmlFor="view-select">View:</label>
                                 <select onChange={(event) => onViewChange(event.target.value)} defaultValue={TransactionView.AddDrop} name="viewOptions" id="view-select">
                                     {Object.values(TransactionView).map(format => {

@@ -30,8 +30,8 @@
     border: 2px solid $carrollGray;
     transition: all .125s;
 
-    &:hover,
-    &.active {
+    &:hover:not(.disabled),
+    &.active:not(.disabled) {
         cursor: pointer;
         scale: 1.03;
         outline: 3px solid $carrollBlack;

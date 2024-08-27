@@ -79,7 +79,7 @@ export const Draft = (props) => {
     let draftViewClass = "draft-view__main item-list-view";
 
     if (view === DraftView.Stats) {
-        draftViewClass += " draft-view__stats";
+        draftViewClass += " item-view__stats";
     }
 
     return (
@@ -87,9 +87,9 @@ export const Draft = (props) => {
             <Header message="Draft Summary"/>
             <main className={draftViewClass}>                
                 {pickInfos ?
-                    <section className="draft-view__draft-pick-holder item-list-view__items-holder">
-                        <div className="draft-view__draft-selects-holder">
-                            <div className="draft-view__draft-sort-holder">
+                    <section className="item-list-view__items-holder">
+                        <div className="item-list-view__selects-holder">
+                            <div className="item-list-view__sort-holder">
                                 {view === DraftView.Overview &&
                                     <>
                                         <label htmlFor="sort-select">Sort By:</label>
@@ -101,7 +101,7 @@ export const Draft = (props) => {
                                     </>
                                 }                                
                             </div>
-                            <div className="draft-view__draft-sort-holder">
+                            <div className="item-list-view__sort-holder">
                                 <label htmlFor="view-select">View:</label>
                                 <select onChange={(event) => onViewChange(event.target.value)} defaultValue={DraftView.Overview} name="viewOptions" id="view-select">
                                     {Object.values(DraftView).map(format => {
