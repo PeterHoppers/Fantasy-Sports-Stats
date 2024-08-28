@@ -3,10 +3,10 @@ import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'rec
 import TeamLineGraph from "../../components/TeamLineGraph/TeamLineGraph";
 import Header from "../../components/Header/Header";
 
-import { PositionId, LAST_REGULAR_SEASON_WEEK, ACCENT_COLOR, PRIMARY_GRAPH_COLOR } from "../../definitions";
+import { PositionId, ResultOptions, LAST_REGULAR_SEASON_WEEK, ACCENT_COLOR, PRIMARY_GRAPH_COLOR } from "../../definitions";
 
 import "./analysis.scss";
-import { getGraphWidth, DEFAULT_HEIGHT } from "../../api/graphData";
+import { getGraphWidth, DEFAULT_HEIGHT, FADE_VALUE } from "../../api/graphData";
 
 //Look into using https://recharts.org/en-US/api/BarChart
 
@@ -32,6 +32,27 @@ export const Analysis = (props) => {
 
     const holderElement = document.querySelector("analysis-view__main");
     const graphWidth = getGraphWidth(holderElement);
+
+    const customDotRenderer = (props) => {
+        let fillColor = "#000000";
+        const winnerColor = "#0ed145";
+        const loserColor = "#ec1c24";
+
+        const { cx, cy, stroke, r, payload, value, dataKey } = props;
+        if (payload.winners.includes(dataKey)) {
+            fillColor = winnerColor;
+        } else if (payload.losers.includes(dataKey)) {
+            fillColor = loserColor;
+        }
+
+        if (stroke.length > 6 && stroke.endsWith(FADE_VALUE)) {
+            fillColor += FADE_VALUE;
+        }
+
+        return <svg fill={fillColor}>
+            <circle cx={cx} cy={cy} r={r + 2} />;
+        </svg>        
+    }
 
     return (
         <>
@@ -81,7 +102,8 @@ export const Analysis = (props) => {
                 {rankingsByWeekData.length > 0 &&
                     <>
                         <h2>Teams Beaten By Week</h2>
-                        <TeamLineGraph graphWidth={graphWidth} data={rankingsByWeekData} teamData={teams} min={0} max={teams.length - 1}/>                        
+                        <p>This chart orders everyone's score by each week and gives a value to each team based upon where they ranked. The team with the lowest score gets a value of 0 while the team with the highest score gets a value equal to the number of teams in the league - 1. Teams with green dots won that week, teams with red dots lost, and teams with black dots were on bye.</p>
+                        <TeamLineGraph graphWidth={graphWidth} data={rankingsByWeekData} teamData={teams} min={0} max={teams.length - 1} customDotRenderer={customDotRenderer}/>                        
                     </>
                 }
                 {rankingData.length > 0 &&
@@ -128,18 +150,42 @@ export const Analysis = (props) => {
                 if (score.home) {
                     scorePerWeek[week].push({
                         teamId: score.home.teamId,
-                        points: score.home.totalPoints
+                        points: score.home.totalPoints,
+                        result: getResultType(score.winner, true)
                     });
                 }
                 if (score.away) {
                     scorePerWeek[week].push({
                         teamId: score.away.teamId,
-                        points: score.away.totalPoints
+                        points: score.away.totalPoints,
+                        result: getResultType(score.winner, false)
                     });
                 }
             });
         }
         return scorePerWeek;
+    }
+
+    function getResultType(winner, isHome) {
+        if (winner === "UNDECIDED") {
+            return ResultOptions.Other;
+        }
+
+        if (winner === "HOME") {
+            if (isHome) {
+                return ResultOptions.Win;
+            } else {
+                return ResultOptions.Loss;
+            }
+        }
+
+        if (winner === "AWAY") {
+            if (!isHome) {
+                return ResultOptions.Win;
+            } else {
+                return ResultOptions.Loss;
+            }
+        }
     }
 
     function getProjectedScoreByWeek(teams, rosters, lastWeek) {
@@ -179,14 +225,16 @@ export const Analysis = (props) => {
         const rankingScores = [];
         for (let week = 1; week <= lastWeek; week++) {
             rankingScores[week] = [];
-            scoresByWeek[week].sort((a, b) => a.points - b.points);
+            scoresByWeek[week].sort((a, b) => a.points - b.points); //we sort by lowest points first, therefore those later in the list beat the most people
 
             for (let index = 0; index < scoresByWeek[week].length; index++) {
-                const teamId = scoresByWeek[week][index].teamId;
+                const teamWeekScore = scoresByWeek[week][index];
+                const teamId = teamWeekScore.teamId;
 
                 rankingScores[week].push({
                     teamId: teamId,
-                    points: index
+                    points: index,
+                    result: teamWeekScore.result
                 });
             }
         }
@@ -296,13 +344,24 @@ export const Analysis = (props) => {
         let weekNumber = 0;
         rankingScores.forEach(week => {
             const weekData = {};
+            const weekWinners = [];
+            const weekLosers = [];
 
             weekNumber++;
             weekData["name"] = "Week " + weekNumber;
             teams.forEach(team => {
                 const teamInfo = week.filter(rank => rank.teamId === team.id);
                 weekData[team.name] = teamInfo[0].points;
+
+                if (teamInfo[0].result === ResultOptions.Win) {
+                    weekWinners.push(team.name);
+                } else if (teamInfo[0].result === ResultOptions.Loss) {
+                    weekLosers.push(team.name);
+                }
             });
+
+            weekData.winners = weekWinners;
+            weekData.losers = weekLosers;
 
             data.push(weekData);
         });

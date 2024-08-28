@@ -1,4 +1,5 @@
 export const DEFAULT_HEIGHT = 350;
+export const FADE_VALUE = "33"; //to add transprency to the colors
 
 export function getGraphWidth(clampingElement) {
     let graphWidth = window.screen.width - 50;

@@ -70,6 +70,12 @@ const TransactionView = Object.freeze({
     Stats: "Stats"
 });
 
+const ResultOptions = Object.freeze({
+    Win: "Win",
+    Loss: "Loss",
+    Other: "Other"
+});
+
 const TeamColors = {
     "LUNA": {
         "primary": "#f1b215",
@@ -209,6 +215,7 @@ export {
     DraftFormat,
     TransactionView,
     DraftView,
+    ResultOptions,
     TeamColors,
     NameOfOwnerGuid,
     LAST_REGULAR_SEASON_WEEK,

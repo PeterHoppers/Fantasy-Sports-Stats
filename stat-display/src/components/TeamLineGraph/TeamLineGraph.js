@@ -3,7 +3,7 @@ import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from 'r
 import { TeamColors } from "../../definitions";
 import { useState } from "react";
 import './TeamLineGraph.scss';
-import { DEFAULT_HEIGHT } from "../../api/graphData";
+import { DEFAULT_HEIGHT, FADE_VALUE } from "../../api/graphData";
 
 const TeamLineGraph = (props) => {
     const [hoverLabel, setHoverLabel] = useState(null);
@@ -83,7 +83,7 @@ const TeamLineGraph = (props) => {
                              
                             const isActive = (hoverLabel === team.name || !hoverLabel);
                             if (!isActive) {
-                                strokeColor += "33";
+                                strokeColor += FADE_VALUE;
                             }
                             const isHidden = isTeamHidden(team.name);
 
@@ -93,7 +93,7 @@ const TeamLineGraph = (props) => {
                                 dataKey={team.name} 
                                 hide={isHidden}
                                 stroke={strokeColor} 
-                                dot={{strokeWidth: 2}}
+                                dot={(props.customDotRenderer) ? props.customDotRenderer : {strokeWidth: 2}}
                             />
                         })
                     }
