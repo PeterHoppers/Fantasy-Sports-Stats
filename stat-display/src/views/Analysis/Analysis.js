@@ -25,6 +25,7 @@ export const Analysis = (props) => {
 
     const totalPointsPerWeek = formatPoints(teams, totalPointsScores);
     const projectedPointsPerWeek = formatPoints(teams, projectedScores);
+    const differenceInPointsPerWeek = getDifferenceInProjectedVsScoredByWeek(totalPointsPerWeek, projectedPointsPerWeek);
     const projectedVsScoredData = getProjectedVsScoredData(teams, totalPointsScores, projectedScores, lastWeek);
     const opponentProjectedVsScoredData = getOpponentProjectedVsScoredData(teams, matchups, totalPointsScores, projectedScores);
     const rankingsByWeekData = getRankingsPerWeek(teams, rankingScores);
@@ -68,6 +69,12 @@ export const Analysis = (props) => {
                     <>
                         <h2>Points Scored Per Week</h2>
                         <TeamLineGraph graphWidth={graphWidth} data={totalPointsPerWeek} teamData={teams} min={35} max={200}/>                        
+                    </>
+                }
+                {differenceInPointsPerWeek.length > 0 &&
+                    <>
+                        <h2>Difference In Points Scored vs. Points Projected Per Week</h2>
+                        <TeamLineGraph graphWidth={graphWidth} data={differenceInPointsPerWeek} teamData={teams} min={-100} max={100}/>                        
                     </>
                 }
                 {projectedVsScoredData.length > 0 &&
@@ -260,18 +267,58 @@ export const Analysis = (props) => {
         return data;
     }
 
+    function getDifferenceInProjectedVsScoredByWeek(scoresByWeek, projectedScoresByWeek) {
+        const data = [];
+
+        for (let index = 0; index < scoresByWeek.length; index ++) {
+            const weekData = {};
+            const weekScore = scoresByWeek[index];
+            const projectedScore = projectedScoresByWeek[index];
+
+            Object.keys(weekScore).forEach(team => {
+                const weekScoreForTeam = Number(weekScore[team]);
+                const projectedScoreForTeam = Number(projectedScore[team]);
+                const difference = weekScoreForTeam - projectedScoreForTeam;
+                weekData[team] = Number(difference.toFixed(2));
+            });
+
+            weekData.name = weekScore.name;
+            data.push(weekData);
+        }            
+
+        return data;
+    }
+
     function getProjectedVsScoredData(teams, scoresByWeek, projectedScoresByWeek, totalWeeks) {
         const data = [];
+        const buggedThreshold = 31; //some projection weeks got bugged, so we're trying to remove bad data with this
         teams.forEach(team => {
             const teamScores = scoresByWeek.flat().filter(score => score.teamId === team.id);
-            const scoredPoints = teamScores.reduce((accumulator, currentValue) => accumulator + currentValue.points, 0);
+            let validScoredWeeks = 0; 
+            const scoredPoints = teamScores.reduce((accumulator, currentValue) => {
+                if (currentValue.points < buggedThreshold) {
+                    return accumulator; 
+                }
+
+                validScoredWeeks++;
+                return accumulator + currentValue.points;
+            }, 0);
+            
             const teamProjectedScores = projectedScoresByWeek.flat().filter(score => score.teamId === team.id);
-            const projectedPoints = teamProjectedScores.reduce((accumulator, currentValue) => accumulator + currentValue.points, 0);
+            let validProjectedWeeks = 0;
+            const projectedPoints = teamProjectedScores.reduce((accumulator, currentValue) => {
+                if (currentValue.points < buggedThreshold) {
+                    return accumulator; 
+                }
+                
+                validProjectedWeeks++;
+                return accumulator + currentValue.points;
+            }, 0);
     
             data.push({
                 "name": team.name,
-                "projected": (projectedPoints / totalWeeks).toFixed(2),
-                "scored": (scoredPoints/ totalWeeks).toFixed(2)
+                "projected": (projectedPoints / validProjectedWeeks).toFixed(2),
+                "scored": (scoredPoints/ validScoredWeeks).toFixed(2)
             });
         });
 

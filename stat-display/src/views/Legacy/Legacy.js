@@ -1,5 +1,5 @@
 import React from "react";
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, LineChart, Line } from 'recharts';
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 import Header from "../../components/Header/Header";
 import { NameOfOwnerGuid } from "../../definitions";
 import { ACCENT_COLOR, PRIMARY_GRAPH_COLOR } from "../../definitions";
@@ -48,7 +48,14 @@ export const Legacy = (props) => {
     averagePointsForAgainst.sort((a, b) => a.averagePointsFor - b.averagePointsFor);
 
     const draftRankPerYear = getOwnerRankPerYear(teamsByOwner, extraYearInfo, DRAFT_DAY_RANK);
-    const finishedRankPerYear = getOwnerRankPerYear(teamsByOwner, extraYearInfo, FINISHED_RANK);
+    const finishedRankPerYear = getOwnerRankPerYear(teamsByOwner, extraYearInfo, FINISHED_RANK);    
+    
+    const foundNames = [];
+    finishedRankPerYear.forEach(year => {
+        foundNames.push(...Object.keys(year));
+    });
+
+    const finishedOwnerNames = ownerNames.filter(x => foundNames.includes(x.name));
     const averageRanksOfOwners = getOwnerAverageRank(teamsByOwner, extraYearInfo);
     averageRanksOfOwners.sort((a, b) => a.averageDraftRank - b.averageDraftRank);
     const validAverageFinishedRankOfOwners = averageRanksOfOwners.filter(x => !isNaN(x.averageFinishedRank));
@@ -101,7 +108,7 @@ export const Legacy = (props) => {
                     <>
                         <h2>Final Rank By Year</h2>
                         <p>Rankings have been converted to a scale of 0 - 1, with 0 being last place and 1 being first place. This helps average out the differing amount of players between years.</p>
-                        <TeamLineGraph graphWidth={graphWidth} data={finishedRankPerYear} teamData={ownerNames} min={0} max={1} customFormatter={rankFormatter}/>
+                        <TeamLineGraph graphWidth={graphWidth} data={finishedRankPerYear} teamData={finishedOwnerNames} min={0} max={1} customFormatter={rankFormatter}/>
                     </>
                 }
                 {validAverageFinishedRankOfOwners.length > 0 &&
