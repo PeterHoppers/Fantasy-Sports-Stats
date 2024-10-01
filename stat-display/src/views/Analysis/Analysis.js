@@ -115,16 +115,16 @@ export const Analysis = (props) => {
                 }
                 {rankingData.length > 0 &&
                     <>
-                        <h2>Estimated Teams Beaten vs Actual Total Teams Beaten</h2>
-                        <p>The estimation of number of teams beaten corresponds with a team's record. It estimates that a win equals beating ~75% of the other teams, while a lose equals only beating ~25% of the other teams. A bye week equals ~50%.</p>
+                        <h2>Total Teams Beaten vs. Estimated Teams Beaten Based On Record</h2>
+                        <p>This chart shows each team's total teams beaten (the sum of the graph above) versus an estimated total of a team with their record. Every win is estimated as beating {Math.floor(teams.length / 10 * 6.75)} teams and every loss is estimated as beating {Math.floor(teams.length / 10 * 3.25)} teams.</p>
                         <BarChart width={graphWidth} height={DEFAULT_HEIGHT} data={rankingData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="projected" name="Estimated Teams Beaten" fill={ACCENT_COLOR} />
-                            <Bar dataKey="points" name="Total Teams Beaten" fill={PRIMARY_GRAPH_COLOR} />
+                            <Bar dataKey="points" name="Total Teams Beaten" fill={ACCENT_COLOR} />
+                            <Bar dataKey="projected" name="Average Teams Beaten" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart>
                     </>
                 }                
@@ -372,6 +372,7 @@ export const Analysis = (props) => {
             const estimateForWins = team.record.overall.wins * estimatedTeamsBeatenPerWin;
             const estimateForLoss = team.record.overall.losses * estimatedTeamsBeatenPerLoss;
             const missedWeeks = totalWeeks - team.record.overall.wins - team.record.overall.losses;
+    
             const estimateForMiss = estimatedTeamsBeatenPerMiss * missedWeeks;
             const estimateRank = Math.floor(estimateForWins + estimateForLoss + estimateForMiss);
 

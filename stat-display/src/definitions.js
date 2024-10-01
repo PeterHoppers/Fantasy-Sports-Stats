@@ -177,6 +177,14 @@ const TeamColors = {
         "primary" : "#808080",
         "secondary" : "#a0522d"
     },
+    "BSHP": {
+        "primary": "#cdc307",
+        "secondary": "#b2b2b2"
+    },
+    "PP": {
+        "primary": "#3182bd",
+        "secondary": "#FFFFFF"
+    },
     "Default": {
         "primary": "#f26722",
         "secondary": "#FFFFFF"
