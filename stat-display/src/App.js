@@ -53,6 +53,7 @@ function App() {
   }
 
   const triggerMatchup = (gameId) => {
+    scrollToTop();
     setActiveMatchup(gameId);
   }
 
@@ -132,7 +133,13 @@ function scrollToTop() {
   const header = document.querySelector("header");
 
   if (header) {
-    document.querySelector("header").scrollIntoView(); //scrolls to the top when you switch pages
+    header.scrollIntoView(); //scrolls to the top when you switch pages
+  } else {
+    const closeButton = document.querySelector(".matchup-close");
+
+    if (closeButton) {
+      closeButton.scrollIntoView();
+    }
   }
 }
 
