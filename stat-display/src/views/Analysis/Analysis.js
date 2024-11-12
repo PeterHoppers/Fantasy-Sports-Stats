@@ -124,7 +124,7 @@ export const Analysis = (props) => {
                             <Tooltip />
                             <Legend />
                             <Bar dataKey="points" name="Total Teams Beaten" fill={ACCENT_COLOR} />
-                            <Bar dataKey="projected" name="Average Teams Beaten" fill={PRIMARY_GRAPH_COLOR} />
+                            <Bar dataKey="projected" name="Estimated Teams Beaten" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart>
                     </>
                 }                
