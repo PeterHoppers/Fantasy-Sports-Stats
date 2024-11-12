@@ -133,12 +133,14 @@ function searchThroughAllTeams(rosters, playerId) {
         }
 
         rosterWeek.forEach(roster => {
-            foundPlayer = roster.roster.entries.find(x => x.playerId === playerId);
             if (foundPlayer) {
-                return foundPlayer;
+                return;
             }
+            foundPlayer = roster.roster.entries.find(x => x.playerId === playerId);            
         });
     });
+    
+    return foundPlayer;
 }
 
 function searchThroughMissingPlayers(playerId) {
