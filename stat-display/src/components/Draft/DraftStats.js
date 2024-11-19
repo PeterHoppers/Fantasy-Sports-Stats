@@ -5,6 +5,8 @@ import './DraftStats.scss';
 import DraftPick from "./DraftPick";
 import { getGraphWidth } from "../../api/graphData";
 
+const PICKS_CHOSEN = 15;
+
 const DraftStats = (props) => {      
     const pickInfos = props.data;
     const isCurrentStandings = !(props.teams[0].rankCalculatedFinal);
@@ -17,8 +19,8 @@ const DraftStats = (props) => {
 
     const teamsDraftData = getDraftDataPerTeam(pickInfos, teams);
     const teamAmount = teams.length;
-    const top10SleeperPicks = getPicksBySleeperValue(pickInfos, teamAmount, 10, true);
-    const worse10Picks = getPicksBySleeperValue(pickInfos, teamAmount, 10, false);
+    const overPerformingPicks = getPicksBySleeperValue(pickInfos, teamAmount, PICKS_CHOSEN, true);
+    const underPerformingPicks = getPicksBySleeperValue(pickInfos, teamAmount, PICKS_CHOSEN, false);
 
     const parentElement = document.querySelector(".draft-view__draft-section-holder");
     const graphWidth = getGraphWidth(parentElement);
@@ -62,21 +64,21 @@ const DraftStats = (props) => {
                     </>                    
                 }
                  <p className="draft-view__draft-stat-description">The following overperforming/underperforming picks were calculated using a simple algorithm that looked at the pick number, the player's total ranking, the player's position, and whether the player would start on an average team in a league with that many teams.</p>
-                {top10SleeperPicks.length > 0 &&
+                {overPerformingPicks.length > 0 &&
                     <>                    
                         <h2>Most Overperforming Picks</h2>
                         <div className="draft-view__draft-section">
-                        {top10SleeperPicks.map(pickInfo => {
+                        {overPerformingPicks.map(pickInfo => {
                             return <DraftPick key={pickInfo.id} pick={pickInfo}/>
                         })}
                         </div>  
                     </>          
                 }
-                {worse10Picks.length > 0 &&
+                {underPerformingPicks.length > 0 &&
                     <>                    
                         <h2>Most Underperforming Picks</h2>
                         <div className="draft-view__draft-section">
-                        {worse10Picks.map(pickInfo => {
+                        {underPerformingPicks.map(pickInfo => {
                             return <DraftPick key={pickInfo.id} pick={pickInfo}/>
                         })}
                         </div>  
@@ -158,14 +160,43 @@ function getPicksBySleeperValue(picks, teamsAmount, amount, isFront) {
 function calcOffsetPickValue(pick, teamAmount) {
     const totalRanking = (pick?.playerRatings?.totalRanking) ? pick?.playerRatings?.totalRanking : 1000;
     const positionRanking = (pick?.playerRatings?.positionalRanking) ? pick?.playerRatings?.positionalRanking : 1000;
+    const pointsScored = (pick?.playerRatings?.totalRating) ? pick?.playerRatings?.totalRating : 0;
     const pickNumber = pick.id;
     const startingAmountOfSaidPosition = StartingAmountPerPosition[pick?.playerPosition?.toString()];
-    let baseValue = pickNumber - totalRanking;
+    let baseValue = pickNumber - totalRanking + (pointsScored / 10);
+
+    if (totalRanking <= 10 && pickNumber >= 25) {
+        baseValue += 20;
+    }
     
     if (positionRanking <= teamAmount * startingAmountOfSaidPosition) {
-        baseValue += 20; //if they would start, give that a bonus
-    } else if (startingAmountOfSaidPosition === 1) {
-        baseValue -= 50;
+        baseValue += 50; //if they would start, give that a bonus
+    } else if (positionRanking <= teamAmount * startingAmountOfSaidPosition * 2) {
+        if (pick?.playerPosition === 1) {
+            baseValue -= 75;
+        } else if (startingAmountOfSaidPosition >= 2) {
+            baseValue += 35;
+        }
+    } else {
+        if (pick?.playerPosition === 1) {
+            baseValue -= 100;
+        }
+    }
+    
+    if (startingAmountOfSaidPosition === 1) {
+        if (pick?.playerPosition === 1) {
+            if (pickNumber < 75) {
+                baseValue -= 75;
+            } else {
+                baseValue -= 40;
+            }
+        } else {
+            baseValue += 25;
+        }
+    }
+
+    if (pickNumber - totalRanking < 35) {
+        baseValue *= .1;
     }
 
     if (!pick?.playerRatings?.totalRating) {

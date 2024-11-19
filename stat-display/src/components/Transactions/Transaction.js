@@ -1,4 +1,5 @@
 import React from "react";
+import { TeamColors } from "../../definitions";
 import './Transaction.scss';
 import PlayerDisplay from "../Generic/PlayerDisplay";
 
@@ -6,9 +7,10 @@ const Transaction = (props) => {
     const transaction = props.transaction;
     const addInfo = transaction.addInfo;
     const dropInfo = transaction.dropInfo;
+    const teamColors = TeamColors[transaction.team.abbrev];
 
     return (
-        <div className="transaction-display">
+        <div className="transaction-display" style={{borderColor: teamColors?.primary}}>
             <div className="transaction-display__title">
                 <span>{`Transaction by ${transaction.team.abbrev}`}</span>
             </div>

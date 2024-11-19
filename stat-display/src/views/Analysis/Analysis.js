@@ -62,19 +62,19 @@ export const Analysis = (props) => {
                 {projectedPointsPerWeek.length > 0 &&
                     <>
                         <h2>Points Projected Per Week</h2>
-                        <TeamLineGraph graphWidth={graphWidth} data={projectedPointsPerWeek} teamData={teams} min={85} max={145}/>
+                        <TeamLineGraph graphWidth={graphWidth} data={projectedPointsPerWeek} teamData={teams} min={70} max={150}/>
                     </>
                 }
                 {totalPointsPerWeek.length > 0 &&
                     <>
                         <h2>Points Scored Per Week</h2>
-                        <TeamLineGraph graphWidth={graphWidth} data={totalPointsPerWeek} teamData={teams} min={35} max={200}/>                        
+                        <TeamLineGraph graphWidth={graphWidth} data={totalPointsPerWeek} teamData={teams} min={40} max={200}/>                        
                     </>
                 }
                 {differenceInPointsPerWeek.length > 0 &&
                     <>
                         <h2>Difference In Points Scored vs. Points Projected Per Week</h2>
-                        <TeamLineGraph graphWidth={graphWidth} data={differenceInPointsPerWeek} teamData={teams} min={-100} max={100}/>                        
+                        <TeamLineGraph graphWidth={graphWidth} data={differenceInPointsPerWeek} teamData={teams} min={-80} max={80}/>                        
                     </>
                 }
                 {projectedVsScoredData.length > 0 &&
@@ -276,10 +276,13 @@ export const Analysis = (props) => {
             const projectedScore = projectedScoresByWeek[index];
 
             Object.keys(weekScore).forEach(team => {
-                const weekScoreForTeam = Number(weekScore[team]);
-                const projectedScoreForTeam = Number(projectedScore[team]);
-                const difference = weekScoreForTeam - projectedScoreForTeam;
-                weekData[team] = Number(difference.toFixed(2));
+                const teamScore = Number(weekScore[team]);
+                if (!Number.isNaN(teamScore) && projectedScore) {
+                    const weekScoreForTeam = teamScore;
+                    const projectedScoreForTeam = Number(projectedScore[team]);
+                    const difference = weekScoreForTeam - projectedScoreForTeam;
+                    weekData[team] = Number(difference.toFixed(2));
+                }                   
             });
 
             weekData.name = weekScore.name;
@@ -328,6 +331,11 @@ export const Analysis = (props) => {
 
     function getOpponentProjectedVsScoredData(teams, matchups, scoresByWeek, projectedScoresByWeek) {
         const data = [];
+
+        if (projectedScoresByWeek.length <= 0) {
+            return data;
+        }
+        
         teams.forEach(team => {
             let opponentPointsProjected = 0;
             let opponentPointsScored = 0;

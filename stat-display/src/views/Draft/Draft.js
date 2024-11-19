@@ -19,7 +19,7 @@ export const Draft = (props) => {
     function createPickInfo(draftData, teams, rosterWeeks) {
         let pickInfos;
 
-        if (draftData) {
+        if (draftData && rosterWeeks.length > 0) {
             const rosters = rosterWeeks[1];
             const teamRosterInfo = teams.map(team => {
                 const startingRoster = rosters.find((roster) => roster.id === team.id);

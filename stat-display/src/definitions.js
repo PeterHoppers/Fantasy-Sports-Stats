@@ -41,8 +41,8 @@ const DefaultPositionNames = {
 
 const StartingAmountPerPosition = Object.freeze({
     1: 1,
-    2: 2,
-    3: 2,
+    2: 2.5,
+    3: 2.5,
     4: 1,
     5: 1,
     16: 1
