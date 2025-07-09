@@ -21,6 +21,8 @@ export const Analysis = (props) => {
     const matchups = getMatchupByWeek(scores, lastWeek);
     const totalPointsScores = getScoreByWeek(scores, lastWeek); 
     const projectedScores = getProjectedScoreByWeek(teams, rosters, lastWeek);
+    const scoresPerPosition = getPointsScoredPerPosition(teams, rosters, lastWeek);
+    console.log(scoresPerPosition);
     const rankingScores = getRankingByWeek(totalPointsScores, lastWeek);
 
     const totalPointsPerWeek = formatPoints(teams, totalPointsScores);
@@ -127,7 +129,28 @@ export const Analysis = (props) => {
                             <Bar dataKey="projected" name="Estimated Teams Beaten" fill={PRIMARY_GRAPH_COLOR} />
                         </BarChart>
                     </>
-                }                
+                }      
+                {scoresPerPosition.length > 0 &&
+                    <>
+                        {Object.keys(PositionId).map((position) => {
+                            const data = formatPointsPerPosition(teams, scoresPerPosition, PositionId[position]);
+                            const height = Number(data[data.length - 1].points) + 20;
+                            const roundedHeight = Math.ceil(height / 100) * 100;
+                            return <>
+                                <h2>Total Points Scored By {position}</h2>
+                                <BarChart width={graphWidth} height={DEFAULT_HEIGHT} data={data}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis domain={[0, roundedHeight]}/>
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="points" name={`Points Scored By ${position}`} fill={ACCENT_COLOR} />
+                                </BarChart>                                
+                            </>
+                        })}
+                    </>
+
+                }          
             </main>
         </>
         
@@ -421,6 +444,49 @@ export const Analysis = (props) => {
 
             data.push(weekData);
         });
+
+        return data;
+    }
+
+    function getPointsScoredPerPosition(teams, rosters, lastWeek) {
+        const projectedScores = [];
+        teams.forEach(team => {
+            const teamRosters = rosters.filter(roster => roster?.id === team.id);
+            let weekId = 1;       
+            const teamId = team.id;
+            projectedScores[teamId] = [];   
+            teamRosters.forEach(roster => {
+                if (weekId > lastWeek) {
+                    return;
+                }
+                const teamScores = projectedScores[teamId];
+                roster.roster.entries.forEach(entry => {
+                    if (!teamScores[entry.lineupSlotId]) {
+                        teamScores[entry.lineupSlotId] = 0;
+                    }
+
+                    const pointsScored = entry.playerPoolEntry.player.stats.find(stat => stat.scoringPeriodId === weekId && stat.statSourceId === 0);
+
+                    teamScores[entry.lineupSlotId] += pointsScored?.appliedTotal ?? 0; 
+                });
+
+                weekId++;
+            });
+        });
+
+        return projectedScores;
+    }
+
+    function formatPointsPerPosition(teams, pointsPerPosition, targetPosition) {
+        const data = [];
+        teams.forEach(team => {
+            data.push({
+                "name": team.name,
+                "points": pointsPerPosition[team.id][targetPosition].toFixed(2),
+            });
+        });
+
+         data.sort((a, b) => a.points - b.points);
 
         return data;
     }
