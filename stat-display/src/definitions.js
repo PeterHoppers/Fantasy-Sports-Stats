@@ -29,7 +29,7 @@ const PositionNames= {
     23: "Flex"
 };
 
-const DefaultPositionNames = {
+const DefaultPositionNames = { //this is different ids due to player's positions and positions in the lineup being different
     0: "N/A",
     1: "QB",
     2: "RB",
@@ -38,6 +38,15 @@ const DefaultPositionNames = {
     5: "K",
     16: "D/ST"
 };
+
+const DefaultPositionColors = { 
+    1: "#ff993333",
+    2: "#ff333333",
+    3: "#3399ff33",
+    4: "#33cc3333",
+    5: "#99660033",
+    16: "#e0e0eb44"
+}
 
 const StartingAmountPerPosition = Object.freeze({
     1: 1,
@@ -224,6 +233,7 @@ export {
     TransactionView,
     DraftView,
     ResultOptions,
+    DefaultPositionColors as PositionColors,
     TeamColors,
     NameOfOwnerGuid,
     LAST_REGULAR_SEASON_WEEK,

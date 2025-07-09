@@ -55,7 +55,7 @@ const DraftStats = (props) => {
                         <BarChart width={graphWidth} height={350} data={teamsDraftData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
-                            <YAxis domain={[0, 4000]}/>
+                            <YAxis/>
                             <Tooltip />
                             <Legend />
                             <Bar dataKey="points" name="Total Points Scored" fill={PRIMARY_GRAPH_COLOR} />

@@ -6,7 +6,7 @@ export const TeamName = (props) => {
     if (!teamColors) {
         teamColors = TeamColors["Default"];
     }
-    const matchupRoot = document.documentElement;    
+    const matchupRoot = document.documentElement;
 
     let classes = "matchup__team";
 
