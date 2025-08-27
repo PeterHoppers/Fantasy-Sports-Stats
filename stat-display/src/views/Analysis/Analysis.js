@@ -22,7 +22,6 @@ export const Analysis = (props) => {
     const totalPointsScores = getScoreByWeek(scores, lastWeek); 
     const projectedScores = getProjectedScoreByWeek(teams, rosters, lastWeek);
     const scoresPerPosition = getPointsScoredPerPosition(teams, rosters, lastWeek);
-    console.log(scoresPerPosition);
     const rankingScores = getRankingByWeek(totalPointsScores, lastWeek);
 
     const totalPointsPerWeek = formatPoints(teams, totalPointsScores);
@@ -61,6 +60,9 @@ export const Analysis = (props) => {
         <>
             <Header message={"Analysis"}/>
             <main className="analysis-view__main">
+                {projectedPointsPerWeek.length === 0 &&
+                    <span>Wait for the season to start to get some stats!</span>
+                }
                 {projectedPointsPerWeek.length > 0 &&
                     <>
                         <h2>Points Projected Per Week</h2>
@@ -317,6 +319,10 @@ export const Analysis = (props) => {
 
     function getProjectedVsScoredData(teams, scoresByWeek, projectedScoresByWeek, totalWeeks) {
         const data = [];
+        if (!scoresByWeek.length) {
+            return data;
+        }
+
         const buggedThreshold = 31; //some projection weeks got bugged, so we're trying to remove bad data with this
         teams.forEach(team => {
             const teamScores = scoresByWeek.flat().filter(score => score.teamId === team.id);
@@ -392,6 +398,10 @@ export const Analysis = (props) => {
 
     function getRankingData(teams, rankingScores, totalWeeks) {
         const data = [];
+        if (!rankingScores || !rankingScores.length) {
+            return data;
+        }
+
         const totalTeams = teams.length;
         const estimatedTeamsBeatenPerWin = Math.floor(totalTeams / 10 * 7.5);
         const estimatedTeamsBeatenPerLoss = Math.floor(totalTeams / 10 * 2.5);
@@ -450,6 +460,9 @@ export const Analysis = (props) => {
 
     function getPointsScoredPerPosition(teams, rosters, lastWeek) {
         const projectedScores = [];
+        if (!teams || teams.length) {
+            return projectedScores;
+        }
         teams.forEach(team => {
             const teamRosters = rosters.filter(roster => roster?.id === team.id);
             let weekId = 1;       
@@ -465,7 +478,7 @@ export const Analysis = (props) => {
                         teamScores[entry.lineupSlotId] = 0;
                     }
 
-                    const pointsScored = entry.playerPoolEntry.player.stats.find(stat => stat.scoringPeriodId === weekId && stat.statSourceId === 0);
+                    const pointsScored = entry.playerPoolEntry.player.stats.find(stat => stat.scoringPeriodId === weekId && stat.statSourceId === 0);                   
 
                     teamScores[entry.lineupSlotId] += pointsScored?.appliedTotal ?? 0; 
                 });
@@ -479,6 +492,10 @@ export const Analysis = (props) => {
 
     function formatPointsPerPosition(teams, pointsPerPosition, targetPosition) {
         const data = [];
+        if (!teams || teams.length) {
+            return data;
+        }
+
         teams.forEach(team => {
             data.push({
                 "name": team.name,

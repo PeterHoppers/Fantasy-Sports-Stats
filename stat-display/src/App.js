@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import info2021 from "./LeagueInfo/info-2021.json";
 import info2022 from "./LeagueInfo/info-2022.json";
 import info2023 from './LeagueInfo/info-2023.json';
+import info2024 from "./LeagueInfo/info-2024.json"
 
 import BottomNav from "./components/BottomNav/BottomNav";
 import LoadingMessage from './components/LoadingMessage/LoadingMessage';
@@ -19,13 +20,13 @@ import { Transactions } from './views/Transaction/Transaction.js';
 import { Legacy } from './views/Legacy/Legacy.js';
 
 function App() {
-  const defaultYears = [2021, 2022, 2023, 2024];
+  const defaultYears = [2021, 2022, 2023, 2024, 2025];
   const currentYear = defaultYears[defaultYears.length - 1];
 
   const [currentPage, setPage] = useState(Pages.Home);
   const [matchUp, setActiveMatchup] = useState(null);
   const [currentInfo, setCurrentInfo] = useState(null);
-  const [info, setInfo] = useState(info2023);
+  const [info, setInfo] = useState(info2024);
   const [years, setYears] = useState(defaultYears);
   const [selectedYear, setSelectedYear] = useState(currentYear);
 
@@ -74,6 +75,9 @@ function App() {
       case "2023":
         setInfo(info2023);
         return;
+      case "2024":
+        setInfo(info2024);
+        return;
       default:
         setInfo(currentInfo);
         return;
@@ -105,7 +109,8 @@ function App() {
             {year: 2021, info: info2021}, 
             {year: 2022, info: info2022}, 
             {year: 2023, info: info2023},
-            {year: 2024, info: currentInfo}
+            {year: 2024, info: info2024},
+            {year: 2025, info: currentInfo}
           ]}/>;
       default:
         return <span/>
