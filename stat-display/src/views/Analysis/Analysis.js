@@ -140,7 +140,7 @@ export const Analysis = (props) => {
                             const roundedHeight = Math.ceil(height / 100) * 100;
                             return <>
                                 <h2>Total Points Scored By {position}</h2>
-                                <BarChart width={graphWidth} height={DEFAULT_HEIGHT} data={data}>
+                                <BarChart key={position} width={graphWidth} height={DEFAULT_HEIGHT} data={data}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="name" />
                                     <YAxis domain={[0, roundedHeight]}/>
@@ -459,20 +459,20 @@ export const Analysis = (props) => {
     }
 
     function getPointsScoredPerPosition(teams, rosters, lastWeek) {
-        const projectedScores = [];
-        if (!teams || teams.length) {
-            return projectedScores;
+        const pointsPerPosition = [];
+        if (!rosters || rosters.length === 0 || lastWeek === 0) {
+            return pointsPerPosition;
         }
         teams.forEach(team => {
             const teamRosters = rosters.filter(roster => roster?.id === team.id);
             let weekId = 1;       
             const teamId = team.id;
-            projectedScores[teamId] = [];   
+            pointsPerPosition[teamId] = [];   
             teamRosters.forEach(roster => {
                 if (weekId > lastWeek) {
                     return;
                 }
-                const teamScores = projectedScores[teamId];
+                const teamScores = pointsPerPosition[teamId];
                 roster.roster.entries.forEach(entry => {
                     if (!teamScores[entry.lineupSlotId]) {
                         teamScores[entry.lineupSlotId] = 0;
@@ -487,12 +487,12 @@ export const Analysis = (props) => {
             });
         });
 
-        return projectedScores;
+        return pointsPerPosition;
     }
 
     function formatPointsPerPosition(teams, pointsPerPosition, targetPosition) {
         const data = [];
-        if (!teams || teams.length) {
+        if (!teams || teams.length === 0) {
             return data;
         }
 
