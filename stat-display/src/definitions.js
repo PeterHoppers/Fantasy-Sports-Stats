@@ -215,7 +215,8 @@ const NameOfOwnerGuid = Object.freeze({
     "{C48FED7A-4768-421D-97A0-D98211F04345}" : "Zach Zarb",
     "{D3D47350-4B8E-4134-8C4F-3056D54A109B}" : "Jackson Nickel",
     "{D3027E95-EE6E-4F61-A97B-F5B43B8847BE}" : "Madelyn Hoppe-Spindler",
-    "{F6E0C9CD-A4BB-4C5E-84A8-1D56037227B1}" : "Victor Wagner"
+    "{F6E0C9CD-A4BB-4C5E-84A8-1D56037227B1}" : "Victor Wagner",
+    "{BEC945AF-2DEA-4682-8E5F-DF7D948F98D3}" : "Ashley Wilken"
 });
 
 const LAST_REGULAR_SEASON_WEEK = 14;
