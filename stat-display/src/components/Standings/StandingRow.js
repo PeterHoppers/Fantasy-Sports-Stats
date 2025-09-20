@@ -9,7 +9,7 @@ export const StandingRow = (props) => {
                 </td>
                 <td className="standings__standing-logo">
                     <div className="standings__standing-logo-holder">
-                        <TeamLogo logo={props.logo}/>
+                        <TeamLogo logo={props.logo} name={props.name}/>
                     </div>                    
                 </td>
                 <td className="standings__standing-name">

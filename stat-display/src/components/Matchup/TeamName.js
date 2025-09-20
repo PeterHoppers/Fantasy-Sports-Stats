@@ -33,7 +33,7 @@ export const TeamName = (props) => {
         <section className={classes}>
             {props.isHome && 
                 <div className="matchup__team-logo-holder">
-                    <TeamLogo logo={props.teamInfo.logo}/>
+                    <TeamLogo logo={props.teamInfo.logo} name={props.teamInfo.name}/>
                 </div>
             }
             <div className="matchup__team-name-holder">
@@ -42,7 +42,7 @@ export const TeamName = (props) => {
             </div>        
             {!props.isHome && 
                 <div className="matchup__team-logo-holder">
-                    <TeamLogo logo={props.teamInfo.logo}/>
+                    <TeamLogo logo={props.teamInfo.logo} name={props.teamInfo.name}/>
                 </div>                
             }    
         </section>
