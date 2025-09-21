@@ -2,6 +2,7 @@ import draft2021 from './../LeagueInfo/DraftInfo/draft-2021.json';
 import draft2022 from './../LeagueInfo/DraftInfo/draft-2022.json';
 import draft2023 from './../LeagueInfo/DraftInfo/draft-2023.json';
 import draft2024 from './../LeagueInfo/DraftInfo/draft-2024.json';
+import draft2025 from './../LeagueInfo/DraftInfo/draft-2025.json';
 
 export function getDraftData(year) {
     if (!year) {
@@ -17,6 +18,8 @@ export function getDraftData(year) {
             return draft2023;
         case "2024":
             return draft2024;
+        case "2025":
+            return draft2025;
         default:
             return;
     }

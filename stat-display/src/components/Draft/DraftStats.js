@@ -201,6 +201,8 @@ function calcOffsetPickValue(pick, teamAmount) {
 
     if (!pick?.playerRatings?.totalRating) {
         baseValue -= 500; //if they scored no points, then yeah, they really underperformed
+    } else if (pick.playerRatings.totalRating < 0){
+        baseValue -= 1000; //if they scored less than 0 points, wow, impressive
     }
 
     return baseValue * startingAmountOfSaidPosition;

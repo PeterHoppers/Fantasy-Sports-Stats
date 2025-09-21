@@ -108,7 +108,7 @@ const TeamColors = {
     },
     "SLIM": {
         "primary": "#15c2f1",
-        "secondary": "#1554f1"
+        "secondary": "#e4cd81"
     },
     "T2": {
         "primary": "#f14415",
@@ -194,6 +194,34 @@ const TeamColors = {
         "primary": "#3182bd",
         "secondary": "#FFFFFF"
     },
+    "WaWa": {
+        "primary": "#17495c",
+        "secondary": "#e99a19"
+    },
+    "WWF": {
+        "primary": "#862f11",
+        "secondary": "#f7892a"
+    },
+    "BBBA": {
+        "primary": "#b4784e",
+        "secondary": "#f5e7ca"
+    },
+    "AAT": {
+        "primary": "#ff9100",
+        "secondary": "#3c5d56"
+    },
+    "FF": {
+        "primary": "#6c910e",
+        "secondary": "#f6d99f"
+    },
+    "RH": {
+        "primary": "#c8391e",
+        "secondary": "#b16a33"
+    },
+    "REGP": {
+        "primary": "#f1c500",
+        "secondary": "#009b3a"
+    },
     "Default": {
         "primary": "#f26722",
         "secondary": "#FFFFFF"
@@ -201,22 +229,22 @@ const TeamColors = {
 };
 
 const NameOfOwnerGuid = Object.freeze({
-    "{0D2E536B-00DF-4337-A2BC-1750974EDD92}" : "Riley Fay",
-    "{8EF584AC-42DF-4D00-AC89-6D249D41E351}" : "Peter Hoppe-Spindler",
-    "{35F2E0A6-2257-4483-833C-91062EB30953}" : "Alexandra Caucutt",
-    "{42FA2A26-9A7B-475B-94CC-77B404F46CDA}" : "William Simmons",
-    "{353AB6F9-2EE7-43B1-8F0E-0209C6044CCA}" : "Sam Blanchard",
-    "{1634A1F6-F832-40CC-B374-F900BC810E75}" : "Analiesa Harbach",
-    "{87369FBA-672A-4A27-AA27-FB5318AED0B4}" : "Travis Daniel",
-    "{4307015B-8024-4D18-A59C-08A6371E0803}" : "Chris Blanchard",
-    "{A616963C-C77E-4923-BB25-F9A9ED60C44A}" : "Millar Minahan",
-    "{B412DB76-9693-45C3-92DB-76969375C331}" : "Ryan Liebherr",
-    "{B0549EEC-CEAB-4CAF-8E3A-1986ED9BD184}" : "Emily Burke",
-    "{C48FED7A-4768-421D-97A0-D98211F04345}" : "Zach Zarb",
-    "{D3D47350-4B8E-4134-8C4F-3056D54A109B}" : "Jackson Nickel",
-    "{D3027E95-EE6E-4F61-A97B-F5B43B8847BE}" : "Madelyn Hoppe-Spindler",
-    "{F6E0C9CD-A4BB-4C5E-84A8-1D56037227B1}" : "Victor Wagner",
-    "{BEC945AF-2DEA-4682-8E5F-DF7D948F98D3}" : "Ashley Wilken"
+    "{0D2E536B-00DF-4337-A2BC-1750974EDD92}" : "Riley",
+    "{8EF584AC-42DF-4D00-AC89-6D249D41E351}" : "Peter",
+    "{35F2E0A6-2257-4483-833C-91062EB30953}" : "Allie",
+    "{42FA2A26-9A7B-475B-94CC-77B404F46CDA}" : "William",
+    "{353AB6F9-2EE7-43B1-8F0E-0209C6044CCA}" : "Sam",
+    "{1634A1F6-F832-40CC-B374-F900BC810E75}" : "Analiesa",
+    "{87369FBA-672A-4A27-AA27-FB5318AED0B4}" : "Travis",
+    "{4307015B-8024-4D18-A59C-08A6371E0803}" : "Chris",
+    "{A616963C-C77E-4923-BB25-F9A9ED60C44A}" : "Millar",
+    "{B412DB76-9693-45C3-92DB-76969375C331}" : "Ryan",
+    "{B0549EEC-CEAB-4CAF-8E3A-1986ED9BD184}" : "Emily",
+    "{C48FED7A-4768-421D-97A0-D98211F04345}" : "Zach",
+    "{D3D47350-4B8E-4134-8C4F-3056D54A109B}" : "Jackson",
+    "{D3027E95-EE6E-4F61-A97B-F5B43B8847BE}" : "Maddy",
+    "{F6E0C9CD-A4BB-4C5E-84A8-1D56037227B1}" : "Victor",
+    "{BEC945AF-2DEA-4682-8E5F-DF7D948F98D3}" : "Ashley"
 });
 
 const LAST_REGULAR_SEASON_WEEK = 14;

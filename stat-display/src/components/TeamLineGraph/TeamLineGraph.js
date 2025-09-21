@@ -88,7 +88,7 @@ const TeamLineGraph = (props) => {
                             const isHidden = isTeamHidden(team.name);
 
                             return <Line 
-                                key={index} 
+                                key={`${index}-${team.name}`} 
                                 type="monotone" 
                                 dataKey={team.name} 
                                 hide={isHidden}
