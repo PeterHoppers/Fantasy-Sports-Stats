@@ -29,6 +29,7 @@ export const Analysis = (props) => {
     const differenceInPointsPerWeek = getDifferenceInProjectedVsScoredByWeek(totalPointsPerWeek, projectedPointsPerWeek);
     const projectedVsScoredData = getProjectedVsScoredData(teams, totalPointsScores, projectedScores, lastWeek);
     const opponentProjectedVsScoredData = getOpponentProjectedVsScoredData(teams, matchups, totalPointsScores, projectedScores);
+    const differenceInProjectedVsScoredData = getProjectedVsActualResultData(teams, projectedVsScoredData, opponentProjectedVsScoredData);
     const rankingsByWeekData = getRankingsPerWeek(teams, rankingScores);
     const rankingData = getRankingData(teams, rankingScores, lastWeek);
 
@@ -56,6 +57,45 @@ export const Analysis = (props) => {
         </svg>        
     }
 
+    const customProjectedDotRenderer = (props) => {
+        let fillColor = "#000000";
+        let strokeColor = "#000000";
+        const winnerColor = "#0ed145";
+        const loserColor = "#ec1c24";
+
+        const { cx, cy, stroke, r, payload, value, dataKey } = props;
+        if (payload.winners.includes(dataKey)) {
+            fillColor = winnerColor;
+        } else if (payload.losers.includes(dataKey)) {
+            fillColor = loserColor;
+        }
+
+        if (payload.projectedWinners.includes(dataKey)) {
+            strokeColor = winnerColor;
+        } else if (payload.projectedLosers.includes(dataKey)) {
+            strokeColor = loserColor;
+        }
+
+        if (stroke.length > 6 && stroke.endsWith(FADE_VALUE)) {
+            fillColor += "11";
+            strokeColor += "11";
+        }
+
+        return <svg fill={strokeColor} stroke={fillColor} strokeWidth={2}>
+            <circle cx={cx} cy={cy} r={r + 3} />;
+        </svg>        
+    }
+
+    const rankFormatter = (value, name, props) => {
+        const projectedMessage = props.payload.projectedResults.find(x => x.name.includes(name));
+        const actualMessage = props.payload.results.find(x => x.name.includes(name));
+        let message = "Did not play this week.";
+        if (projectedMessage && actualMessage) {
+             message = `\n${projectedMessage?.label}\n${actualMessage?.label}`
+        }       
+        return `${message}`;
+    }
+
     return (
         <>
             <Header message={"Analysis"}/>
@@ -79,6 +119,13 @@ export const Analysis = (props) => {
                     <>
                         <h2>Difference In Points Scored vs. Points Projected Per Week</h2>
                         <TeamLineGraph graphWidth={graphWidth} data={differenceInPointsPerWeek} teamData={teams} min={-80} max={80}/>                        
+                    </>
+                }
+                {differenceInProjectedVsScoredData.length > 0 &&
+                    <>
+                        <h2>Difference In Projected Result vs. Actual Result Per Week</h2>
+                        <p>This chart shows the difference between each team's projected result and the actual result. Each dot's fill color indicates if that team was projected to win or lose. Its outline color indicates if they won or lost.</p>
+                        <TeamLineGraph graphWidth={graphWidth} data={differenceInProjectedVsScoredData} teamData={teams} min={-100} max={100} customFormatter={rankFormatter} customDotRenderer={customProjectedDotRenderer}/>                        
                     </>
                 }
                 {projectedVsScoredData.length > 0 &&
@@ -350,7 +397,9 @@ export const Analysis = (props) => {
             data.push({
                 "name": team.name,
                 "projected": (projectedPoints / validProjectedWeeks).toFixed(2),
-                "scored": (scoredPoints/ validScoredWeeks).toFixed(2)
+                "scored": (scoredPoints/ validScoredWeeks).toFixed(2),
+                "projectedPointsPerWeek": teamProjectedScores,
+                "scoredPointsPerWeek": teamScores
             });
         });
 
@@ -369,11 +418,21 @@ export const Analysis = (props) => {
             let opponentPointsProjected = 0;
             let opponentPointsScored = 0;
             let opponentsPlayed = 0;
+
+            let opponentProjectedTotals = [];
+            let opponentScoredTotals = [];
             for (let week = 1; week <= lastWeek; week++) {
                 const opponentId = matchups[week][team.id];
 
                 //if we didn't play anyone that week, don't both with finding an opponent
                 if (!opponentId) {
+                    opponentProjectedTotals.push({
+                        teamId: 0
+                    });
+
+                    opponentScoredTotals.push({
+                        teamId: 0
+                    });
                     continue;
                 }
 
@@ -383,16 +442,85 @@ export const Analysis = (props) => {
                 const opponentScored = scoresByWeek[week].find(projected => projected.teamId === opponentId);
                 opponentPointsProjected += opponentProjected.points;
                 opponentPointsScored += opponentScored.points;
+
+                opponentProjectedTotals.push(opponentProjected);
+                opponentScoredTotals.push(opponentScored);
             }
     
             data.push({
                 "name": team.name,
                 "projected": (opponentPointsProjected / opponentsPlayed).toFixed(2),
-                "scored": (opponentPointsScored / opponentsPlayed).toFixed(2)
+                "scored": (opponentPointsScored / opponentsPlayed).toFixed(2),
+                "projectedPointsPerWeek": opponentProjectedTotals,
+                "scoredPointsPerWeek": opponentScoredTotals
             });
         });
 
         data.sort((a, b) => a.scored - b.scored);
+        return data;
+    }
+
+    function getProjectedVsActualResultData(teams, projectedVsScoredData, opponentProjectedVsScored) {
+        const data = [];
+
+        if (projectedVsScoredData.length <= 0) {
+            return data;
+        }
+
+        for (let weekIndex = 0; weekIndex < lastWeek; weekIndex++) {
+            data.push({
+                name: `Week ${weekIndex + 1}`,
+                projectedResults: [],
+                projectedLosers: [],
+                projectedWinners: [],
+                losers: [],
+                winners: [],
+                results: [],
+            });  
+            teams.forEach(team => {      
+                const teamName = team.name;
+                const teamData =  projectedVsScoredData.find(x => x.name === teamName);
+                const opponentData = opponentProjectedVsScored.find(x => x.name === teamName);
+                const teamProjectedPoints = teamData.projectedPointsPerWeek[weekIndex].points;     
+                const teamScoredPoints = teamData.scoredPointsPerWeek[weekIndex].points;     
+                const opponentProjectedPoints = opponentData.projectedPointsPerWeek[weekIndex]?.points ?? teamProjectedPoints;     
+                const opponentScoredPoints = opponentData.scoredPointsPerWeek[weekIndex]?.points ?? teamScoredPoints;     
+                const projectedPointsDiff =  teamProjectedPoints - opponentProjectedPoints;
+                const scoredPointsDiff = teamScoredPoints - opponentScoredPoints;
+                const changeInDiff = scoredPointsDiff - projectedPointsDiff;
+                
+                const weekData = data[weekIndex];                
+                weekData[team.name] = Number(changeInDiff.toFixed(2));
+                if (projectedPointsDiff > 0) {
+                    weekData.projectedWinners.push(teamName);
+                    weekData.projectedResults.push({
+                        name: teamName,
+                        label: `Projected: Win by ${projectedPointsDiff.toFixed(2)}` 
+                   });
+                } else if (projectedPointsDiff < 0) {
+                    weekData.projectedLosers.push(teamName);
+                    weekData.projectedResults.push({
+                        name: teamName,
+                        label: `Projected: Loss by ${Math.abs(projectedPointsDiff).toFixed(2)}` 
+                   });
+                }
+
+                if (scoredPointsDiff > 0) {
+                   weekData.winners.push(teamName);
+                   weekData.results.push({
+                        name: teamName,
+                        label: `Actual: Won by ${scoredPointsDiff.toFixed(2)}` 
+                   });
+                } else if (scoredPointsDiff < 0) {
+                   weekData.losers.push(teamName);
+                   weekData.results.push({
+                        name: teamName,
+                        label: `Actual: Lost by ${Math.abs(scoredPointsDiff).toFixed(2)}` 
+                   });
+                }
+            });
+        }
+
         return data;
     }
 

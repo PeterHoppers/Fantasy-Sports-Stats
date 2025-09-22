@@ -7,4 +7,11 @@
             cursor: pointer;
         }
     }
+    .recharts-tooltip-item-value {
+        white-space: pre-line;
+    }
+
+    .recharts-tooltip-wrapper {
+        z-index: 10;
+    }
 }

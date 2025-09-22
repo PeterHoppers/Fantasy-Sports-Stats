@@ -53,6 +53,5 @@ function getFallbackLogo(name, logo) {
             return logo;
     }
 
-    console.log(`${window.location.href}${rootFolder}${fileName}`);
     return `${window.location.href}${rootFolder}${fileName}`;
 }

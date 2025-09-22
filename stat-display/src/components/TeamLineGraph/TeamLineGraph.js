@@ -52,6 +52,31 @@ const TeamLineGraph = (props) => {
         setHeight(newHeight);
     }
 
+    const TootipTypes = Object.freeze({
+        Default: "Default",
+        CustomFormat: "CustomFormat",
+        CustomContent: "CustomContent",
+    });
+
+    let tooltipType = TootipTypes.Default;
+    
+    if (props.customFormatter) {
+        tooltipType = TootipTypes.CustomFormat;
+    } else if (props.CustomContent) {
+        tooltipType = TootipTypes.CustomContent;
+    }
+
+    const renderTooltip = (tooltip) => {
+        switch (tooltip) {
+            case TootipTypes.CustomFormat:
+                return <Tooltip formatter={props.customFormatter} />;
+            case TootipTypes.CustomContent:
+                return <Tooltip content={props.customContent} />;
+            default:
+                return <Tooltip />;
+        }
+    }
+
     return (
         <div className="team-line-graph" data-hidden={hiddenTeams.length} data-hover={hoverLabel}>
             {(hiddenTeams !== null) && 
@@ -59,12 +84,7 @@ const TeamLineGraph = (props) => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis domain={[props.min, props.max]}/>
-                    {props.customFormatter 
-                        ?
-                            <Tooltip formatter={props.customFormatter} />
-                        :
-                            <Tooltip />
-                    }
+                    {renderTooltip(tooltipType)}
                     
                     <Legend  
                         onMouseOver={handleLegendMouseEnter}
