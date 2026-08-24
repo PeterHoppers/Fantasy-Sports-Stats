@@ -53,14 +53,15 @@ export const Draft = (props) => {
         
                 const playerInfo = playerEntry.playerPoolEntry.player;
                 const playerRatings = playerEntry.playerPoolEntry.ratings;
+                
                 return {
                     id: pick.id,
                     roundNumber: pick.roundId,
                     teamPicked: teamRoster.teamInfo,
                     playerInfo: playerInfo,
                     playerPosition: playerInfo.defaultPositionId,
-                    playerRatings: playerRatings[0],
-                    playerRank: (playerRatings[0].totalRanking === 0) ? 1000 : playerRatings[0].totalRanking
+                    playerRatings: (playerRatings) ? playerRatings[0] : null,
+                    playerRank: (playerRatings && playerRatings[0].totalRanking === 0) ? 1000 : (playerRatings ? playerRatings[0].totalRanking : null)
                 }
             });
         }    

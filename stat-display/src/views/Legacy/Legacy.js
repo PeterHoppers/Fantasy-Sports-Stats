@@ -16,6 +16,11 @@ export const Legacy = (props) => {
     const extraYearInfo = {};
     props.yearInfos.forEach(yearInfo => {
         const teamsPerYear = yearInfo.info.teams;
+        if (!teamsPerYear || teamsPerYear.length === 0) {
+            console.warn(`No teams found for year ${yearInfo.year}. Skipping this year.`);
+            return;
+        }
+        
         extraYearInfo[yearInfo.year] = {
             teamNumber: yearInfo.info.teams.length,
             playedWeeks: getNumberOfRegularSeasonWeeksSoFar(yearInfo.info.scores)

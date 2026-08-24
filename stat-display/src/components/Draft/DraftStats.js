@@ -9,6 +9,15 @@ const PICKS_CHOSEN = 15;
 
 const DraftStats = (props) => {      
     const pickInfos = props.data;
+    if (pickInfos.length === 0 || !pickInfos[0].playerRank || !pickInfos[0].playerRatings) {
+        return (
+            <section className="draft-view__draft-section-holder">
+                <p className="draft-view__draft-stat-description">Wait for the year to start to get stats on the draft!</p>
+            </section>
+        );
+    }
+
+
     const isCurrentStandings = !(props.teams[0].rankCalculatedFinal);
     let teams;
     if (isCurrentStandings) { //TODO: Move this to shared logic with the standings
